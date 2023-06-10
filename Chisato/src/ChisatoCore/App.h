@@ -10,6 +10,7 @@ namespace Chisato {
 		virtual ~App();
 
 		void AppMain();
+
 	};
 
 	App* CreateApplication();
