@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ChisatoCore\Log.h" />
     <ClInclude Include="src\Chisato.h" />
     <ClInclude Include="src\ChisatoCore\App.h" />
     <ClInclude Include="src\ChisatoCore\Core.h" />
     <ClInclude Include="src\ChisatoCore\Main.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ChisatoCore\Log.cpp" />
     <ClCompile Include="src\ChisatoCore\App.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -66,6 +68,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Chisato\packages\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,6 +84,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Chisato\packages\spdlog\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
