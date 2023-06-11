@@ -1,6 +1,6 @@
 #pragma once
 #include"Core.h"
-
+#include<memory>
 
 namespace Chisato {
 	
@@ -8,11 +8,10 @@ namespace Chisato {
 	public:
 		App();
 		virtual ~App();
-
+		
 		void AppMain();
-
 	};
 
-	App* CreateApplication();
+	std::unique_ptr<App> CreateApplication();
 }
 

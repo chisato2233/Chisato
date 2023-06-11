@@ -7,6 +7,6 @@ public:
 	~Sanbox(){}
 };
 
-Chisato::App* Chisato::CreateApplication() {
-	return new Sanbox();
+std::unique_ptr<Chisato::App> Chisato::CreateApplication() {
+	return std::make_unique<Chisato::App>(Sanbox{ });
 }
