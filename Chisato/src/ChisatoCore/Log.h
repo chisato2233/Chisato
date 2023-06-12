@@ -16,16 +16,16 @@ namespace Chisato {
 		CSTAPI void Init();
 
 		namespace Engine {
-			CSTAPI inline void Trace(std::string s) { p_EngineLogger->trace(s); }
-			CSTAPI inline void Info(std::string s) { p_EngineLogger->info(s); }
-			CSTAPI inline void Warn(std::string s) { p_EngineLogger->warn(s); }
-			CSTAPI inline void Error(std::string s) { p_EngineLogger->error(s); }
+			CSTAPI inline void Trace(std::string&& s) { p_EngineLogger->trace(s); }
+			CSTAPI inline void Info(std::string&& s) { p_EngineLogger->info(s); }
+			CSTAPI inline void Warn(std::string&& s) { p_EngineLogger->warn(s); }
+			CSTAPI inline void Error(std::string&& s) { p_EngineLogger->error(s); }
 		}
 		namespace Cosole {
-			CSTAPI inline void Trace(std::string s) { p_CosoleLogger->trace(s); }
-			CSTAPI inline void Info(std::string s) { p_CosoleLogger->info(s); }
-			CSTAPI inline void Warn(std::string s) { p_CosoleLogger->warn(s); }
-			CSTAPI inline void Error(std::string s) { p_CosoleLogger->error(s); }
+			CSTAPI inline void Trace(std::string&& s) { p_CosoleLogger->trace(s); }
+			CSTAPI inline void Info(std::string&& s) { p_CosoleLogger->info(s); }
+			CSTAPI inline void Warn(std::string&& s) { p_CosoleLogger->warn(s); }
+			CSTAPI inline void Error(std::string&& s) { p_CosoleLogger->error(s); }
 		}
 
 	}
