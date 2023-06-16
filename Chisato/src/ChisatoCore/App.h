@@ -1,5 +1,10 @@
 #pragma once
+
+//Í³Ò»µÄ¿â
 #include"Core.h"
+#include"Events/EventCore.h"
+#include"Log.h"
+
 #include<memory>
 
 namespace Chisato {
@@ -9,6 +14,7 @@ namespace Chisato {
 		App();
 		virtual ~App();
 		
+		void AppInit();
 		void AppMain();
 	};
 

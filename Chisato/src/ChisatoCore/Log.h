@@ -2,35 +2,33 @@
 #include"Core.h"
 #include"spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+
 #include<memory>
 
-namespace Chisato {
-	namespace Log {
-		CSTAPI struct l {
-			static std::shared_ptr<int> p_int;
+namespace Chisato::Log{
+	//使用CRTP方便的写函数库
+	template<typename Child>
+	class Funcs {
+	public:
+		static void Info(std::string&& s) { Child::p_logger->info(s); }
+		static void Warn(std::string&& s);
+		static void Error(std::string&& s);
+		static void Trace(std::string&& s);
+	};
 
-		};
-		CSTAPI std::shared_ptr<spdlog::logger> p_EngineLogger;
-		CSTAPI std::shared_ptr<spdlog::logger> p_CosoleLogger;
-		
-		CSTAPI void Init();
-
-		namespace Engine {
-			CSTAPI inline void Trace(std::string&& s) { p_EngineLogger->trace(s); }
-			CSTAPI inline void Info(std::string&& s) { p_EngineLogger->info(s); }
-			CSTAPI inline void Warn(std::string&& s) { p_EngineLogger->warn(s); }
-			CSTAPI inline void Error(std::string&& s) { p_EngineLogger->error(s); }
-		}
-		namespace Cosole {
-			CSTAPI inline void Trace(std::string&& s) { p_CosoleLogger->trace(s); }
-			CSTAPI inline void Info(std::string&& s) { p_CosoleLogger->info(s); }
-			CSTAPI inline void Warn(std::string&& s) { p_CosoleLogger->warn(s); }
-			CSTAPI inline void Error(std::string&& s) { p_CosoleLogger->error(s); }
-		}
-
-	}
+	class Engine : public Funcs<Engine>{
+		friend void Init();
+		template<typename Engine> friend class Funcs;
+		static std::shared_ptr<spdlog::logger> p_logger;
+	};
 	
+	class Cosole : public Funcs<Cosole> { 
+		friend void Init();
+		template<typename Cosole> friend class Funcs;
+		static std::shared_ptr<spdlog::logger> p_logger;
+	};
 
+	void Init();
 }
 
 

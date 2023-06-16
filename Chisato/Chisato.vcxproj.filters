@@ -19,6 +19,9 @@
     <ClInclude Include="src\ChisatoCore\Main.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Events\Event.h" />
+    <ClInclude Include="src\ChisatoCore\Events\KeyEvent.h" />
+    <ClInclude Include="src\ChisatoCore\Events\EventCore.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\App.cpp">
