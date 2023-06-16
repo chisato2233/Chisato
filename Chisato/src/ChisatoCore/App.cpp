@@ -17,7 +17,7 @@ namespace Chisato {
 		AppInit();
 		Log::Cosole::Info("Hello, Chisato");
 		Events::KeyDownEvent a(1);		
-		
+		Log::Cosole::Trace(a.GetName());
 		while (1);
 	}
 }

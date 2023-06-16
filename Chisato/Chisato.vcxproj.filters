@@ -30,5 +30,6 @@
     <ClCompile Include="src\ChisatoCore\Log.cpp">
       <Filter>ChisatoCore</Filter>
     </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Events\KeyEvent.cpp" />
   </ItemGroup>
 </Project>

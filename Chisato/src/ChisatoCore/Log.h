@@ -11,9 +11,9 @@ namespace Chisato::Log{
 	class Funcs {
 	public:
 		static void Info(std::string&& s) { Child::p_logger->info(s); }
-		static void Warn(std::string&& s);
-		static void Error(std::string&& s);
-		static void Trace(std::string&& s);
+		static void Warn(std::string&& s) { Child::p_logger->warn(s); }
+		static void Error(std::string&& s) { Child::p_logger->error(s); }
+		static void Trace(std::string&& s) { Child::p_logger->trace(s); }
 	};
 
 	class Engine : public Funcs<Engine>{

@@ -19,20 +19,21 @@ namespace Chisato::Events{
 
 	class CSTAPI Event {
 		friend class EventManger;
-
-	public:
-
 	protected:
 		int tag;
 	public:
 
 		Event(int _tag = Tag::None)
 			:tag(_tag){ }
+		virtual ~Event() = default;
 
 		int GetTag()const noexcept { return tag; }
 		inline bool IsTag(int _tag) { return GetTag() & _tag; }
-			
+
 		virtual std::string GetName()const noexcept = 0;
 
 	};
+
+	template<typename Ty>
+	concept cpt_Event = std::is_base_of_v<Event, Ty>;
 }
