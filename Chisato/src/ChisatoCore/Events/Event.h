@@ -36,4 +36,9 @@ namespace Chisato::Events{
 
 	template<typename Ty>
 	concept cpt_Event = std::is_base_of_v<Event, Ty>;
+
+	class EventManger {
+		 
+	};
+
 }

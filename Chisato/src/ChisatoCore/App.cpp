@@ -13,11 +13,14 @@ namespace Chisato {
 		Log::Init();
 		Log::Cosole::Info("Initialized succsese");
 	}
+
 	void App::AppMain(){
 		AppInit();
 		Log::Cosole::Info("Hello, Chisato");
-		Events::KeyDownEvent a(1);		
+
+		Events::KeyDownEvent a(1);
 		Log::Cosole::Trace(a.GetName());
+		
 		while (1);
 	}
 }

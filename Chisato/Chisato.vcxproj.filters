@@ -22,6 +22,9 @@
     <ClInclude Include="src\ChisatoCore\Events\Event.h" />
     <ClInclude Include="src\ChisatoCore\Events\KeyEvent.h" />
     <ClInclude Include="src\ChisatoCore\Events\EventCore.h" />
+    <ClInclude Include="src\ChisatoCore\Events\MouseEvent.h" />
+    <ClInclude Include="src\ChisatoCore\NewEvent\Event.h" />
+    <ClInclude Include="src\ChisatoCore\NewEvent\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\App.cpp">
@@ -31,5 +34,6 @@
       <Filter>ChisatoCore</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\Events\KeyEvent.cpp" />
+    <ClCompile Include="src\ChisatoCore\Events\MouseEvent.cpp" />
   </ItemGroup>
 </Project>

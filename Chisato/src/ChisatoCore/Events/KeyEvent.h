@@ -31,7 +31,7 @@ namespace Chisato {
 			int repeatCount;
 		public:
 			KeyHoldEvent(int _code,int cnt)
-				:KeyDownEvent(_code){ }
+				:KeyDownEvent(_code),repeatCount(cnt) { }
 			virtual std::string GetName()const noexcept override;
 		};
 
