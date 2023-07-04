@@ -1,6 +1,5 @@
 #pragma once
 #include"Event.h"
-#include<sstream>
 
 //键盘事件系统。包括：
 //	公用的KeyEvent，构造函数为保护类型，只能派生
@@ -33,7 +32,7 @@ namespace Chisato::Events {
 	public:
 		MouseDownEvent(float x, float y, int _b)
 			:
-			MouseEvent(x, y, Tag::Input | Tag::MouseButton),
+			MouseEvent(x, y, Tag::Input | Tag::Mouse | Tag::MouseButton),
 			button(_b) { }
 
 		virtual std::string GetName()const noexcept override;
@@ -65,7 +64,7 @@ namespace Chisato::Events {
 	class CSTAPI MouseUpEvent :public MouseEvent {
 	public:
 		MouseUpEvent(float x,float y)
-			:MouseEvent(x,y, Tag::Input | Tag::Mouse) { }
+			:MouseEvent(x,y, Tag::Input | Tag::Mouse | Tag::MouseButton) { }
 
 		virtual std::string GetName()const noexcept override;
 	};

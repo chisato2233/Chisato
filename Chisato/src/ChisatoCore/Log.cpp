@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "Log.h"
 
 namespace Chisato::Log {
@@ -6,7 +7,7 @@ namespace Chisato::Log {
 
 
 	void Init() {
-		spdlog::set_pattern("%^%v  ---[%n][%T]%$");
+		spdlog::set_pattern("%^ >>>>>[%n][%T]<<<<< \n%v\n %$");
 
 		Engine::p_logger = spdlog::stdout_color_mt("Application");
 		Engine::p_logger->set_level(spdlog::level::trace);

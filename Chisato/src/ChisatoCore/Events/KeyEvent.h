@@ -1,6 +1,6 @@
 #pragma once
 #include"Event.h"
-#include<sstream>
+
 
 //键盘事件系统。包括：
 //	公用的KeyEvent，构造函数为保护类型，只能派生

@@ -1,28 +1,28 @@
+#include"pch.h"
 #include "MouseEvent.h"
 
 namespace Chisato::Events {
 	std::string MouseDownEvent::GetName()const noexcept {
 		std::ostringstream oss;
-		oss << "\n"
-			<< "[Event]: Mouse Down \n"
-			<< "[Position]: " << pos.first << pos.second << "\n\n";
+		oss << "[Event]: Mouse Down \n"
+			<< "[Position]: " << pos.first << pos.second;
 		return oss.str();
 	}
 
 
 	std::string MouseHoldEvent::GetName() const noexcept {
 		std::ostringstream oss;
-		oss << "\n"
+		oss 
 			<< "[Event]: Mouse Hold \n"
 			<< "[Position]: " << pos.first << pos.second << '\n'
-			<< "[Repeat Count]: " << repeatCount << "\n\n";
+			<< "[Repeat Count]: " << repeatCount;
 		return oss.str();
 	}
 
 	std::string MouseUpEvent::GetName() const noexcept {
 		std::ostringstream oss;
 		oss << "[Event]: Mouse Up \n"
-			<< "[Position]: " << pos.first << pos.second << "\n\n";
+			<< "[Position]: " << pos.first << pos.second;
 		return oss.str();
 	}
 

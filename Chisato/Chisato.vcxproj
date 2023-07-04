@@ -76,10 +76,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;CST_DEBUGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -97,10 +99,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -122,10 +126,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -149,20 +155,30 @@
     <ClInclude Include="src\Chisato.h" />
     <ClInclude Include="src\ChisatoCore\App.h" />
     <ClInclude Include="src\ChisatoCore\Core.h" />
+    <ClInclude Include="src\ChisatoCore\Events\AppEvent.h" />
     <ClInclude Include="src\ChisatoCore\Events\Event.h" />
     <ClInclude Include="src\ChisatoCore\Events\EventCore.h" />
     <ClInclude Include="src\ChisatoCore\Events\KeyEvent.h" />
     <ClInclude Include="src\ChisatoCore\Events\MouseEvent.h" />
-    <ClInclude Include="src\ChisatoCore\NewEvent\Event.h" />
     <ClInclude Include="src\ChisatoCore\Log.h" />
     <ClInclude Include="src\ChisatoCore\Main.h" />
+    <ClInclude Include="src\ChisatoCore\NewEvent\Action.h" />
+    <ClInclude Include="src\ChisatoCore\NewEvent\Controlable.h" />
+    <ClInclude Include="src\ChisatoCore\NewEvent\Event.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\Input.h" />
+    <ClInclude Include="src\ChisatoCore\Object.h" />
+    <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\App.cpp" />
+    <ClCompile Include="src\ChisatoCore\Events\AppEvent.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\KeyEvent.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\MouseEvent.cpp" />
     <ClCompile Include="src\ChisatoCore\Log.cpp" />
+    <ClCompile Include="src\ChisatoCore\Object.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

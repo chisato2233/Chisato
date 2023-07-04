@@ -18,12 +18,17 @@ project"Chisato"
 	targetdir ("bin/".. outputdir .."/%{prj.name}")
 	objdir ("bin-int/".. outputdir .."/%{prj.name}")
 
+	pchheader "pch.h"
+	pchsource "Chisato/src/pch.cpp"
+	forceincludes{"pch.h"}
+
 	files{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
 	}
 
 	includedirs{
+		"%{prj.name}/src",
 		"%{prj.name}/packages/spdlog/include"
 	}
 
