@@ -2,20 +2,20 @@
 #include"Event.h"
 
 
-namespace Chisato::Events {
+namespace Chisato {
 	class CSTAPI WindowResizeEvent:public Event {
 	private:
-		unsigned int width, hight;
+		std::pair<unsigned int, unsigned int> size;
 	
 	public:
-		WindowResizeEvent(unsigned int w, unsigned int h) 
-			:
+		WindowResizeEvent(std::pair<unsigned int,unsigned int> _size = {}):
 			Event(Tag::Window),
-			width{ w }, hight{ h } { }
-		WindowResizeEvent():WindowResizeEvent(0,0){ }
+			size(_size) { }
 
-		constexpr unsigned int GetW() { return width; }
-		constexpr unsigned int GetH() { return hight; }
+		WindowResizeEvent(unsigned int w, unsigned int h) : WindowResizeEvent(std::pair{w, h}) { }
+
+		constexpr unsigned int GetW() { return size.first; }
+		constexpr unsigned int GetH() { return size.second; }
 
 		virtual std::string GetName()const noexcept override;
 	};

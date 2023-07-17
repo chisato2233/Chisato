@@ -1,8 +1,11 @@
 #pragma once
 #include"Core.h"
-#include"spdlog/spdlog.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
 
+#pragma warning(push,0)
+#include"spdlog/spdlog.h"
+#include <spdlog/fmt/ostr.h>
+#include "spdlog/sinks/stdout_color_sinks.h"
+#pragma warning(pop)
 
 namespace Chisato::Log{
 	//使用CRTP方便的写函数库
@@ -13,7 +16,11 @@ namespace Chisato::Log{
 		static void Warn(std::string&& s) { Child::p_logger->warn(s); }
 		static void Error(std::string&& s) { Child::p_logger->error(s); }
 		static void Trace(std::string&& s) { Child::p_logger->trace(s); }
+		static void Critical(std::string&& s) { Child::p_logger->critical(s); }
 	};
+
+
+
 
 	class Engine : public Funcs<Engine>{
 		friend void Init();
@@ -28,6 +35,5 @@ namespace Chisato::Log{
 	};
 
 	void Init();
+	
 }
-
-

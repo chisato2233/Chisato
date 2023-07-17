@@ -1,103 +1,135 @@
 workspace "Chisato"
+	-- 版本
 	architecture "x64"
 
+	--配置
 	configurations{
 		"Debug",
 		"Release",
 		"Dist"
 	}
 
+	--输出路径
+	outputdir="%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-outputdir="%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+	--包含目录
+	IncludeDir={}
+	IncludeDir["GLFW"]="Chisato/packages/GLFW/include"
+	IncludeDir["spdlog"]="Chisato/packages/spdlog/include"
 
-project"Chisato"
-	location "Chisato"
-	kind "SharedLib"
-	language "C++"
+	--引入GLFW的premake文件
+	include "Chisato/packages/GLFW"
 
-	targetdir ("bin/".. outputdir .."/%{prj.name}")
-	objdir ("bin-int/".. outputdir .."/%{prj.name}")
 
-	pchheader "pch.h"
-	pchsource "Chisato/src/pch.cpp"
-	forceincludes{"pch.h"}
+	--工程：chisato
+	project"Chisato"
+		location "Chisato"
+		kind "SharedLib"
+		language "C++"
 
-	files{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
+		--目标路径
+		targetdir ("bin/".. outputdir .."/%{prj.name}")
+		--链接路径
+		objdir ("bin-int/".. outputdir .."/%{prj.name}")
 
-	includedirs{
-		"%{prj.name}/src",
-		"%{prj.name}/packages/spdlog/include"
-	}
+		--预编译头
+		pchheader "pch.h"
+		pchsource "Chisato/src/pch.cpp"
+		forceincludes{"pch.h"}
 
-	filter"system:windows"
-		cppdialect "C++20"
-		staticruntime "On"
-		systemversion "latest"
-
-		defines{
-			"CST_PLATFORM_WINDOWS",
-			"CST_BUILD_DLL"
+		files{
+			"%{prj.name}/src/**.h",
+			"%{prj.name}/src/**.cpp"
 		}
 
-		postbuildcommands{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+		includedirs{
+			"%{prj.name}/src",
+			"%{IncludeDir.spdlog}",
+			"%{IncludeDir.GLFW}"
+		}
+		
+		links{
+			"GLFW",
+			"opengl32.lib",
+			"dwmapi.lib"
 		}
 
-	filter "configurations:Debug"
-		defines "CST_DEBUGS"
-		symbols "On"
+		-- windows版本
+		filter"system:windows"
+			cppdialect "C++20"
+			staticruntime "On"
+			systemversion "latest"
+
+			defines{
+				"CST_PLATFORM_WINDOWS",
+				"CST_BUILD_DLL"
+			}
+
+			postbuildcommands{
+				("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			}
 		
-	filter "configurations:Release"
-		defines "CST_RELEASE"
-		optimize "On"	
+		-- Debug版本
+		filter "configurations:Debug"
+			defines "CST_DEBUGS"
+			symbols "On"
+			runtime "Debug"
+			
+		--Release版本	
+		filter "configurations:Release"
+			defines "CST_RELEASE"
+			optimize "On"
+			runtime "Release"	
 		
-	filter "configurations:Dist"
-		defines "CST_DIST"
-		optimize "On"
+		-- Dist版本	
+		filter "configurations:Dist"
+			defines "CST_DIST"
+			optimize "On"
 
+	
+	project "Sandbox"
+		location "Sandbox"
+		kind "ConsoleApp"
+		language "C++"
 
-project "Sandbox"
-	location "Sandbox"
-	kind "ConsoleApp"
-	language "C++"
+		targetdir ("bin/".. outputdir .."/%{prj.name}")
+		objdir ("bin-int/".. outputdir .."/%{prj.name}")
 
-	targetdir ("bin/".. outputdir .."/%{prj.name}")
-	objdir ("bin-int/".. outputdir .."/%{prj.name}")
-
-	files{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
-
-	includedirs{
-		"Chisato/packages/spdlog/include",
-		"Chisato/src"
-	}
-
-	links{
-		"Chisato"
-	}
-
-	filter"system:windows"
-		cppdialect "C++20"
-		staticruntime "On"
-		systemversion "latest"
-
-		defines{
-			"CST_PLATFORM_WINDOWS"
+		files{
+			"%{prj.name}/src/**.h",
+			"%{prj.name}/src/**.cpp"
 		}
 
-	filter "configurations:Debug"
-		defines "CST_DEBUGS"
-		symbols "On"
-		
-	filter "configurations:Release"
-		defines "CST_RELEASE"
-		optimize "On"	
-		
-	filter "configurations:Dist"
-		defines "CST_DIST"
-		optimize "On"
+		includedirs{
+			"Chisato/packages/spdlog/include",
+			"Chisato/packages/GLFW/include",
+			"Chisato/src"
+		}
+
+		links{
+			"Chisato"
+		}
+
+		filter"system:windows"
+			cppdialect "C++20"
+			staticruntime "On"
+			systemversion "latest"
+
+			defines{
+				"CST_PLATFORM_WINDOWS"
+			}
+
+		filter "configurations:Debug"
+			defines "CST_DEBUGS"
+			symbols "On"
+			staticruntime "On"
+			
+		filter "configurations:Release"
+			defines "CST_RELEASE"
+			optimize "On"
+			staticruntime "On"	
+			
+		filter "configurations:Dist"
+			defines "CST_DIST"
+			optimize "On"
+			staticruntime "On"	

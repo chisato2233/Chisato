@@ -5,6 +5,9 @@
 #include"Events/EventCore.h"
 #include"NewEvent/Event.h"
 #include"Log.h"
+#include"Window.h"
+#include"GLFW/glfw3.h"
+
 
 
 namespace Chisato {
@@ -16,8 +19,11 @@ namespace Chisato {
 		
 		void AppInit();
 		void AppMain();
+	private:
+		std::unique_ptr<Window> wnd;
+		bool isRuning = true;
 	};
 
-	std::unique_ptr<App> CreateApplication();
+	App* CreateApplication();
 }
 

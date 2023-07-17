@@ -10,6 +10,12 @@
     <Filter Include="ChisatoCore\NewEvent">
       <UniqueIdentifier>{14354AAC-00C4-D375-A9E2-E7709550E41B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platforms">
+      <UniqueIdentifier>{DDACA145-4917-56BC-9255-0762FEFE3311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platforms\Windows">
+      <UniqueIdentifier>{17E40808-83FA-069E-CC71-92BF38C7D725}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Chisato.h" />
@@ -34,6 +40,9 @@
     <ClInclude Include="src\ChisatoCore\Events\MouseEvent.h">
       <Filter>ChisatoCore\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Exception.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Log.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
@@ -55,6 +64,12 @@
     <ClInclude Include="src\ChisatoCore\Object.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Window.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Windows\WinodwsWnd.h">
+      <Filter>Platforms\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -70,11 +85,17 @@
     <ClCompile Include="src\ChisatoCore\Events\MouseEvent.cpp">
       <Filter>ChisatoCore\Events</Filter>
     </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Exception.cpp">
+      <Filter>ChisatoCore</Filter>
+    </ClCompile>
     <ClCompile Include="src\ChisatoCore\Log.cpp">
       <Filter>ChisatoCore</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\Object.cpp">
       <Filter>ChisatoCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\Windows\WinodwsWnd.cpp">
+      <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>

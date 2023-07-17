@@ -1,6 +1,6 @@
 #include "KeyEvent.h"
 
-namespace Chisato::Events{
+namespace Chisato{
 	std::string KeyDownEvent::GetName()const noexcept{
 		std::ostringstream oss;
 		oss 

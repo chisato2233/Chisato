@@ -1,4 +1,3 @@
-#include"pch.h"
 #include "Log.h"
 
 namespace Chisato::Log {

@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;CST_DEBUGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -91,6 +91,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Chisato\Chisato.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -103,7 +104,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -118,6 +119,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86_64\Chisato\Chisato.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -130,7 +132,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -145,6 +147,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Dist-windows-x86_64\Chisato\Chisato.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -160,6 +163,7 @@
     <ClInclude Include="src\ChisatoCore\Events\EventCore.h" />
     <ClInclude Include="src\ChisatoCore\Events\KeyEvent.h" />
     <ClInclude Include="src\ChisatoCore\Events\MouseEvent.h" />
+    <ClInclude Include="src\ChisatoCore\Exception.h" />
     <ClInclude Include="src\ChisatoCore\Log.h" />
     <ClInclude Include="src\ChisatoCore\Main.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\Action.h" />
@@ -167,6 +171,8 @@
     <ClInclude Include="src\ChisatoCore\NewEvent\Event.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\Input.h" />
     <ClInclude Include="src\ChisatoCore\Object.h" />
+    <ClInclude Include="src\ChisatoCore\Window.h" />
+    <ClInclude Include="src\Platforms\Windows\WinodwsWnd.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -174,11 +180,18 @@
     <ClCompile Include="src\ChisatoCore\Events\AppEvent.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\KeyEvent.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\MouseEvent.cpp" />
+    <ClCompile Include="src\ChisatoCore\Exception.cpp" />
     <ClCompile Include="src\ChisatoCore\Log.cpp" />
     <ClCompile Include="src\ChisatoCore\Object.cpp" />
+    <ClCompile Include="src\Platforms\Windows\WinodwsWnd.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="packages\GLFW\GLFW.vcxproj">
+      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

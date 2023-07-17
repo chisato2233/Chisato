@@ -9,3 +9,11 @@
 #else
 	#error Please try to change Windows System
 #endif
+
+#ifdef CST_ASSERT_ENABLE
+	#define CST_ASSERT(x,...) { if(!(x)){::Chisato::Log::Engine::Error(std::format("Error: {}",__VA_ARGS__));__debugbreak(); } }
+	#define CST_COSOLE_ASSERT(x,...) { if(!(x)){::Chisato::Log::Cosole::Error(std::format("Error: {}",__VA_ARGS__));__debugbreak(); } }
+#else
+	#define CST_ASSERT(x,...)
+	#define CST_COSOLE_ASSERT(x,...)
+#endif

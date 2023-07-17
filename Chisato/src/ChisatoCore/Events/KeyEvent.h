@@ -9,7 +9,6 @@
 //	Ì§ÆðÊÂ¼þ
 
 namespace Chisato {
-	namespace Events {
 		class CSTAPI KeyEvent :public Event {
 		protected:
 			int keycode;
@@ -42,6 +41,4 @@ namespace Chisato {
 				:KeyEvent(_code,Tag::Input | Tag::Keybord) { }
 			virtual std::string GetName()const noexcept override;
 		};
-
-	}
 }

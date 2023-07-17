@@ -1,17 +1,15 @@
-#include"pch.h"
 
 #include "App.h"
 
 namespace Chisato {
 	App::App(){
-
+		AppInit();
+		wnd = std::unique_ptr<Window>(Window::Creat());
 	}
 
 	App::~App(){
 
 	}
-
-	class AB{};
 
 	void App::AppInit() {
 		Log::Init();
@@ -19,17 +17,10 @@ namespace Chisato {
 	}
 
 	void App::AppMain(){
-		AppInit();
-		Log::Engine::Info("Hello, Chisato");
-
-		Events::KeyDownEvent a(1);
-		Log::Cosole::Trace(a);
-		
-		Events::WindowResizeEvent b(1080, 3060);
-		Log::Cosole::Trace(b);
-		
-		
-		
-		while (1);
+		while (isRuning) {
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+			wnd->OnUpdate();
+		}
 	}
 }

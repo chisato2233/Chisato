@@ -1,7 +1,6 @@
-#include"pch.h"
 #include "MouseEvent.h"
 
-namespace Chisato::Events {
+namespace Chisato {
 	std::string MouseDownEvent::GetName()const noexcept {
 		std::ostringstream oss;
 		oss << "[Event]: Mouse Down \n"
