@@ -56,7 +56,7 @@ workspace "Chisato"
 
 		-- windows版本
 		filter"system:windows"
-			cppdialect "C++20"
+			cppdialect "C++latest"
 			staticruntime "On"
 			systemversion "latest"
 

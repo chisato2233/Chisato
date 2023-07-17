@@ -23,3 +23,5 @@
 #include<queue>
 #include<stack>
 #include<sstream>
+
+#include"ChisatoCore/Log.h"
