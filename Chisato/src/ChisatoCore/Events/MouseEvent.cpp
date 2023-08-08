@@ -1,28 +1,21 @@
 #include "MouseEvent.h"
 
 namespace Chisato {
+	std::string MouseMoveEvent::GetName()const noexcept {
+		return std::format("[Event] Mouse ({}, {})", GetX(), GetY());
+	}
+
 	std::string MouseDownEvent::GetName()const noexcept {
-		std::ostringstream oss;
-		oss << "[Event]: Mouse Down \n"
-			<< "[Position]: " << pos.first << pos.second;
-		return oss.str();
+		return std::format("[Event] Mouse Down ({})", button);
 	}
 
 
 	std::string MouseHoldEvent::GetName() const noexcept {
-		std::ostringstream oss;
-		oss 
-			<< "[Event]: Mouse Hold \n"
-			<< "[Position]: " << pos.first << pos.second << '\n'
-			<< "[Repeat Count]: " << repeatCount;
-		return oss.str();
+		return std::format("[Event] Mouse Hold ({}, cnt:{})", button, GetCount());
 	}
 
 	std::string MouseUpEvent::GetName() const noexcept {
-		std::ostringstream oss;
-		oss << "[Event]: Mouse Up \n"
-			<< "[Position]: " << pos.first << pos.second;
-		return oss.str();
+		return std::format("[Event] Mouse Up ({})", button);
 	}
 
 	template<typename e>

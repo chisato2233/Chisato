@@ -173,7 +173,7 @@
     <ClInclude Include="src\ChisatoCore\Tools\Object.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Singleton.h" />
     <ClInclude Include="src\ChisatoCore\Window.h" />
-    <ClInclude Include="src\Platforms\Windows\WinodwsWnd.h" />
+    <ClInclude Include="src\Platforms\Windows\Wnd_Windows.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -184,7 +184,7 @@
     <ClCompile Include="src\ChisatoCore\Log.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Object.cpp" />
-    <ClCompile Include="src\Platforms\Windows\WinodwsWnd.cpp" />
+    <ClCompile Include="src\Platforms\Windows\Wnd_Windows.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

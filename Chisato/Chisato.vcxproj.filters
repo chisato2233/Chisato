@@ -73,7 +73,7 @@
     <ClInclude Include="src\ChisatoCore\Window.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platforms\Windows\WinodwsWnd.h">
+    <ClInclude Include="src\Platforms\Windows\Wnd_Windows.h">
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
@@ -100,7 +100,7 @@
     <ClCompile Include="src\ChisatoCore\Tools\Object.cpp">
       <Filter>ChisatoCore\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platforms\Windows\WinodwsWnd.cpp">
+    <ClCompile Include="src\Platforms\Windows\Wnd_Windows.cpp">
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />

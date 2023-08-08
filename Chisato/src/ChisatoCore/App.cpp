@@ -24,7 +24,7 @@ namespace Chisato {
 		Log::Engine::Trace(e.GetName());
 		
 		EventManger m(e);
-		bool sucess = m.Dispatch<WindowCloseEvent>(std::bind( [](App* papp,WindowCloseEvent& e) {papp->isRuning = false; return true; }, this, std::placeholders::_1));
-		if (!sucess) Log::Engine::Error("Do not doing WindowCloseEvent");
+		m.Dispatch<WindowCloseEvent>(std::bind( [](App* papp,WindowCloseEvent& e) {papp->isRuning = false; return true; }, this, std::placeholders::_1));
+		//if (!sucess) Log::Engine::Error("Do not doing WindowCloseEvent");
 	}
 }

@@ -11,17 +11,24 @@ namespace Chisato{
 	
 	class CSTAPI MouseEvent :public Event {
 	protected:
-		std::pair<float, float> pos;
-
-		//main constructor
-		MouseEvent(std::pair<float, float> _pos, int _tag = Tag::None) :
-			pos{_pos},Event(_tag) { }
-
-	public:
-		constexpr float GetX() { return pos.first; }
-		constexpr float GetY() { return pos.second; }
-		constexpr std::pair<float, float> GetPos() {return pos; }
+		MouseEvent(int _tag = Tag::Input | Tag::Mouse) : Event(_tag) { }
 	};
+
+
+
+	class CSTAPI MouseMoveEvent :public MouseEvent {
+	private:
+		std::pair<float, float> pos;
+	public:
+		MouseMoveEvent(std::pair<float,float> _pos) : MouseEvent() { }
+
+		float GetX()const noexcept { return pos.first; }
+		float GetY() const noexcept { return pos.second; }
+		auto GetPos() { return pos; }
+
+		virtual std::string GetName()const noexcept override;
+	};
+
 
 
 	class CSTAPI MouseDownEvent :public MouseEvent {
@@ -29,43 +36,44 @@ namespace Chisato{
 		int button;
 
 	public:
-		
-		MouseDownEvent(std::pair<float,float> _pos,int _b):
-			MouseEvent(_pos,Tag::Input|Tag::Mouse|Tag::MouseButton),
+		MouseDownEvent(int _b):
+			MouseEvent(Tag::Input|Tag::Mouse|Tag::MouseButton),
 			button{ _b } { }
-
+		
 		virtual std::string GetName()const noexcept override;
 	};
 
-	class CSTAPI MouseMoveEvent :public MouseEvent {
-	public:
 
-		MouseMoveEvent(std::pair<float,float> _pos) :
-			MouseEvent(_pos, Tag::Input | Tag::Mouse) { }
-
-		
-		//virtual std::string GetName()const noexcept override;
-	};
 
 	class CSTAPI MouseHoldEvent :public MouseDownEvent {
 	private:
 		int repeatCount;
 	public:
-		MouseHoldEvent(std::pair<float,float> _pos, int _b, int cnt)
-			:MouseDownEvent(_pos, _b),
-			repeatCount(cnt) { }
+		MouseHoldEvent(int _b, int cnt) : MouseDownEvent(_b), repeatCount(cnt) { }
 
+		int GetCount() const noexcept { return repeatCount; }
+		
 		virtual std::string GetName()const noexcept override;
-		inline int GetCount() { return repeatCount; }
-
 	};
 
 
+
 	class CSTAPI MouseUpEvent :public MouseEvent {
+		int button;
 	public:
-		MouseUpEvent(std::pair<float,float> _pos)
-			:MouseEvent(_pos, Tag::Input | Tag::Mouse | Tag::MouseButton) { }
+		MouseUpEvent(int _b):
+			button{_b},
+			MouseEvent(Tag::Input | Tag::Mouse | Tag::MouseButton) { }
 
 		virtual std::string GetName()const noexcept override;
+	};
+
+	class CSTAPI MouseScrollEvent :public MouseEvent {
+		std::pair<float, float> offset;
+	public:
+		MouseScrollEvent(std::pair<float, float> _offset) :offset{ _offset } { }
+		virtual std::string GetName()const noexcept override { 
+			return std::format("[Event] Mouse Scroll ({}, {})", offset.first, offset.second); 
+		}
 	};
 }
