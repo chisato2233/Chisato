@@ -10,6 +10,9 @@
     <Filter Include="ChisatoCore\NewEvent">
       <UniqueIdentifier>{14354AAC-00C4-D375-A9E2-E7709550E41B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ChisatoCore\Tools">
+      <UniqueIdentifier>{B9550F1F-256C-0DB5-6EE3-98D6DA38DE3C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platforms">
       <UniqueIdentifier>{DDACA145-4917-56BC-9255-0762FEFE3311}</UniqueIdentifier>
     </Filter>
@@ -40,9 +43,6 @@
     <ClInclude Include="src\ChisatoCore\Events\MouseEvent.h">
       <Filter>ChisatoCore\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Exception.h">
-      <Filter>ChisatoCore</Filter>
-    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Log.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
@@ -61,8 +61,14 @@
     <ClInclude Include="src\ChisatoCore\NewEvent\Input.h">
       <Filter>ChisatoCore\NewEvent</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Object.h">
-      <Filter>ChisatoCore</Filter>
+    <ClInclude Include="src\ChisatoCore\Tools\Exception.h">
+      <Filter>ChisatoCore\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\Object.h">
+      <Filter>ChisatoCore\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\Singleton.h">
+      <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Window.h">
       <Filter>ChisatoCore</Filter>
@@ -85,14 +91,14 @@
     <ClCompile Include="src\ChisatoCore\Events\MouseEvent.cpp">
       <Filter>ChisatoCore\Events</Filter>
     </ClCompile>
-    <ClCompile Include="src\ChisatoCore\Exception.cpp">
-      <Filter>ChisatoCore</Filter>
-    </ClCompile>
     <ClCompile Include="src\ChisatoCore\Log.cpp">
       <Filter>ChisatoCore</Filter>
     </ClCompile>
-    <ClCompile Include="src\ChisatoCore\Object.cpp">
-      <Filter>ChisatoCore</Filter>
+    <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp">
+      <Filter>ChisatoCore\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Tools\Object.cpp">
+      <Filter>ChisatoCore\Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\Windows\WinodwsWnd.cpp">
       <Filter>Platforms\Windows</Filter>

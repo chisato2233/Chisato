@@ -16,14 +16,14 @@ namespace Chisato {
 	public:
 		App();
 		virtual ~App();
-		
-		void AppInit();
-		void AppMain();
+
+		void Main();
+		void OnEvent(Event&);
 	private:
 		std::unique_ptr<Window> wnd;
 		bool isRuning = true;
 	};
 
-	App* CreateApplication();
+	App* Create();
 }
 

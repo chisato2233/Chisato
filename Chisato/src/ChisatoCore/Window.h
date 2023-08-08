@@ -16,17 +16,17 @@ namespace Chisato {
 
 	class CSTAPI Window {
 	public:
-		using EventCallback = std::function<void(Event&)>;
 
 		virtual ~Window(){ }
 
 		virtual void OnUpdate() = 0;
+		virtual void Close() = 0;
 
 		virtual uint GetW() const = 0;
 		virtual uint GetH() const = 0;
 		virtual std::string GetName() const = 0;
 
-		virtual void SetEventCallback(const EventCallback& callback) = 0;
+		virtual void SetEventCallback(const std::function<void(Event&)>& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync()const = 0;
 

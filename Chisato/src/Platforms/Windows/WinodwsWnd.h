@@ -1,6 +1,7 @@
 #pragma once
 #include"ChisatoCore/Window.h"
 #include"ChisatoCore/Log.h"
+#include"ChisatoCore/Events/EventCore.h"
 #include"GLFW/glfw3.h"
 
 namespace Chisato {
@@ -11,13 +12,15 @@ namespace Chisato {
 
 		struct WndData : WndProps {
 			bool VSync;
-			EventCallback callback;
+			std::function<void(Event&)> callback;
 		} data;
+
 	public:
 		Wnd_Windows(const WndProps& props);
 		virtual ~Wnd_Windows();
 
 		void OnUpdate() override;
+		void Close()override;
 
 		inline uint GetW()const override { return data.size.first; }
 		inline uint GetH()const override { return data.size.second; }
@@ -25,14 +28,16 @@ namespace Chisato {
 			return std::format("{} Window({},{}), form Windows ", data.title, GetW(), GetH());
 		}
 
-		inline void SetEventCallback(const EventCallback& _callback) override { data.callback = _callback; }
+		inline void SetEventCallback(const std::function<void(Event&)>& _callback) override { data.callback = _callback; }
 
-		void SetVSync(bool enabled);
-		bool IsVSync()const;
+		inline void SetVSync(bool enabled) {
+			if (enabled) glfwSwapInterval(1);
+			else glfwSwapInterval(0);
+			data.VSync = enabled;
+		}
+		inline bool IsVSync()const { return data.VSync; }
 
 	private:
 		virtual void Init(const WndProps& props);
-		virtual void Close();
-
 	};
 }

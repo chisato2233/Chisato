@@ -21,30 +21,55 @@ namespace Chisato {
 			s_GLFWInitialized = true;
 		}
 		wnd = glfwCreateWindow((int)data.size.first, (int)data.size.second, data.title.c_str(), nullptr, nullptr);
+		
 		glfwMakeContextCurrent(wnd);
 		glfwSetWindowUserPointer(wnd, &data);
 		SetVSync(true);
 
+		//Set GLFW Event Call Back
+		glfwSetErrorCallback([](int code, const char* description) {Log::Engine::Error("GLFW Error: {}, (code: {})", description, code); });
+
+		glfwSetWindowSizeCallback(
+			wnd, 
+			[](GLFWwindow* wnd, int w, int h) {
+				auto data = *(WndData*)glfwGetWindowUserPointer(wnd);
+				data.size = { w,h };
+
+				WindowResizeEvent e(w, h);
+				data.callback(e);
+
+			}
+		);
+
+		glfwSetWindowCloseCallback(
+			wnd,
+			[](GLFWwindow* wnd) {
+				auto data = *(WndData*)glfwGetWindowUserPointer(wnd);
+
+				WindowCloseEvent e;
+				data.callback(e);
+				
+			}
+		);
+
+		glfwSetMouseButtonCallback(
+			wnd,
+			[](GLFWwindow* wnd, int button, int action, int mods) {
+				auto data = *(WndData*)glfwGetWindowUserPointer(wnd);
+
+				switch (action) {
+				case GLFW_PRESS:
+					MouseDownEvent e(); break;
+				}
+			}
+		);
 	}
 
-	void Wnd_Windows::Close() {
-		glfwDestroyWindow(wnd);
-	}
+	void Wnd_Windows::Close() { glfwDestroyWindow(wnd); }
 
 	void Wnd_Windows::OnUpdate() {
 		glfwPollEvents();
 		glfwSwapBuffers(wnd);
 
-	}
-
-
-	void Wnd_Windows::SetVSync(bool enabled) {
-		if (enabled) glfwSwapInterval(1);
-		else glfwSwapInterval(0);
-		data.VSync = enabled;
-	}
-
-	bool Wnd_Windows::IsVSync()const {
-		return data.VSync;
 	}
 }

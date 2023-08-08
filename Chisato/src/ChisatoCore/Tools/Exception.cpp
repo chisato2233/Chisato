@@ -5,6 +5,7 @@ std::string ChisatoException::GetType() const noexcept{ return "Unkown Exception
 
 void ChisatoException::GetWhat() noexcept{
 	whatr = std::format(
+		"\nException!"
 		"[Type]: {}\n"
 		"[Information]: none\n {}",
 		GetType(),

@@ -12,6 +12,7 @@
 #include<ranges>
 #include<functional>
 #include<format>
+#include<concepts>
 
 
 #include<string>
@@ -25,3 +26,4 @@
 #include<sstream>
 
 #include"ChisatoCore/Log.h"
+#include"ChisatoCore/Tools/Exception.h"

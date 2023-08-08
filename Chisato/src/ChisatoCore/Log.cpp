@@ -6,13 +6,29 @@ namespace Chisato::Log {
 
 
 	void Init() {
-		spdlog::set_pattern("%^ >>>>>[%n][%T]<<<<< \n%v\n %$");
+		spdlog::set_pattern("%^ [%n][%T]>>>>>    %v %$");
 
-		Engine::p_logger = spdlog::stdout_color_mt("Application");
-		Engine::p_logger->set_level(spdlog::level::trace);
+		Engine::Get() = spdlog::stdout_color_mt("Application");
+		Engine::Get()->set_level(spdlog::level::trace);
 
-		Cosole::p_logger = spdlog::stdout_color_mt("Chisato Core");
-		Cosole::p_logger->set_level(spdlog::level::trace);
+		Cosole::Get() = spdlog::stdout_color_mt("Chisato Core");
+		Cosole::Get()->set_level(spdlog::level::trace);
 	}
 
 }
+
+namespace Chisato::newLog {
+	CoreLog coreLog;
+	AppLog appLog;
+
+	void Init() {
+		spdlog::set_pattern("%^ [%n][%T]>>>>>    %v %$");
+
+		coreLog.plogger = spdlog::stdout_color_mt("Chisato Core");
+		appLog.plogger = spdlog::stdout_color_mt("Application");
+
+		coreLog.plogger->set_level(spdlog::level::trace);
+		appLog.plogger->set_level(spdlog::level::trace);
+	}
+}
+

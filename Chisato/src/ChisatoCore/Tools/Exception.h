@@ -1,5 +1,5 @@
 #pragma once
-#include"Core.h"
+#include"../Core.h"
 
 class ChisatoException :std::exception {
 private:
@@ -23,7 +23,7 @@ public:
 	std::string GetOriginal() noexcept;
 };
 
-class CSTAPI MyException : public ChisatoException {
+class MyException : public ChisatoException {
 private:
 	std::string information;
 

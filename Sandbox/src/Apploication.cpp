@@ -3,9 +3,8 @@
 
 class Sanbox :public Chisato::App {
 public:
-	Sanbox(){}
+	Sanbox() {}
 	~Sanbox(){}
 };
 
-Chisato::App* Chisato::CreateApplication() 
-	{ return new Sanbox{ }; }
+Chisato::App* Chisato::Create() { return new Sanbox{ }; }

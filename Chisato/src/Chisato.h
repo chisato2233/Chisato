@@ -8,8 +8,8 @@
 #ifdef CST_PLATFORM_WINDOWS
 
 int main(int argc, char** argv) {
-	auto app = Chisato::CreateApplication();
-	app->AppMain();
+	auto app = Chisato::Create();
+	app->Main();
 }
 
 #endif
