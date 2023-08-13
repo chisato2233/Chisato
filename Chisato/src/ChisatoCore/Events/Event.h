@@ -4,7 +4,7 @@
 #include"ChisatoCore//Tools/Singleton.h"
 
 
-namespace Chisato{
+namespace Chisato {
 
 	namespace Tag {
 		enum {
@@ -20,48 +20,53 @@ namespace Chisato{
 
 	class CSTAPI Event {
 		friend class EventManger;
+
 	protected:
 		int tag;
 	public:
+		bool isActive = true; //记录事件是否可用
 
 		Event(int _tag = Tag::None)
-			:tag(_tag){ }
+			:tag(_tag) { }
 		virtual ~Event() = default;
 
 		int GetTag()const noexcept { return tag; }
-		inline bool IsTag(int _tag) { return GetTag() & _tag; }
+		bool IsTag(int _tag) const { return GetTag() & _tag; }
 
 		virtual std::string GetName()const noexcept = 0;
-	
-		operator std::string() { return GetName(); }
 	};
 
-	template<typename Ty>
-	concept cpt_Event = std::is_base_of_v<Event, Ty>;
 
-	template<cpt_Event T_Event>
-	class EventSpace :Singleton<EventSpace<T_Event> > {
-		friend class Event;
-	private:
-		std::vector<std::function<void(T_Event*)>> funcPool;
-	public:
-		inline void operator+= (std::function<void(T_Event*)> fun) { funcPool.push_back(fun); }
+	template<typename Ty> concept cpt_Event = std::is_base_of_v<Event, Ty>;
+
+	template<std::derived_from<Event> T_Event>
+	struct Dispatch {
+		static auto& get() { static std::vector<std::function<void()> > funcs; return funcs; }
+		Dispatch(Event& e, std::function<void(T_Event&)> f) {
+			auto p = dynamic_cast<T_Event*>(&e);
+			if (p) {
+				Log::Application::Error("ll");
+				get().push_back(std::bind(f, *p));
+			}
+		}
+		void operator()()const { for (auto& i : get()) i(); }
 	};
 
 
 	class CSTAPI EventManger {
-	public:
-		EventManger(Event& _event):event(_event){ }
-		template<typename T>
-		bool Dispatch(std::function<bool(T&)> func) {
-			T* pevent = dynamic_cast<T*>(&event);
-			if (pevent) {
-				return func(*pevent);
-			}
-			else return false;
-		}
-	private:
 		Event& event;
+	public:
+
+		EventManger(Event& _event):event(_event){ }
+
+		template<cpt_Event T> bool Dispatch(std::function<bool(T&)> func) {
+			T* p_event = dynamic_cast<T*>(&event);
+			if (p_event&&p_event->isActive) {
+				return func(*p_event);
+			}
+			return false;
+		}
+
 	};
 
 	

@@ -8,10 +8,8 @@ namespace Chisato {
 	struct WndProps {
 		std::string title;
 		std::pair<uint,uint> size;
-		WndProps(const std::string& _title = "Chisato Engine", std::pair<uint, uint> _size = { 1280,720 }):
-			title{_title},size{_size} { 
-			
-		}
+		WndProps(std::string&& title = "Chisato Engine", std::pair<uint, uint> size = { 1280,720 }):
+			title{title},size{size} { }
 	};
 
 	class CSTAPI Window {
@@ -20,7 +18,6 @@ namespace Chisato {
 		virtual ~Window(){ }
 
 		virtual void OnUpdate() = 0;
-		virtual void Close() = 0;
 
 		virtual uint GetW() const = 0;
 		virtual uint GetH() const = 0;
@@ -30,7 +27,7 @@ namespace Chisato {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync()const = 0;
 
-		static Window* Creat(const WndProps& props = WndProps{});
+		static Window* Create(const WndProps& props = WndProps{});
 	};
 
 }

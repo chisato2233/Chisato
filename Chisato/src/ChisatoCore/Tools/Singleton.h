@@ -1,7 +1,7 @@
 
 namespace Chisato {
 	template<typename T>
-	class Singleton {
+	struct Singleton {
 	protected:
 		static std::unique_ptr<T> handle;
 		

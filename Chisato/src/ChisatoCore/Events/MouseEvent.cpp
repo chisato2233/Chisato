@@ -2,20 +2,20 @@
 
 namespace Chisato {
 	std::string MouseMoveEvent::GetName()const noexcept {
-		return std::format("[Event] Mouse ({}, {})", GetX(), GetY());
+		return std::format("[Event]: Mouse ({}, {})", GetX(), GetY());
 	}
 
 	std::string MouseDownEvent::GetName()const noexcept {
-		return std::format("[Event] Mouse Down ({})", button);
+		return std::format("[Event]: Mouse Down ({})", button);
 	}
 
 
 	std::string MouseHoldEvent::GetName() const noexcept {
-		return std::format("[Event] Mouse Hold ({}, cnt:{})", button, GetCount());
+		return std::format("[Event]: Mouse Hold ({}, cnt:{})", button, GetCount());
 	}
 
 	std::string MouseUpEvent::GetName() const noexcept {
-		return std::format("[Event] Mouse Up ({})", button);
+		return std::format("[Event]: Mouse Up ({})", button);
 	}
 
 	template<typename e>

@@ -77,6 +77,8 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\ChisatoCore\Layer.h" />
+    <ClInclude Include="src\ChisatoCore\LayerStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\App.cpp">

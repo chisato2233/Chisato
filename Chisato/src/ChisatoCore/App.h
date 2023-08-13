@@ -2,26 +2,30 @@
 
 //Í³Ò»µÄ¿â
 #include"Core.h"
-#include"Events/EventCore.h"
-#include"NewEvent/Event.h"
-#include"Log.h"
 #include"Window.h"
-#include"GLFW/glfw3.h"
+#include"Events/EventCore.h"
+#include"LayerStack.h"
 
 
 
 namespace Chisato {
 	
-	class CSTAPI App{
+	class CSTAPI App {
+		std::unique_ptr<Window> wnd;
+		bool isRunning = true;
+
+	protected:
+		LayerStack layerStack;
 	public:
+
 		App();
 		virtual ~App();
 
 		void Main();
 		void OnEvent(Event&);
-	private:
-		std::unique_ptr<Window> wnd;
-		bool isRuning = true;
+
+
+	
 	};
 
 	App* Create();

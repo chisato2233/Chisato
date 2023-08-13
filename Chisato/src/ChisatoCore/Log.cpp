@@ -2,17 +2,17 @@
 
 namespace Chisato::Log {
 	std::shared_ptr<spdlog::logger> Engine::p_logger;
-	std::shared_ptr<spdlog::logger> Cosole::p_logger;
+	std::shared_ptr<spdlog::logger> Application::p_logger;
 
 
 	void Init() {
 		spdlog::set_pattern("%^ [%n][%T]>>>>>    %v %$");
 
-		Engine::Get() = spdlog::stdout_color_mt("Application");
+		Engine::Get() = spdlog::stdout_color_mt("Engine");
 		Engine::Get()->set_level(spdlog::level::trace);
 
-		Cosole::Get() = spdlog::stdout_color_mt("Chisato Core");
-		Cosole::Get()->set_level(spdlog::level::trace);
+		Application::Get() = spdlog::stdout_color_mt("Application");
+		Application::Get()->set_level(spdlog::level::trace);
 	}
 
 }

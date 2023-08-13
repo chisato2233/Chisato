@@ -20,7 +20,7 @@ namespace Chisato{
 	private:
 		std::pair<float, float> pos;
 	public:
-		MouseMoveEvent(std::pair<float,float> _pos) : MouseEvent() { }
+		MouseMoveEvent(std::pair<float, float> _pos) : pos{_pos},MouseEvent() { }
 
 		float GetX()const noexcept { return pos.first; }
 		float GetY() const noexcept { return pos.second; }

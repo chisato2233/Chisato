@@ -163,6 +163,8 @@
     <ClInclude Include="src\ChisatoCore\Events\EventCore.h" />
     <ClInclude Include="src\ChisatoCore\Events\KeyEvent.h" />
     <ClInclude Include="src\ChisatoCore\Events\MouseEvent.h" />
+    <ClInclude Include="src\ChisatoCore\Layer.h" />
+    <ClInclude Include="src\ChisatoCore\LayerStack.h" />
     <ClInclude Include="src\ChisatoCore\Log.h" />
     <ClInclude Include="src\ChisatoCore\Main.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\Action.h" />

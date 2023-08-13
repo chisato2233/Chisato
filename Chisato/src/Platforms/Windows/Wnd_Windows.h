@@ -6,8 +6,8 @@
 
 namespace Chisato {
 
+	
 	class Wnd_Windows :public Window {
-	private:
 		GLFWwindow* wnd;
 
 		struct WndData : WndProps {
@@ -17,27 +17,22 @@ namespace Chisato {
 
 	public:
 		Wnd_Windows(const WndProps& props);
-		virtual ~Wnd_Windows();
+		~Wnd_Windows() override;
 
 		void OnUpdate() override;
-		void Close()override;
 
-		inline uint GetW()const override { return data.size.first; }
-		inline uint GetH()const override { return data.size.second; }
-		inline std::string GetName()const override {
-			return std::format("{} Window({},{}), form Windows ", data.title, GetW(), GetH());
-		}
+		uint GetW()const override;
+		uint GetH()const override;
 
-		inline void SetEventCallback(const std::function<void(Event&)>& _callback) override { data.callback = _callback; }
+		std::string GetName()const override;
 
-		inline void SetVSync(bool enabled) {
-			if (enabled) glfwSwapInterval(1);
-			else glfwSwapInterval(0);
-			data.VSync = enabled;
-		}
-		inline bool IsVSync()const { return data.VSync; }
+		void SetEventCallback(const std::function<void(Event&)>& _callback) override;
+
+		void SetVSync(bool enabled) override;
+
+		bool IsVSync()const override;
 
 	private:
-		virtual void Init(const WndProps& props);
+		void Init(const WndProps& props);
 	};
 }
