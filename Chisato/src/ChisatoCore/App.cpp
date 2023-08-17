@@ -1,16 +1,15 @@
-#include "App.h"
+﻿#include "App.h"
 #include"GLFW/glfw3.h"
 #include"Log.h"
 
 namespace Chisato {
 	App::App(){
-		Log::Init();
+		using namespace Debug;
+		Init();
 		
 		wnd = std::unique_ptr<Window>(Window::Create());
 		wnd->SetEventCallback([this](Event& PH1) { OnEvent((PH1)); });
-
-		Log::Engine::Info("Initialized success");
-		
+		Log<Engine>::Info("Initialize app success!");
 	}
 	App::~App() = default;
 
@@ -26,14 +25,19 @@ namespace Chisato {
 	}
 
 	void App::OnEvent(Event& e) {
-		Log::Engine::Trace(e.GetName());
+		using namespace Debug;
 
-		for (const auto& i : layerStack) {
-			i->OnEvent(e);
-			if (!e.isActive) break;
+		for (auto i = layerStack.end(); i != layerStack.begin();) {
+			(**--i).OnEvent(&e);
+			if (!e.isActive) return;
 		}
 
+		
+
 		EventManger m(e);
-		m.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& e) {isRunning = false; return true; });
+		//m.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& e) {isRunning = false; return true; });
+		Dispatch<WindowResizeEvent>{e, [this](auto& e) {isRunning = false; }}();
+		if (e.isActive) Log<Engine>::Trace(e.GetName());
 	}
+
 }

@@ -40,12 +40,12 @@ namespace Chisato {
 	template<typename Ty> concept cpt_Event = std::is_base_of_v<Event, Ty>;
 
 	template<std::derived_from<Event> T_Event>
-	struct Dispatch {
+	struct CSTAPI Dispatch {
+		
 		static auto& get() { static std::vector<std::function<void()> > funcs; return funcs; }
 		Dispatch(Event& e, std::function<void(T_Event&)> f) {
 			auto p = dynamic_cast<T_Event*>(&e);
 			if (p) {
-				Log::Application::Error("ll");
 				get().push_back(std::bind(f, *p));
 			}
 		}
@@ -56,17 +56,12 @@ namespace Chisato {
 	class CSTAPI EventManger {
 		Event& event;
 	public:
-
 		EventManger(Event& _event):event(_event){ }
-
 		template<cpt_Event T> bool Dispatch(std::function<bool(T&)> func) {
 			T* p_event = dynamic_cast<T*>(&event);
-			if (p_event&&p_event->isActive) {
-				return func(*p_event);
-			}
+			if (p_event&&p_event->isActive) return func(*p_event);
 			return false;
 		}
-
 	};
 
 	

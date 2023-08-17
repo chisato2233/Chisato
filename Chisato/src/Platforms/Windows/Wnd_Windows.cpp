@@ -15,7 +15,7 @@ namespace Chisato {
 	Wnd_Windows::~Wnd_Windows() { glfwDestroyWindow(wnd); }
 	
 	void Wnd_Windows::Init(const WndProps& props)  {
-		Log::Funcs<Log::Engine>::Trace("Create {}", GetName());
+		//Log::Funcs<Log::Engine>::Trace("Create {}", GetName());
 
 		if (!s_GLFWInitialized) {
 			int s = glfwInit();
@@ -31,7 +31,7 @@ namespace Chisato {
 
 		//Set GLFW Event Call Back
 		glfwSetErrorCallback([](int code, const char* description) mutable{
-			Log::Engine::Error(std::format("GLFW Error ({2}): {1}", description, code));
+			Debug::Log<Debug::Engine>::Error("GLFW Error ({1}): {0}", description, code);
 		});
 
 		glfwSetWindowSizeCallback(wnd, [](GLFWwindow* wnd, int w, int h) {

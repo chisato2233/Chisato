@@ -17,10 +17,9 @@ namespace Chisato{
 
 
 	class CSTAPI MouseMoveEvent :public MouseEvent {
-	private:
 		std::pair<float, float> pos;
 	public:
-		MouseMoveEvent(std::pair<float, float> _pos) : pos{_pos},MouseEvent() { }
+		MouseMoveEvent(std::pair<float, float> _pos) : pos{_pos}{ }
 
 		float GetX()const noexcept { return pos.first; }
 		float GetY() const noexcept { return pos.second; }
@@ -40,7 +39,7 @@ namespace Chisato{
 			MouseEvent(Tag::Input|Tag::Mouse|Tag::MouseButton),
 			button{ _b } { }
 		
-		virtual std::string GetName()const noexcept override;
+		std::string GetName()const noexcept override;
 	};
 
 

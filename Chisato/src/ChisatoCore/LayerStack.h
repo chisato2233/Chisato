@@ -4,7 +4,7 @@
 namespace Chisato {
 	class CSTAPI LayerStack {
 		std::vector<std::shared_ptr<Layer>> layerVec;
-		std::vector<std::shared_ptr<Layer>>::iterator stackTop;
+		std::vector<std::shared_ptr<Layer>>::iterator stackTop=layerVec.begin();
 
 	public:
 		auto begin() { return layerVec.begin(); }
