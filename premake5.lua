@@ -16,10 +16,11 @@ workspace "Chisato"
 	IncludeDir={}
 	IncludeDir["GLFW"]="Chisato/packages/GLFW/include"
 	IncludeDir["spdlog"]="Chisato/packages/spdlog/include"
+	IncludeDir["GLAD"]="Chisato/packages/GLAD/include"
 
 	--引入GLFW的premake文件
 	include "Chisato/packages/GLFW"
-
+	include "Chisato/packages/GLAD"
 
 	--工程：chisato
 	project"Chisato"
@@ -45,13 +46,15 @@ workspace "Chisato"
 		includedirs{
 			"%{prj.name}/src",
 			"%{IncludeDir.spdlog}",
-			"%{IncludeDir.GLFW}"
+			"%{IncludeDir.GLFW}",
+			"%{IncludeDir.GLAD}"
 		}
 		
 		links{
 			"GLFW",
 			"opengl32.lib",
-			"dwmapi.lib"
+			"dwmapi.lib",
+			"GLAD", 
 		}
 
 		-- windows版本
@@ -62,7 +65,8 @@ workspace "Chisato"
 
 			defines{
 				"CST_PLATFORM_WINDOWS",
-				"CST_BUILD_DLL"
+				"CST_BUILD_DLL",
+				"GLFW_INCLUDE_NONE",
 			}
 
 			postbuildcommands{
@@ -74,17 +78,20 @@ workspace "Chisato"
 			defines "CST_DEBUGS"
 			symbols "On"
 			runtime "Debug"
+			staticruntime "off"
 			
 		--Release版本	
 		filter "configurations:Release"
 			defines "CST_RELEASE"
 			optimize "On"
-			runtime "Release"	
+			runtime "Release"
+			staticruntime "off"	
 		
 		-- Dist版本	
 		filter "configurations:Dist"
 			defines "CST_DIST"
 			optimize "On"
+			staticruntime "off"
 
 	
 	project "Sandbox"
@@ -101,18 +108,20 @@ workspace "Chisato"
 		}
 
 		includedirs{
-			"Chisato/packages/spdlog/include",
-			"Chisato/packages/GLFW/include",
-			"Chisato/src"
+			"Chisato/src",
+			"%{IncludeDir.spdlog}",
+			"%{IncludeDir.GLFW}",
+			"%{IncludeDir.GLAD}",
 		}
 
 		links{
-			"Chisato"
+			"Chisato",
+			"GLAD",
 		}
 
 		filter"system:windows"
 			cppdialect "C++20"
-			staticruntime "On"
+			
 			systemversion "latest"
 
 			defines{
@@ -122,14 +131,14 @@ workspace "Chisato"
 		filter "configurations:Debug"
 			defines "CST_DEBUGS"
 			symbols "On"
-			staticruntime "On"
+			staticruntime "off"
 			
 		filter "configurations:Release"
 			defines "CST_RELEASE"
 			optimize "On"
-			staticruntime "On"	
+			staticruntime "off"
 			
 		filter "configurations:Dist"
 			defines "CST_DIST"
 			optimize "On"
-			staticruntime "On"	
+			staticruntime "off"

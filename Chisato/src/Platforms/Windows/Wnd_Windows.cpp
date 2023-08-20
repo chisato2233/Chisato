@@ -9,13 +9,6 @@ namespace Chisato {
 	Wnd_Windows::Wnd_Windows(const WndProps& props) :
 		data{props} 
 	{
-		Init(props);
-	}
-
-	Wnd_Windows::~Wnd_Windows() { glfwDestroyWindow(wnd); }
-	
-	void Wnd_Windows::Init(const WndProps& props)  {
-		//Log::Funcs<Log::Engine>::Trace("Create {}", GetName());
 
 		if (!s_GLFWInitialized) {
 			int s = glfwInit();
@@ -24,13 +17,16 @@ namespace Chisato {
 		}
 
 		wnd = glfwCreateWindow(static_cast<int>(data.size.first), static_cast<int>(data.size.second), data.title.c_str(), nullptr, nullptr);
-		
 		glfwMakeContextCurrent(wnd);
+
+		int _ = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+		CST_ASSERT(_, "Could not initialize GLAD!!");
+
 		glfwSetWindowUserPointer(wnd, &data);
 		SetVSync(true);
 
 		//Set GLFW Event Call Back
-		glfwSetErrorCallback([](int code, const char* description) mutable{
+		glfwSetErrorCallback([](int code, const char* description) mutable {
 			Debug::Log<Debug::Engine>::Error("GLFW Error ({1}): {0}", description, code);
 		});
 
@@ -48,11 +44,89 @@ namespace Chisato {
 
 			WindowCloseEvent e;
 			data.callback(e);
-				
+
 		});
 
 		glfwSetMouseButtonCallback(wnd, [](GLFWwindow* wnd, int button, int action, int mods) {
 			auto data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
+			switch (action) {
+			case GLFW_PRESS: {
+				MouseDownEvent e{ button };
+				data.callback(e);
+				break;
+			}
+			case GLFW_REPEAT: {
+				MouseHoldEvent e{ button,mods };
+				data.callback(e);
+				break;
+			}
+			case GLFW_RELEASE: {
+				MouseUpEvent e{ button };
+				data.callback(e);
+				break;
+			}
+			}
+		});
+
+		glfwSetCursorPosCallback(wnd, [](GLFWwindow* wnd, double x, double y) {
+			auto& data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
+			MouseMoveEvent e({ static_cast<float>(x),static_cast<float>(y) });
+			data.callback(e);
+		});
+
+		glfwSetScrollCallback(wnd, [](GLFWwindow* wnd, double x, double y) {
+			auto data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
+			MouseScrollEvent e{ {static_cast<float>(x),static_cast<float>(y)} };
+			data.callback(e);
+		});
+	}
+
+	Wnd_Windows::~Wnd_Windows() { glfwDestroyWindow(wnd); }
+	
+	void Wnd_Windows::Init(const WndProps& props)  {
+		//Log::Funcs<Log::Engine>::Trace("Create {}", GetName());
+
+		if (!s_GLFWInitialized) {
+			int s = glfwInit();
+			CST_ASSERT(s, "Could not initialize GLFW!!");
+			s_GLFWInitialized = true;
+		}
+
+		wnd = glfwCreateWindow(static_cast<int>(data.size.first), static_cast<int>(data.size.second), data.title.c_str(), nullptr, nullptr);
+		
+		glfwMakeContextCurrent(wnd);
+
+		int _ = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+		CST_ASSERT(_ , "Could not initialize GLAD!!");
+
+		glfwSetWindowUserPointer(wnd, &data);
+		SetVSync(true);
+
+		//Set GLFW Event Call Back
+		glfwSetErrorCallback([](int code, const char* description) mutable{
+			Debug::Log<Debug::Engine>::Error("GLFW Error ({1}): {0}", description, code);
+		});
+		
+		glfwSetWindowSizeCallback(wnd, [](GLFWwindow* wnd, int w, int h) {
+			auto& data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
+			data.size = { w,h };
+			Debug::Log<Debug::Engine>::Error("in it");
+
+			WindowResizeEvent e(w, h);
+			data.callback(e);
+
+		});
+
+		glfwSetWindowCloseCallback(wnd, [](GLFWwindow* wnd) {
+			auto& data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
+			Debug::Log<Debug::Engine>::Error("in it");
+			WindowCloseEvent e;
+			data.callback(e);
+				
+		});
+
+		glfwSetMouseButtonCallback(wnd, [](GLFWwindow* wnd, int button, int action, int mods) {
+			auto& data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
 			switch (action) {
 				case GLFW_PRESS: {
 					MouseDownEvent e{button}; 
@@ -73,13 +147,13 @@ namespace Chisato {
 		});
 
 		glfwSetCursorPosCallback(wnd, [](GLFWwindow* wnd, double x, double y) {
-			auto data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
+			auto& data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
 			MouseMoveEvent e({ static_cast<float>(x),static_cast<float>(y) });
 			data.callback(e);
 		});
 
 		glfwSetScrollCallback(wnd, [](GLFWwindow* wnd, double x, double y) {
-			auto data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
+			auto& data = *static_cast<WndData*>(glfwGetWindowUserPointer(wnd));
 			MouseScrollEvent e{ {static_cast<float>(x),static_cast<float>(y)} };
 			data.callback(e);
 		});

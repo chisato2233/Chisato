@@ -2,6 +2,7 @@
 
 #ifdef CST_PLATFORM_WINDOWS
 	#include<Windows.h>
+#include<winrt/windows.ai.machinelearning.h>
 #endif 
 
 

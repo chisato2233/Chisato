@@ -41,15 +41,24 @@ namespace Chisato {
 
 	template<std::derived_from<Event> T_Event>
 	struct CSTAPI Dispatch {
-		
-		static auto& get() { static std::vector<std::function<void()> > funcs; return funcs; }
-		Dispatch(Event& e, std::function<void(T_Event&)> f) {
-			auto p = dynamic_cast<T_Event*>(&e);
-			if (p) {
-				get().push_back(std::bind(f, *p));
+		using eventFuncVec = std::vector<std::function<void(T_Event&)> >;
+		static std::unique_ptr<eventFuncVec> p_funcs;
+
+		static auto& get() {
+			if (!p_funcs) p_funcs = std::make_unique<eventFuncVec>();
+			return *p_funcs;
+		}
+
+		auto& operator+=(std::function<void(T_Event&)> f) {
+			get().push_back(f);
+			return *this;
+		}
+
+		void operator()(Event& e) {
+			if(T_Event* p=dynamic_cast<T_Event*>(&e)) {
+				for (auto f : get()) f(*p);
 			}
 		}
-		void operator()()const { for (auto& i : get()) i(); }
 	};
 
 

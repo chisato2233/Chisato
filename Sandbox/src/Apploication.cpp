@@ -1,15 +1,15 @@
 #include<Chisato.h>
 #include"ChisatoCore/Log.h"
+
 using namespace Chisato;
 struct ExampleLayer : Layer {
 
 	ExampleLayer():Layer("Example") {}
 
-	void OnEvent( Event* event) override {
-		//event.GetName();
-		//event->isActive = false;
-		//Chisato::Log::Application::Trace(event->GetName());
-		Debug::Log<Debug::Engine>::Trace(event->GetName());
+	void OnEvent( Event& event) override {
+		////event.GetName();
+		//event.isActive = false;
+		//Debug::Log<Debug::Engine>::Trace(event.GetName());
 	}
 	
 

@@ -1,5 +1,5 @@
 ﻿#include "App.h"
-#include"GLFW/glfw3.h"
+#include <glad/glad.h>
 #include"Log.h"
 
 namespace Chisato {
@@ -28,15 +28,13 @@ namespace Chisato {
 		using namespace Debug;
 
 		for (auto i = layerStack.end(); i != layerStack.begin();) {
-			(**--i).OnEvent(&e);
-			if (!e.isActive) return;
+			(**--i).OnEvent(e);
+			if (!e.isActive) break;
 		}
 
-		
-
 		EventManger m(e);
-		//m.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& e) {isRunning = false; return true; });
-		Dispatch<WindowResizeEvent>{e, [this](auto& e) {isRunning = false; }}();
+		m.Dispatch<WindowCloseEvent>([this](WindowCloseEvent& e) {isRunning = false; return true; });
+		
 		if (e.isActive) Log<Engine>::Trace(e.GetName());
 	}
 

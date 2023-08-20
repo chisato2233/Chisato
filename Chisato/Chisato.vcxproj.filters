@@ -43,6 +43,12 @@
     <ClInclude Include="src\ChisatoCore\Events\MouseEvent.h">
       <Filter>ChisatoCore\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layer.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\LayerStack.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Log.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
@@ -77,8 +83,6 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\ChisatoCore\Layer.h" />
-    <ClInclude Include="src\ChisatoCore\LayerStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\App.cpp">
