@@ -4,3 +4,6 @@
 [submodule "Chisato/packages/GLFW"]
 	path = Chisato/packages/GLFW
 	url = https://github.com/thecherno/glfw
+[submodule "Chisato/packages/Imgui"]
+	path = Chisato/packages/Imgui
+	url = https://github.com/TheCherno/imgui.git
