@@ -79,8 +79,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;CST_DEBUGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_DEBUGS;CST_ASSERT_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -103,8 +103,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -131,8 +131,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -160,21 +160,27 @@
     <ClInclude Include="src\ChisatoCore\Core.h" />
     <ClInclude Include="src\ChisatoCore\Events\AppEvent.h" />
     <ClInclude Include="src\ChisatoCore\Events\Event.h" />
-    <ClInclude Include="src\ChisatoCore\Events\EventCore.h" />
+    <ClInclude Include="src\ChisatoCore\Events\EventLib.h" />
     <ClInclude Include="src\ChisatoCore\Events\KeyEvent.h" />
     <ClInclude Include="src\ChisatoCore\Events\MouseEvent.h" />
-    <ClInclude Include="src\ChisatoCore\Layer.h" />
-    <ClInclude Include="src\ChisatoCore\LayerStack.h" />
-    <ClInclude Include="src\ChisatoCore\Log.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\ImGuiLayer.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\Layer.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\LayerLib.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\LayerStack.h" />
     <ClInclude Include="src\ChisatoCore\Main.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\Action.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\Controlable.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\Event.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\Input.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h" />
+    <ClInclude Include="src\ChisatoCore\Tools\Log.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Object.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Singleton.h" />
+    <ClInclude Include="src\ChisatoCore\Tools\ToolLib.h" />
     <ClInclude Include="src\ChisatoCore\Window.h" />
+    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_glfw.h" />
+    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\Platforms\Windows\Wnd_Windows.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
@@ -183,9 +189,12 @@
     <ClCompile Include="src\ChisatoCore\Events\AppEvent.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\KeyEvent.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\MouseEvent.cpp" />
-    <ClCompile Include="src\ChisatoCore\Log.cpp" />
+    <ClCompile Include="src\ChisatoCore\Layers\ImGuiLayer.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp" />
+    <ClCompile Include="src\ChisatoCore\Tools\Log.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Object.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\Platforms\Windows\Wnd_Windows.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -197,6 +206,9 @@
     </ProjectReference>
     <ProjectReference Include="packages\GLAD\GLAD.vcxproj">
       <Project>{5D4A857C-4981-860D-F26D-6C10DE83020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="packages\ImGui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

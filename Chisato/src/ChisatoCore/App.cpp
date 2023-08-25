@@ -1,8 +1,10 @@
 ﻿#include "App.h"
-#include <glad/glad.h>
-#include"Log.h"
+
+
 
 namespace Chisato {
+	App* App::handle = nullptr;
+
 	App::App(){
 		using namespace Debug;
 		Init();
@@ -15,7 +17,7 @@ namespace Chisato {
 
 	void App::Main(){
 		while (isRunning) {
-			glClearColor(1, 0, 1, 1);
+			glClearColor(245/255.f, 212/255.f, 217/255.f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			for(auto& i:layerStack) i->OnUpdate();

@@ -4,6 +4,11 @@
 
 #include"ChisatoCore/App.h"
 
+#include<ChisatoCore/Core.h>
+#include<ChisatoCore/Events/EventLib.h>
+#include<ChisatoCore/Layers/LayerLib.h>
+#include<ChisatoCore/Tools/ToolLib.h>
+
 /*************************************Ö÷º¯Êý***********************************/
 #ifdef CST_PLATFORM_WINDOWS
 

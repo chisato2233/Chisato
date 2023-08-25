@@ -1,8 +1,6 @@
 #pragma once
 #include"ChisatoCore/Window.h"
-#include"ChisatoCore/Events/EventCore.h"
 #include"GLFW/glfw3.h"
-#include"glad/glad.h"
 
 namespace Chisato {
 

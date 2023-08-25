@@ -17,10 +17,12 @@ workspace "Chisato"
 	IncludeDir["GLFW"]="Chisato/packages/GLFW/include"
 	IncludeDir["spdlog"]="Chisato/packages/spdlog/include"
 	IncludeDir["GLAD"]="Chisato/packages/GLAD/include"
+	IncludeDir["ImGui"]="Chisato/packages/ImGui"
 
 	--引入GLFW的premake文件
 	include "Chisato/packages/GLFW"
 	include "Chisato/packages/GLAD"
+	include "Chisato/packages/ImGui"
 
 	--工程：chisato
 	project"Chisato"
@@ -47,7 +49,8 @@ workspace "Chisato"
 			"%{prj.name}/src",
 			"%{IncludeDir.spdlog}",
 			"%{IncludeDir.GLFW}",
-			"%{IncludeDir.GLAD}"
+			"%{IncludeDir.GLAD}",
+			"%{IncludeDir.ImGui}",
 		}
 		
 		links{
@@ -55,6 +58,7 @@ workspace "Chisato"
 			"opengl32.lib",
 			"dwmapi.lib",
 			"GLAD", 
+			"ImGui",
 		}
 
 		-- windows版本
@@ -67,6 +71,7 @@ workspace "Chisato"
 				"CST_PLATFORM_WINDOWS",
 				"CST_BUILD_DLL",
 				"GLFW_INCLUDE_NONE",
+				"IMGUI_IMPL_OPENGL_LOADER_CUSTOM",
 			}
 
 			postbuildcommands{
@@ -75,7 +80,10 @@ workspace "Chisato"
 		
 		-- Debug版本
 		filter "configurations:Debug"
-			defines "CST_DEBUGS"
+			defines {
+				"CST_DEBUGS",
+				"CST_ASSERT_ENABLE"
+			}
 			symbols "On"
 			runtime "Debug"
 			staticruntime "off"
@@ -112,11 +120,11 @@ workspace "Chisato"
 			"%{IncludeDir.spdlog}",
 			"%{IncludeDir.GLFW}",
 			"%{IncludeDir.GLAD}",
+			"%{IncludeDir.ImGui}",
 		}
 
 		links{
 			"Chisato",
-			"GLAD",
 		}
 
 		filter"system:windows"
@@ -125,7 +133,7 @@ workspace "Chisato"
 			systemversion "latest"
 
 			defines{
-				"CST_PLATFORM_WINDOWS"
+				"CST_PLATFORM_WINDOWS",
 			}
 
 		filter "configurations:Debug"

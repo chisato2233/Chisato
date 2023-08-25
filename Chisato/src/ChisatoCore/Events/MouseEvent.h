@@ -39,7 +39,9 @@ namespace Chisato{
 			MouseEvent(Tag::Input|Tag::Mouse|Tag::MouseButton),
 			button{ _b } { }
 		
+		int GetButton() const noexcept{ return button; }
 		std::string GetName()const noexcept override;
+
 	};
 
 
@@ -51,8 +53,7 @@ namespace Chisato{
 		MouseHoldEvent(int _b, int cnt) : MouseDownEvent(_b), repeatCount(cnt) { }
 
 		int GetCount() const noexcept { return repeatCount; }
-		
-		virtual std::string GetName()const noexcept override;
+		std::string GetName()const noexcept override;
 	};
 
 
@@ -60,19 +61,21 @@ namespace Chisato{
 	class CSTAPI MouseUpEvent :public MouseEvent {
 		int button;
 	public:
-		MouseUpEvent(int _b):
-			button{_b},
-			MouseEvent(Tag::Input | Tag::Mouse | Tag::MouseButton) { }
-
-		virtual std::string GetName()const noexcept override;
+		MouseUpEvent(int _b) :
+			button{ _b },
+			MouseEvent(Tag::Input | Tag::Mouse | Tag::MouseButton) {}
+			std::string GetName()const noexcept override;
 	};
 
 	class CSTAPI MouseScrollEvent :public MouseEvent {
 		std::pair<float, float> offset;
 	public:
 		MouseScrollEvent(std::pair<float, float> _offset) :offset{ _offset } { }
-		virtual std::string GetName()const noexcept override { 
+		
+		std::string GetName()const noexcept override { 
 			return std::format("[Event] Mouse Scroll ({}, {})", offset.first, offset.second); 
 		}
+		auto GetX()const noexcept { return offset.first; }
+		auto GetY()const noexcept { return offset.second; }
 	};
 }

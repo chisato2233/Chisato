@@ -3,7 +3,7 @@ namespace Chisato {
 	template<typename T>
 	struct Singleton {
 	protected:
-		static std::unique_ptr<T> handle;
+		static T* handle;
 		
 		Singleton() { }
 	
@@ -11,7 +11,7 @@ namespace Chisato {
 		Singleton(const Singleton&) = delete;
 		Singleton& operator=(const Singleton&) = delete;
 		
-		static T& Get() {
+		static T& get() {
 			if (!handle) handle = std::make_unique<T>();
 			return *handle;
 		}

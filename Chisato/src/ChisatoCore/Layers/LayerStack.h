@@ -1,5 +1,5 @@
 #pragma once
-#include"Layer.h"
+
 
 namespace Chisato {
 	class CSTAPI LayerStack {
@@ -11,8 +11,8 @@ namespace Chisato {
 		auto end() { return layerVec.end(); }
 
 
-		void push(const std::shared_ptr<Layer>& layer) { stackTop = layerVec.emplace(stackTop, layer); }
-		void push_over(const std::shared_ptr<Layer>& layer) { layerVec.emplace_back(layer); }
+		void push(const std::shared_ptr<Layer>& layer) { stackTop = layerVec.emplace(stackTop, layer), layer->OnAttach(); }
+		void push_over(const std::shared_ptr<Layer>& layer) { layerVec.emplace_back(layer), layer->OnAttach(); }
 
 		void pop() { layerVec.erase(stackTop--); }
 		void pop_over() {

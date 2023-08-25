@@ -1,6 +1,5 @@
 #pragma once
-#include"ChisatoCore/Core.h"
-#include"ChisatoCore//Events//Event.h"
+#include <pch.h>
 
 namespace Chisato {
 	using uint = unsigned int;

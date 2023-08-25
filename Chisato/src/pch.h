@@ -2,10 +2,9 @@
 
 #ifdef CST_PLATFORM_WINDOWS
 	#include<Windows.h>
-#include<winrt/windows.ai.machinelearning.h>
 #endif 
 
-
+//std
 #include<iostream>
 #include<memory>
 #include<utility>
@@ -15,7 +14,7 @@
 #include<format>
 #include<concepts>
 
-
+//stl
 #include<string>
 #include<vector>
 #include<map>
@@ -26,5 +25,14 @@
 #include<stack>
 #include<sstream>
 
-#include"ChisatoCore/Log.h"
-#include"ChisatoCore/Tools/Exception.h"
+//opengl
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <imgui.h>
+#include<Platforms/OPenGL/imgui_impl_opengl3.h>
+
+//my lib
+#include<ChisatoCore/Core.h>
+#include<ChisatoCore/Events/EventLib.h>
+#include<ChisatoCore/Layers/LayerLib.h>
+#include<ChisatoCore/Tools/ToolLib.h>

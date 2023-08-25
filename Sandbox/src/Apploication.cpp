@@ -1,7 +1,8 @@
 #include<Chisato.h>
-#include"ChisatoCore/Log.h"
+#include<ChisatoCore/Layers/LayerLib.h>
 
 using namespace Chisato;
+
 struct ExampleLayer : Layer {
 
 	ExampleLayer():Layer("Example") {}
@@ -20,10 +21,13 @@ struct ExampleLayer : Layer {
 };
 
 
-class Sandbox :public Chisato::App {
+class Sandbox : public App {
 public:
 	Sandbox() {
 		layerStack.push(std::make_shared<ExampleLayer>());
+		layerStack.push_over(std::make_shared<ImGuiLayer>());
+
+		handle = this;
 	}
 	~Sandbox()override = default;
 };
