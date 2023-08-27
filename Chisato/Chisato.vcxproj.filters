@@ -107,6 +107,8 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\ChisatoCore\input.h" />
+    <ClInclude Include="src\Platforms\platform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp">
@@ -137,5 +139,6 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\ChisatoCore\input.cpp" />
   </ItemGroup>
 </Project>

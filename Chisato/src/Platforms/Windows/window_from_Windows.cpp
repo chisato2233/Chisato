@@ -9,13 +9,13 @@ namespace cst {
 	window_from_Windows::window_from_Windows(const wnd_props& props) :
 		data_{props} 
 	{
-		Init(props);
+		init(props);
 	}
 
 	window_from_Windows::~window_from_Windows() { glfwDestroyWindow(wnd_ptr_); }
 
 	//init function
-	void window_from_Windows::Init(const wnd_props& props)  {
+	void window_from_Windows::init(const wnd_props& props)  {
 		if (!s_GLFWInitialized) {
 			int s = glfwInit();
 			CST_ASSERT(s, "Could not initialize GLFW!!");
@@ -42,7 +42,6 @@ namespace cst {
 			data.size = { w,h };
 			window_resize_event e(w, h);
 			data.callback(e);
-
 		});
 
 		glfwSetWindowCloseCallback(wnd_ptr_, [](GLFWwindow* wnd) {

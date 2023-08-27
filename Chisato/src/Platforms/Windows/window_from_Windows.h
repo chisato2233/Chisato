@@ -2,6 +2,7 @@
 #include"ChisatoCore/window.h"
 #include"GLFW/glfw3.h"
 
+
 namespace cst {
 
 	class CSTAPI window_from_Windows :public window {
@@ -35,6 +36,6 @@ namespace cst {
 
 
 	private:
-		void Init(const wnd_props& props);
+		void init(const wnd_props& props);
 	};
 }

@@ -51,8 +51,11 @@ namespace cst {
 			io.AddKeyEvent(ImGuiMod_Super,	wnd.get_key(GLFW_KEY_LEFT_SUPER)	|| wnd.get_key(GLFW_KEY_RIGHT_SUPER));
 		};
 		//App Event*******************************************************************
-		m.Dispatch<window_resize_event>([](auto&) {
-			
+		m.Dispatch<window_resize_event>([](auto& e) {
+			auto& io = ImGui::GetIO();
+			io.DisplaySize = ImVec2{ static_cast<float>(e.get_w()),static_cast<float>(e.get_h()) };
+			io.DisplayFramebufferScale = ImVec2(1.f, 1.f);
+			glViewport(0, 0, e.get_w(), e.get_h());
 			return false;
 		});
 

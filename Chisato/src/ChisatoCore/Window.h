@@ -1,5 +1,6 @@
 #pragma once
 #include <pch.h>
+#include <Platforms/platform.h>
 
 namespace cst {
 	using uint = unsigned int;

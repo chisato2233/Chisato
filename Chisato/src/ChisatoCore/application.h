@@ -26,7 +26,6 @@ namespace cst {
 		~application() = default;
 		void main();
 		void on_event(event&);
-
 		static auto& get() {
 			CST_ASSERT(handle_, "Application has not created yet")
 			return *handle_;
