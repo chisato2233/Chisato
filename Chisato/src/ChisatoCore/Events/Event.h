@@ -4,7 +4,7 @@
 #include"ChisatoCore//Tools/Singleton.h"
 
 
-namespace Chisato {
+namespace cst {
 
 	namespace Tag {
 		enum {
@@ -18,59 +18,48 @@ namespace Chisato {
 		};
 	}
 
-	class CSTAPI Event {
-		friend class EventManger;
+	class CSTAPI event {
+		friend struct event_manger;
 
 	protected:
-		int tag;
+		int tag_;
 	public:
-		bool isActive = true; //记录事件是否可用
+		bool is_active = true; //记录事件是否可用
 
-		Event(int _tag = Tag::None)
-			:tag(_tag) { }
-		virtual ~Event() = default;
+		event(int _tag = Tag::None)
+			:tag_(_tag) { }
+		virtual ~event() = default;
 
-		int GetTag()const noexcept { return tag; }
-		bool IsTag(int _tag) const { return GetTag() & _tag; }
+		int get_tag()const noexcept { return tag_; }
+		bool is_tag(int _tag) const { return get_tag() & _tag; }
 
-		virtual std::string GetName()const noexcept = 0;
+		virtual std::string get_name()const noexcept = 0;
 	};
 
 
-	template<typename Ty> concept cpt_Event = std::is_base_of_v<Event, Ty>;
+	template<typename Ty> concept cpt_Event = std::is_base_of_v<event, Ty>;
 
-	template<std::derived_from<Event> T_Event>
-	struct CSTAPI Dispatch {
-		using eventFuncVec = std::vector<std::function<void(T_Event&)> >;
-		static std::unique_ptr<eventFuncVec> p_funcs;
+	
+	template<std::derived_from<event> T>
+	struct CSTAPI event_dispatch {
+		std::function<void(T&)> func;
 
-		static auto& get() {
-			if (!p_funcs) p_funcs = std::make_unique<eventFuncVec>();
-			return *p_funcs;
-		}
-
-		auto& operator+=(std::function<void(T_Event&)> f) {
-			get().push_back(f);
-			return *this;
-		}
-
-		void operator()(Event& e) {
-			if(T_Event* p=dynamic_cast<T_Event*>(&e)) {
-				for (auto f : get()) f(*p);
-			}
+		template<class F> requires std::invocable<F,T&> event_dispatch(F&& f) : func{std::forward<F>(f)} { }
+		void operator()(event& e) {
+			if (T* p = dynamic_cast<T*>(&e)) return func(*p);
 		}
 	};
+	
+	
+	struct CSTAPI event_manger {
+		event_manger(event& _e):event_(_e){ }
 
-
-	class CSTAPI EventManger {
-		Event& event;
-	public:
-		EventManger(Event& _event):event(_event){ }
-		template<cpt_Event T> bool Dispatch(std::function<bool(T&)> func) {
-			T* p_event = dynamic_cast<T*>(&event);
-			if (p_event&&p_event->isActive) return func(*p_event);
-			return false;
+		template<std::derived_from<event> E, std::invocable<E&> F >
+		void Dispatch(F&& f) {
+			cst::event_dispatch<E>{std::forward<F>(f) }(event_);
 		}
+	private:
+		event& event_;
 	};
 
 }

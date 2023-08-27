@@ -1,21 +1,22 @@
 ﻿#pragma once
-#include"Layer.h"
+#include"layer.h"
+#include "ChisatoCore/application.h"
 
-namespace Chisato {
-    class CSTAPI App;
+namespace cst {
+    class CSTAPI application;
 
-	class CSTAPI ImGuiLayer : public Layer {
+	class CSTAPI ImGui_layer : public layer {
         float time = 0.f;
 	public:
-        ImGuiLayer();
+        ImGui_layer();
 
-		void OnAttach() override;
-		void OnUpdate() override;
-		void OnEvent(Event& event) override;
+		void on_attach() override;
+		void on_update() override;
+		void on_event(event& event) override;
 	};
 
 
-	static ImGuiKey Key_Translate_FromGLFWToImGui(int key) {
+	static auto translate(int key) {
         switch (key)
         {
         case GLFW_KEY_TAB: return ImGuiKey_Tab;

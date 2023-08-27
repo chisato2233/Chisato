@@ -9,6 +9,7 @@ workspace "Chisato"
 		"Dist"
 	}
 
+	startproject "Sandbox"
 	--输出路径
 	outputdir="%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
@@ -75,7 +76,7 @@ workspace "Chisato"
 			}
 
 			postbuildcommands{
-				("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+				("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 			}
 		
 		-- Debug版本

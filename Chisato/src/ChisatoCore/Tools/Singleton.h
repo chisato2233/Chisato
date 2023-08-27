@@ -1,5 +1,5 @@
 
-namespace Chisato {
+namespace cst {
 	template<typename T>
 	struct Singleton {
 	protected:

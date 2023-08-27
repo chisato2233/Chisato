@@ -1,18 +1,17 @@
 #pragma once
-#include"../Events/EventLib.h"
 
-namespace Chisato {
-	class CSTAPI Layer {
-		std::string name;
+namespace cst {
+	class CSTAPI layer {
+		std::string name_;
 	public:
-		Layer(std::string&& name = "Layer") :name{ name } { }
-		virtual ~Layer() = default;
+		layer(std::string&& name = "Layer") :name_{ name } { }
+		virtual ~layer() = default;
 
-		virtual void OnAttach() { }
-		virtual void OnDetach() { }
-		virtual void OnUpdate() { }
-		virtual void OnEvent(Event& event) { }
+		virtual void on_attach() { }
+		virtual void on_detach() { }
+		virtual void on_update() { }
+		virtual void on_event(event& event) { }
 
-		auto GetName()const noexcept { return name; }
+		auto get_name()const noexcept { return name_; }
 	};
 };

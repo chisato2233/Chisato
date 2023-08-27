@@ -1,5 +1,5 @@
 //import "Object.h";
 
-using namespace Chisato;
+using namespace cst;
 
 

@@ -1,18 +1,18 @@
 #include "Log.h"
 
-namespace Chisato::Debug {
+namespace cst::debug {
 
-	std::shared_ptr<spdlog::logger> Engine::p_logger;
-	std::shared_ptr<spdlog::logger> Application::p_logger;
+	std::shared_ptr<spdlog::logger> engine::p_logger;
+	std::shared_ptr<spdlog::logger> application::p_logger;
 
-	void Init() {
+	void init() {
 		spdlog::set_pattern("%^ [%n][%T]>>>>>    %v %$");
 
-		Engine::p_logger = spdlog::stdout_color_mt("Chisato Engine");
-		Application::p_logger = spdlog::stdout_color_mt("Application");
+		engine::p_logger = spdlog::stdout_color_mt("Chisato Engine");
+		application::p_logger = spdlog::stdout_color_mt("Application");
 
-		Engine::p_logger->set_level(spdlog::level::trace);
-		Application::p_logger->set_level(spdlog::level::trace);
+		engine::p_logger->set_level(spdlog::level::trace);
+		application::p_logger->set_level(spdlog::level::trace);
 	}
 }
 

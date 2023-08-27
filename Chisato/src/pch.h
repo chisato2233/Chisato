@@ -33,6 +33,6 @@
 
 //my lib
 #include<ChisatoCore/Core.h>
-#include<ChisatoCore/Events/EventLib.h>
-#include<ChisatoCore/Layers/LayerLib.h>
+#include<ChisatoCore/Events/event_lib.h>
+#include<ChisatoCore/Layers/layer_lib.h>
 #include<ChisatoCore/Tools/ToolLib.h>

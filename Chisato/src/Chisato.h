@@ -2,19 +2,17 @@
 
 //统一的Chisato库。
 
-#include"ChisatoCore/App.h"
+#include"ChisatoCore/application.h"
 
-#include<ChisatoCore/Core.h>
-#include<ChisatoCore/Events/EventLib.h>
-#include<ChisatoCore/Layers/LayerLib.h>
-#include<ChisatoCore/Tools/ToolLib.h>
 
 /*************************************主函数***********************************/
 #ifdef CST_PLATFORM_WINDOWS
 
-int main(int argc, char** argv) {
-	auto app = Chisato::Create();
-	app->Main();
+int main() {
+	cst::application::handle_ = cst::create();
+	try { cst::application::get().main(); }
+	catch (cst::debug::exception& e) { cst::debug::log<>::error(e.get_what()); }
+	catch (std::exception& e) { cst::debug::log<>::error(e.what()); }
 }
 
 #endif

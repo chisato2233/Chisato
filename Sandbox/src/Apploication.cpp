@@ -1,35 +1,33 @@
 #include<Chisato.h>
-#include<ChisatoCore/Layers/LayerLib.h>
+#include<ChisatoCore/Layers/layer_lib.h>
 
-using namespace Chisato;
+using namespace cst;
 
-struct ExampleLayer : Layer {
+struct ExampleLayer : layer {
 
-	ExampleLayer():Layer("Example") {}
+	ExampleLayer():layer("Example") {}
 
-	void OnEvent( Event& event) override {
+	void on_event( event& event) override {
 		////event.GetName();
 		//event.isActive = false;
 		//Debug::Log<Debug::Engine>::Trace(event.GetName());
 	}
 	
 
-	void OnUpdate() override {
+	void on_update() override {
 		//Chisato::Log::Engine::Trace("Layer Update");
 	}
 
 };
 
 
-class Sandbox : public App {
+class Sandbox : public application {
 public:
 	Sandbox() {
-		layerStack.push(std::make_shared<ExampleLayer>());
-		layerStack.push_over(std::make_shared<ImGuiLayer>());
-
-		handle = this;
+		layers().push_over(std::make_shared<ImGui_layer>());
 	}
-	~Sandbox()override = default;
 };
 
-Chisato::App* Chisato::Create() { return new Sandbox{ }; }
+application* cst::create() { return new Sandbox{}; }
+
+  

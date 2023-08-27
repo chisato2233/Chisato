@@ -1,32 +1,34 @@
 #pragma once
 #include <pch.h>
 
-namespace Chisato {
+namespace cst {
 	using uint = unsigned int;
 	
-	struct WndProps {
+	struct wnd_props {
 		std::string title;
 		std::pair<uint,uint> size;
-		WndProps(std::string&& title = "Chisato Engine", std::pair<uint, uint> size = { 1280,720 }):
+		
+		wnd_props(std::string&& title = "Chisato Engine", std::pair<uint, uint> size = { 1280,720 }):
 			title{title},size{size} { }
 	};
 
-	class CSTAPI Window {
-	public:
+	struct window {
+		virtual ~window() = default;
 
-		virtual ~Window(){ }
+		virtual void on_update() = 0;
 
-		virtual void OnUpdate() = 0;
+		virtual uint					get_w()			const noexcept = 0;
+		virtual uint					get_h()			const noexcept = 0;
+		virtual std::pair<uint, uint>	get_size()		const noexcept = 0;
+		virtual bool					get_key(int key)const noexcept = 0;
+		virtual void*					get_wnd_ptr()	const noexcept = 0;
+		virtual std::string				get_name()		const noexcept = 0;
 
-		virtual uint GetW() const = 0;
-		virtual uint GetH() const = 0;
-		virtual std::string GetName() const = 0;
+		virtual void set_event_callback	(const std::function<void(event&)>& callback)	= 0;
+		virtual void set_v_sync			(bool enabled)									= 0;
+		virtual bool is_v_sync			()const noexcept								= 0;
 
-		virtual void SetEventCallback(const std::function<void(Event&)>& callback) = 0;
-		virtual void SetVSync(bool enabled) = 0;
-		virtual bool IsVSync()const = 0;
-
-		static Window* Create(const WndProps& props = WndProps{});
+		static window* create(const wnd_props& props = wnd_props{});
 	};
 
 }
