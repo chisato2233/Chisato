@@ -2,9 +2,12 @@
 
 namespace cst {
 	application* application::handle_;
+
 	application::application(){
 		debug::init();
-		wnd_ = std::unique_ptr<struct window>(window::create());
+		wnd_	= std::unique_ptr<window_base>	(window_base::create());
+		input_	= std::unique_ptr<input_base>	(input_base	::create());
+
 		wnd_->set_event_callback([this](event& PH1) { on_event((PH1)); });
 
 		debug::log<>::info("Initialize app success!");
@@ -34,4 +37,5 @@ namespace cst {
 		if (e.is_active) log<>::trace(e.get_name());
 	}
 
+	
 }

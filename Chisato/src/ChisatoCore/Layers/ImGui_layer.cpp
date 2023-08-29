@@ -43,12 +43,12 @@ namespace cst {
 
 		auto modifier = [this] {
 			auto& io = ImGui::GetIO();
-			auto& wnd = application::get().window();
+			auto& input = application::get().input();
 
-			io.AddKeyEvent(ImGuiMod_Ctrl,	wnd.get_key(GLFW_KEY_LEFT_CONTROL)	|| wnd.get_key(GLFW_KEY_RIGHT_CONTROL));
-			io.AddKeyEvent(ImGuiMod_Shift,	wnd.get_key(GLFW_KEY_LEFT_SHIFT)	|| wnd.get_key(GLFW_KEY_RIGHT_SHIFT));
-			io.AddKeyEvent(ImGuiMod_Alt,	wnd.get_key(GLFW_KEY_LEFT_ALT)		|| wnd.get_key(GLFW_KEY_RIGHT_ALT));
-			io.AddKeyEvent(ImGuiMod_Super,	wnd.get_key(GLFW_KEY_LEFT_SUPER)	|| wnd.get_key(GLFW_KEY_RIGHT_SUPER));
+			io.AddKeyEvent(ImGuiMod_Ctrl,	input.is_key_pressed(GLFW_KEY_LEFT_CONTROL)	|| input.is_key_pressed(GLFW_KEY_RIGHT_CONTROL));
+			io.AddKeyEvent(ImGuiMod_Shift,	input.is_key_pressed(GLFW_KEY_LEFT_SHIFT)	|| input.is_key_pressed(GLFW_KEY_RIGHT_SHIFT));
+			io.AddKeyEvent(ImGuiMod_Alt,	input.is_key_pressed(GLFW_KEY_LEFT_ALT)		|| input.is_key_pressed(GLFW_KEY_RIGHT_ALT));
+			io.AddKeyEvent(ImGuiMod_Super,	input.is_key_pressed(GLFW_KEY_LEFT_SUPER)	|| input.is_key_pressed(GLFW_KEY_RIGHT_SUPER));
 		};
 		//App Event*******************************************************************
 		m.Dispatch<window_resize_event>([](auto& e) {

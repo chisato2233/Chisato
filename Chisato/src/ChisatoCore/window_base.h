@@ -1,6 +1,5 @@
 #pragma once
 #include <pch.h>
-#include <Platforms/platform.h>
 
 namespace cst {
 	using uint = unsigned int;
@@ -13,15 +12,14 @@ namespace cst {
 			title{title},size{size} { }
 	};
 
-	struct window {
-		virtual ~window() = default;
+	struct window_base {
+		virtual ~window_base() = default;
 
 		virtual void on_update() = 0;
 
 		virtual uint					get_w()			const noexcept = 0;
 		virtual uint					get_h()			const noexcept = 0;
 		virtual std::pair<uint, uint>	get_size()		const noexcept = 0;
-		virtual bool					get_key(int key)const noexcept = 0;
 		virtual void*					get_wnd_ptr()	const noexcept = 0;
 		virtual std::string				get_name()		const noexcept = 0;
 
@@ -29,7 +27,9 @@ namespace cst {
 		virtual void set_v_sync			(bool enabled)									= 0;
 		virtual bool is_v_sync			()const noexcept								= 0;
 
-		static window* create(const wnd_props& props = wnd_props{});
+		static window_base* create(const wnd_props& props = wnd_props{});
 	};
 
+	
+	
 }

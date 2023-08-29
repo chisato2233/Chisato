@@ -1,5 +1,5 @@
 #include<Chisato.h>
-#include<ChisatoCore/Layers/layer_lib.h>
+
 
 using namespace cst;
 
@@ -28,6 +28,8 @@ public:
 	}
 };
 
-application* cst::create() { return new Sandbox{}; }
+int main() {
+	return engine_main<Sandbox>();
+}
 
   

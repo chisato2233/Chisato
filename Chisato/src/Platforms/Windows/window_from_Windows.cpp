@@ -4,18 +4,18 @@
 namespace cst {
 	static bool s_GLFWInitialized = false;
 
-	window* window::create(const wnd_props& props) { return new window_from_Windows(props); }
+	window_base* window_base::create(const wnd_props& props) { return new window<platforms::Windows>(props); }
 	
-	window_from_Windows::window_from_Windows(const wnd_props& props) :
+	window<platforms::Windows>::window(const wnd_props& props) :
 		data_{props} 
 	{
 		init(props);
 	}
 
-	window_from_Windows::~window_from_Windows() { glfwDestroyWindow(wnd_ptr_); }
+	window<platforms::Windows>::~window() { glfwDestroyWindow(wnd_ptr_); }
 
 	//init function
-	void window_from_Windows::init(const wnd_props& props)  {
+	void window<platforms::Windows>::init(const wnd_props& props)  {
 		if (!s_GLFWInitialized) {
 			int s = glfwInit();
 			CST_ASSERT(s, "Could not initialize GLFW!!");
@@ -112,7 +112,7 @@ namespace cst {
 		});
 	}
 
-	void window_from_Windows::set_v_sync(bool enabled) {
+	void window<platforms::Windows>::set_v_sync(bool enabled) {
 		if (enabled) glfwSwapInterval(1);
 		else glfwSwapInterval(0);
 		data_.v_sync = enabled;

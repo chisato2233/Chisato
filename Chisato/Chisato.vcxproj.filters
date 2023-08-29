@@ -67,7 +67,7 @@
     <ClInclude Include="src\ChisatoCore\NewEvent\Controlable.h">
       <Filter>ChisatoCore\NewEvent</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\NewEvent\Input.h">
+    <ClInclude Include="src\ChisatoCore\NewEvent\input_base.h">
       <Filter>ChisatoCore\NewEvent</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\NewEvent\event.h">
@@ -91,7 +91,7 @@
     <ClInclude Include="src\ChisatoCore\application.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\window.h">
+    <ClInclude Include="src\ChisatoCore\window_base.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\imgui_impl_glfw.h">
@@ -107,8 +107,9 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\ChisatoCore\input.h" />
-    <ClInclude Include="src\Platforms\platform.h" />
+    <ClInclude Include="src\ChisatoCore\input_base.h" />
+    <ClInclude Include="src\ChisatoCore\platforms.h" />
+    <ClInclude Include="src\Platforms\Windows\input_from_Windows.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp">
@@ -139,6 +140,7 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\ChisatoCore\input.cpp" />
+    <ClCompile Include="src\ChisatoCore\input_base.cpp" />
+    <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp" />
   </ItemGroup>
 </Project>

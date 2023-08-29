@@ -1,21 +1,23 @@
 #pragma once
-#include"ChisatoCore/window.h"
+#include"ChisatoCore/window_base.h"
 #include"GLFW/glfw3.h"
 
 
 namespace cst {
+	template<cpt_plat P>class CSTAPI window;
 
-	class CSTAPI window_from_Windows :public window {
+	template<>
+	class CSTAPI window<platforms::Windows> :public window_base {
 		GLFWwindow* wnd_ptr_;
-
+		
 		struct WndData : wnd_props {
 			bool v_sync;
 			std::function<void(event&)> callback;
 		} data_;
 
 	public:
-		window_from_Windows(const wnd_props& props);
-		~window_from_Windows() override;
+		window(const wnd_props& props);
+		~window() override;
 
 		void on_update() override{
 			glfwPollEvents();
@@ -24,7 +26,6 @@ namespace cst {
 
 		uint					get_w()			const noexcept override { return data_.size.first;}
 		uint					get_h()			const noexcept override { return data_.size.second; }
-		bool					get_key(int key)const noexcept override { return GLFW_PRESS==glfwGetKey(wnd_ptr_, key); }
 		std::pair<uint, uint>	get_size()		const noexcept override { return data_.size; }
 		std::string				get_name()		const noexcept override { return std::format("Window {},from Windows", data_.title); }
 		void*					get_wnd_ptr()	const noexcept override { return wnd_ptr_; }
@@ -38,4 +39,5 @@ namespace cst {
 	private:
 		void init(const wnd_props& props);
 	};
+
 }
