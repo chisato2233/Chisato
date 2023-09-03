@@ -28,6 +28,7 @@ namespace cst::debug {
 		template<typename... Args> static void trace	(std::string_view s, Args&&... args) { L::p_logger->trace		(std::vformat(s, std::make_format_args(std::forward<Args>(args)...))); }
 		template<typename... Args> static void critical	(std::string_view s, Args&&... args) { L::p_logger->critical	(std::vformat(s, std::make_format_args(std::forward<Args>(args)...))); }
 	};
+
 	template struct log<engine>;
 	template struct log<application>;
 	void init();

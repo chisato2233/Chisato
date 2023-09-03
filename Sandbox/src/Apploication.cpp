@@ -29,7 +29,7 @@ public:
 };
 
 int main() {
-	return engine_main<Sandbox>();
+	return engine_run<Sandbox>();
 }
 
   

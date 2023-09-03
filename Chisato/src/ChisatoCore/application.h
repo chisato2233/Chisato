@@ -11,11 +11,11 @@
 int main();
 namespace cst {
 	class CSTAPI application;
-	template<std::derived_from<application> App> CSTAPI int engine_main();
+	//template<std::derived_from<application> App> CSTAPI int engine_main();
 
 	class CSTAPI application {
 		template<std::derived_from<application> App>
-		friend CSTAPI int engine_main();
+		friend CSTAPI int engine_run();
 
 		static application* handle_;
 
@@ -42,7 +42,7 @@ namespace cst {
 		auto& input()	const { return *input_; }
 	};
 
-	#include"ChisatoCore/Main.h"
+	#include"ChisatoCore/engine_run.h"
 }
 
 

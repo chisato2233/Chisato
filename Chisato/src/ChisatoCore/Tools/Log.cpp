@@ -10,9 +10,9 @@ namespace cst::debug {
 
 		engine::p_logger = spdlog::stdout_color_mt("Chisato Engine");
 		application::p_logger = spdlog::stdout_color_mt("Application");
-
 		engine::p_logger->set_level(spdlog::level::trace);
 		application::p_logger->set_level(spdlog::level::trace);
+
 	}
 }
 

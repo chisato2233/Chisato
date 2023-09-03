@@ -1,5 +1,5 @@
 ﻿#include "application.h"
-
+#include"NewEvent/events.h"
 namespace cst {
 	application* application::handle_;
 
@@ -11,6 +11,7 @@ namespace cst {
 		wnd_->set_event_callback([this](event& PH1) { on_event((PH1)); });
 
 		debug::log<>::info("Initialize app success!");
+		new_event::test();
 	}
 
 	void application::main(){
@@ -19,7 +20,8 @@ namespace cst {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			for(auto& i:layer_stack_) i->on_update();
-			wnd_->on_update();
+
+			window().on_update();
 		}
 	}
 	

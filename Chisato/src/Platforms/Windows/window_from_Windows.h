@@ -4,6 +4,7 @@
 
 
 namespace cst {
+	//add more specialized is undefined behaviour. 
 	template<cpt_plat P>class CSTAPI window;
 
 	template<>

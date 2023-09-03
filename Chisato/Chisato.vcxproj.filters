@@ -58,20 +58,8 @@
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h">
       <Filter>ChisatoCore\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Main.h">
+    <ClInclude Include="src\ChisatoCore\engine_run.h">
       <Filter>ChisatoCore</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ChisatoCore\NewEvent\Action.h">
-      <Filter>ChisatoCore\NewEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ChisatoCore\NewEvent\Controlable.h">
-      <Filter>ChisatoCore\NewEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ChisatoCore\NewEvent\input_base.h">
-      <Filter>ChisatoCore\NewEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ChisatoCore\NewEvent\event.h">
-      <Filter>ChisatoCore\NewEvent</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h">
       <Filter>ChisatoCore\Tools</Filter>
@@ -110,6 +98,8 @@
     <ClInclude Include="src\ChisatoCore\input_base.h" />
     <ClInclude Include="src\ChisatoCore\platforms.h" />
     <ClInclude Include="src\Platforms\Windows\input_from_Windows.h" />
+    <ClInclude Include="src\ChisatoCore\keycode.h" />
+    <ClInclude Include="src\ChisatoCore\NewEvent\events.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp">
@@ -142,5 +132,6 @@
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\ChisatoCore\input_base.cpp" />
     <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp" />
+    <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp" />
   </ItemGroup>
 </Project>

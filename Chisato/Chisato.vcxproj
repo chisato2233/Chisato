@@ -163,15 +163,13 @@
     <ClInclude Include="src\ChisatoCore\Events\event_lib.h" />
     <ClInclude Include="src\ChisatoCore\Events\key_event.h" />
     <ClInclude Include="src\ChisatoCore\Events\mouse_event.h" />
+    <ClInclude Include="src\ChisatoCore\keycode.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui_layer.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_lib.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h" />
-    <ClInclude Include="src\ChisatoCore\Main.h" />
-    <ClInclude Include="src\ChisatoCore\NewEvent\Action.h" />
-    <ClInclude Include="src\ChisatoCore\NewEvent\Controlable.h" />
-    <ClInclude Include="src\ChisatoCore\NewEvent\input_base.h" />
-    <ClInclude Include="src\ChisatoCore\NewEvent\event.h" />
+    <ClInclude Include="src\ChisatoCore\engine_run.h" />
+    <ClInclude Include="src\ChisatoCore\NewEvent\events.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Log.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Object.h" />
@@ -191,6 +189,7 @@
     <ClCompile Include="src\ChisatoCore\input_base.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp" />
     <ClCompile Include="src\ChisatoCore\Layers\ImGui_layer.cpp" />
+    <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Log.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Object.cpp" />

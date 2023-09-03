@@ -4,6 +4,7 @@
 namespace cst {
 	static bool s_GLFWInitialized = false;
 
+	
 	window_base* window_base::create(const wnd_props& props) { return new window<platforms::Windows>(props); }
 	
 	window<platforms::Windows>::window(const wnd_props& props) :

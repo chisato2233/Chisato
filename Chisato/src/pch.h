@@ -24,6 +24,7 @@
 #include<queue>
 #include<stack>
 #include<sstream>
+#include<variant>
 
 //opengl
 #include <glad/glad.h>
