@@ -155,7 +155,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\ChisatoCore\input_base.h" />
     <ClInclude Include="src\Chisato.h" />
     <ClInclude Include="src\ChisatoCore\Core.h" />
     <ClInclude Include="src\ChisatoCore\Events\app_event.h" />
@@ -163,37 +162,41 @@
     <ClInclude Include="src\ChisatoCore\Events\event_lib.h" />
     <ClInclude Include="src\ChisatoCore\Events\key_event.h" />
     <ClInclude Include="src\ChisatoCore\Events\mouse_event.h" />
-    <ClInclude Include="src\ChisatoCore\keycode.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui_layer.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_lib.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h" />
-    <ClInclude Include="src\ChisatoCore\engine_run.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\events.h" />
+    <ClInclude Include="src\ChisatoCore\Tools\Coroutine.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Log.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Object.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Singleton.h" />
+    <ClInclude Include="src\ChisatoCore\Tools\Time.h" />
     <ClInclude Include="src\ChisatoCore\Tools\ToolLib.h" />
     <ClInclude Include="src\ChisatoCore\application.h" />
+    <ClInclude Include="src\ChisatoCore\engine_run.h" />
+    <ClInclude Include="src\ChisatoCore\input_base.h" />
+    <ClInclude Include="src\ChisatoCore\keycode.h" />
+    <ClInclude Include="src\ChisatoCore\platforms.h" />
     <ClInclude Include="src\ChisatoCore\window_base.h" />
     <ClInclude Include="src\Platforms\OpenGL\imgui_impl_glfw.h" />
     <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3.h" />
     <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="src\ChisatoCore\platforms.h" />
     <ClInclude Include="src\Platforms\Windows\input_from_Windows.h" />
     <ClInclude Include="src\Platforms\Windows\window_from_Windows.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ChisatoCore\input_base.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp" />
     <ClCompile Include="src\ChisatoCore\Layers\ImGui_layer.cpp" />
     <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp" />
+    <ClCompile Include="src\ChisatoCore\Tools\Coroutine.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Log.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Object.cpp" />
     <ClCompile Include="src\ChisatoCore\application.cpp" />
+    <ClCompile Include="src\ChisatoCore\input_base.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\imgui_impl_glfw.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp" />

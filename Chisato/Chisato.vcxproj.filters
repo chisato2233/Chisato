@@ -58,8 +58,8 @@
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h">
       <Filter>ChisatoCore\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\engine_run.h">
-      <Filter>ChisatoCore</Filter>
+    <ClInclude Include="src\ChisatoCore\NewEvent\events.h">
+      <Filter>ChisatoCore\NewEvent</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h">
       <Filter>ChisatoCore\Tools</Filter>
@@ -73,10 +73,25 @@
     <ClInclude Include="src\ChisatoCore\Tools\Singleton.h">
       <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\Time.h">
+      <Filter>ChisatoCore\Tools</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\ToolLib.h">
       <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\application.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\engine_run.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\input_base.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\keycode.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\platforms.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\window_base.h">
@@ -91,15 +106,13 @@
     <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3_loader.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platforms\Windows\input_from_Windows.h">
+      <Filter>Platforms\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platforms\Windows\window_from_Windows.h">
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\ChisatoCore\input_base.h" />
-    <ClInclude Include="src\ChisatoCore\platforms.h" />
-    <ClInclude Include="src\Platforms\Windows\input_from_Windows.h" />
-    <ClInclude Include="src\ChisatoCore\keycode.h" />
-    <ClInclude Include="src\ChisatoCore\NewEvent\events.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp">
@@ -107,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\Layers\ImGui_layer.cpp">
       <Filter>ChisatoCore\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp">
+      <Filter>ChisatoCore\NewEvent</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp">
       <Filter>ChisatoCore\Tools</Filter>
@@ -120,18 +136,21 @@
     <ClCompile Include="src\ChisatoCore\application.cpp">
       <Filter>ChisatoCore</Filter>
     </ClCompile>
+    <ClCompile Include="src\ChisatoCore\input_base.cpp">
+      <Filter>ChisatoCore</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\imgui_impl_glfw.cpp">
       <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\imgui_impl_opengl3.cpp">
       <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp">
+      <Filter>Platforms\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platforms\Windows\window_from_Windows.cpp">
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\ChisatoCore\input_base.cpp" />
-    <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp" />
-    <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp" />
   </ItemGroup>
 </Project>

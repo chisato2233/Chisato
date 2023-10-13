@@ -7,9 +7,10 @@
 #include "Layers/layer_stack.h"
 #include"Tools/ToolLib.h"
 
-
+//using namespace std;
 int main();
 namespace cst {
+	using namespace std;
 	class CSTAPI application;
 	//template<std::derived_from<application> App> CSTAPI int engine_main();
 
@@ -34,13 +35,14 @@ namespace cst {
 		void main();
 		void on_event(event&);
 		static auto& get() {
-			CST_ASSERT(handle_, "Application has not created yet")
+			CST_ASSERT(handle_, "Application has not created yet, pleace excute function engine_run to create Chisato Engine Application first");
 			return *handle_;
 		}
 
 		auto& window()	const { return *wnd_; }
 		auto& input()	const { return *input_; }
 	};
+
 
 	#include"ChisatoCore/engine_run.h"
 }

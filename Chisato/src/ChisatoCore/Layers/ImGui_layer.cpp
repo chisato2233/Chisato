@@ -22,9 +22,7 @@ namespace cst {
 
 		io.DisplaySize = ImVec2(static_cast<float>(application::get().window().get_w()),static_cast<float>(application::get().window().get_h()));
 		
-		const auto t = static_cast<float>(glfwGetTime());
-		io.DeltaTime = time > 0.f ? (t - time) : (1.f/60.f);
-		time = t;
+		io.DeltaTime = max(time::delta(), 1.f / 60.f);
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();

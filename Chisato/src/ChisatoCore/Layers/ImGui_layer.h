@@ -6,7 +6,7 @@ namespace cst {
     class CSTAPI application;
 
 	class CSTAPI ImGui_layer : public layer {
-        float time = 0.f;
+        float even_time = 0.f;
 	public:
         ImGui_layer();
 

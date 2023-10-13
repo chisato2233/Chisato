@@ -22,15 +22,34 @@ namespace cst::debug {
 	template<typename T> concept logger = std::same_as<T, engine> || std::same_as<T, application>;
 
 	template<logger L = CST_DEBUG_DEFAULT_LOGGER> struct CSTAPI log {
-		template<typename... Args> static void info		(std::string_view s, Args&&... args) { L::p_logger->info		(std::vformat(s, std::make_format_args(std::forward<Args>(args)...))); }
-		template<typename... Args> static void warn		(std::string_view s, Args&&... args) { L::p_logger->warn		(std::vformat(s, std::make_format_args(std::forward<Args>(args)...))); }
-		template<typename... Args> static void error	(std::string_view s, Args&&... args) { L::p_logger->error		(std::vformat(s, std::make_format_args(std::forward<Args>(args)...))); }
-		template<typename... Args> static void trace	(std::string_view s, Args&&... args) { L::p_logger->trace		(std::vformat(s, std::make_format_args(std::forward<Args>(args)...))); }
-		template<typename... Args> static void critical	(std::string_view s, Args&&... args) { L::p_logger->critical	(std::vformat(s, std::make_format_args(std::forward<Args>(args)...))); }
+		static void info		(std::string_view s, auto&&... args) { L::p_logger->info		(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
+		static void warn		(std::string_view s, auto&&... args) { L::p_logger->warn		(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
+		static void error		(std::string_view s, auto&&... args) { L::p_logger->error		(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
+		static void trace		(std::string_view s, auto&&... args) { L::p_logger->trace		(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
+		static void critical	(std::string_view s, auto&&... args) { L::p_logger->critical	(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
+
+		//static void info		(auto&&... args) { L::p_logger->info		(std::forward<decltype(args)>(args)...); }
+		//static void warn		(auto&&... args) { L::p_logger->warn		(std::forward<decltype(args)>(args)...); }
+		//static void error		(auto&&... args) { L::p_logger->error		(std::forward<decltype(args)>(args)...); }
+		//static void trace		(auto&&... args) { L::p_logger->trace		(std::forward<decltype(args)>(args)...); }
+		//static void critical	(auto&&... args) { L::p_logger->critical	(std::forward<decltype(args)>(args)...); }
+
+
 	};
+	template<logger L = CST_DEBUG_DEFAULT_LOGGER> struct CSTAPI log_arg {
+		static void info(auto&&... args) {
+			[[maybe_unused]] int _[]{
+				(L::p_logger->info(std::forward<decltype(args)>(args)),0)...
+			};
+		}
+	};
+
 
 	template struct log<engine>;
 	template struct log<application>;
+	template struct log_arg<engine>;
+	template struct log_arg<application>;
+	
 	void init();
 }
 

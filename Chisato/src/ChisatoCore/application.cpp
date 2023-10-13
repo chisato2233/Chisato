@@ -1,21 +1,31 @@
 ﻿#include "application.h"
-#include"NewEvent/events.h"
 namespace cst {
 	application* application::handle_;
+	
+	
 
 	application::application(){
-		debug::init();
+		using namespace std;
+		time::	init();
+		debug::	init();
+		async::system::init();
+
 		wnd_	= std::unique_ptr<window_base>	(window_base::create());
 		input_	= std::unique_ptr<input_base>	(input_base	::create());
 
 		wnd_->set_event_callback([this](event& PH1) { on_event((PH1)); });
 
 		debug::log<>::info("Initialize app success!");
-		new_event::test();
+		//new_event::test();
 	}
+	
 
 	void application::main(){
+
+		//debug::log_arg<>::info(1, 2, "sdf");
 		while (is_running) {
+			time::update();
+			async::system::get().update();
 			glClearColor(245/255.f, 212/255.f, 217/255.f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
