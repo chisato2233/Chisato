@@ -6,12 +6,14 @@
 #include"window_base.h"
 #include "Layers/layer_stack.h"
 #include"Tools/ToolLib.h"
+//#include"Async/async_lib.h"
 
 //using namespace std;
 int main();
 namespace cst {
 	using namespace std;
 	class CSTAPI application;
+	
 	//template<std::derived_from<application> App> CSTAPI int engine_main();
 
 	class CSTAPI application {
@@ -38,6 +40,8 @@ namespace cst {
 			CST_ASSERT(handle_, "Application has not created yet, pleace excute function engine_run to create Chisato Engine Application first");
 			return *handle_;
 		}
+		
+
 
 		auto& window()	const { return *wnd_; }
 		auto& input()	const { return *input_; }

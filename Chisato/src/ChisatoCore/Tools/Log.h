@@ -28,19 +28,32 @@ namespace cst::debug {
 		static void trace		(std::string_view s, auto&&... args) { L::p_logger->trace		(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
 		static void critical	(std::string_view s, auto&&... args) { L::p_logger->critical	(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
 
-		//static void info		(auto&&... args) { L::p_logger->info		(std::forward<decltype(args)>(args)...); }
-		//static void warn		(auto&&... args) { L::p_logger->warn		(std::forward<decltype(args)>(args)...); }
-		//static void error		(auto&&... args) { L::p_logger->error		(std::forward<decltype(args)>(args)...); }
-		//static void trace		(auto&&... args) { L::p_logger->trace		(std::forward<decltype(args)>(args)...); }
-		//static void critical	(auto&&... args) { L::p_logger->critical	(std::forward<decltype(args)>(args)...); }
+		static void info (auto&&... args) {
+			std::ostringstream oss;
+			[[maybe_unused]] int _[]{ (oss << std::forward<decltype(args)>(args) << ' ', 0)... };
+			L::p_logger->info(oss.str());
+		}
+		/*static void warn		(auto&&... args) { L::p_logger->warn		(std::forward<decltype(args)>(args)...); }
+		static void error		(auto&&... args) { L::p_logger->error		(std::forward<decltype(args)>(args)...); }
+		static void trace		(auto&&... args) { L::p_logger->trace		(std::forward<decltype(args)>(args)...); }
+		static void critical	(auto&&... args) { L::p_logger->critical	(std::forward<decltype(args)>(args)...); }*/
 
 
 	};
+
 	template<logger L = CST_DEBUG_DEFAULT_LOGGER> struct CSTAPI log_arg {
-		static void info(auto&&... args) {
-			[[maybe_unused]] int _[]{
-				(L::p_logger->info(std::forward<decltype(args)>(args)),0)...
-			};
+		
+		static void trace(auto&&... args) {
+			std::ostringstream oss;
+			[[maybe_unused]] int _[]{ (oss << std::forward<decltype(args)>(args) << ' ', 0)... };
+			L::p_logger->trace (oss.str());
+		}
+
+	private:
+		const char* extend_arg(auto&&... args) {
+			std::ostringstream oss;
+			[[maybe_unused]] int _[]{ (oss << std::forward<decltype(args)>(args) << ' ', 0)... };
+			return oss.str().c_str();
 		}
 	};
 

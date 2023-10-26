@@ -20,27 +20,11 @@ struct ExampleLayer : layer {
 
 };
 
-async::task my1() {
-	while (1) {
-		debug::log<>::trace("1");
-		co_await async::next_frame{};
-	}
-	
-}
-async::task my2() {
-	while (1) {
-		debug::log<>::trace("2");
-		co_await async::next_frame{};
-	}
-
-}
 
 class Sandbox : public application {
 public:
 	Sandbox() {
 		layers().push_over(std::make_shared<ImGui_layer>());
-		async::system::get().start_task(my1());
-		async::system::get().start_task(my2());
 	}
 };
 

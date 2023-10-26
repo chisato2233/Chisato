@@ -5,7 +5,6 @@ namespace cst {
 	
 
 	application::application(){
-		using namespace std;
 		time::	init();
 		debug::	init();
 		async::system::init();
@@ -16,13 +15,16 @@ namespace cst {
 		wnd_->set_event_callback([this](event& PH1) { on_event((PH1)); });
 
 		debug::log<>::info("Initialize app success!");
-		//new_event::test();
+		//debug::log<>::info("sda",1, 2, "sds");
+
+
 	}
 	
 
 	void application::main(){
-
-		//debug::log_arg<>::info(1, 2, "sdf");
+		
+		
+		
 		while (is_running) {
 			time::update();
 			async::system::get().update();
@@ -37,6 +39,7 @@ namespace cst {
 	
 	void application::on_event(event& e) {
 		using namespace debug;
+		//async::event_system::get().on_event(e);
 
 		for (auto i = layer_stack_.end(); i != layer_stack_.begin();) {
 			(**--i).on_event(e);
@@ -45,7 +48,8 @@ namespace cst {
 		
 		event_dispatch<window_close_event>{ [this](auto&) {is_running = false; } }(e);
 		
-		//event_dispatch<window_resize_event>{[this](auto& e) {debug::log<>::info("ll"), glViewport(0, 0, e.get_w(), e.get_h()); } }(e);
+
+
 		if (e.is_active) log<>::trace(e.get_name());
 	}
 

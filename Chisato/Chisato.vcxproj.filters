@@ -61,6 +61,9 @@
     <ClInclude Include="src\ChisatoCore\NewEvent\events.h">
       <Filter>ChisatoCore\NewEvent</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\Coroutine.h">
+      <Filter>ChisatoCore\Tools</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h">
       <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
@@ -123,6 +126,9 @@
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp">
       <Filter>ChisatoCore\NewEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Tools\Coroutine.cpp">
+      <Filter>ChisatoCore\Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp">
       <Filter>ChisatoCore\Tools</Filter>
