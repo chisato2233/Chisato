@@ -31,10 +31,10 @@
     <ClInclude Include="src\ChisatoCore\Core.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Events\app_event.h">
+    <ClInclude Include="src\ChisatoCore\Events\Event.h">
       <Filter>ChisatoCore\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Events\event.h">
+    <ClInclude Include="src\ChisatoCore\Events\app_event.h">
       <Filter>ChisatoCore\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Events\event_lib.h">
@@ -49,7 +49,7 @@
     <ClInclude Include="src\ChisatoCore\Layers\ImGui_layer.h">
       <Filter>ChisatoCore\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Layers\layer.h">
+    <ClInclude Include="src\ChisatoCore\Layers\Layer.h">
       <Filter>ChisatoCore\Layers</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\layer_lib.h">

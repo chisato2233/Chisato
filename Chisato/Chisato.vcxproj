@@ -157,13 +157,13 @@
   <ItemGroup>
     <ClInclude Include="src\Chisato.h" />
     <ClInclude Include="src\ChisatoCore\Core.h" />
+    <ClInclude Include="src\ChisatoCore\Events\Event.h" />
     <ClInclude Include="src\ChisatoCore\Events\app_event.h" />
-    <ClInclude Include="src\ChisatoCore\Events\event.h" />
     <ClInclude Include="src\ChisatoCore\Events\event_lib.h" />
     <ClInclude Include="src\ChisatoCore\Events\key_event.h" />
     <ClInclude Include="src\ChisatoCore\Events\mouse_event.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui_layer.h" />
-    <ClInclude Include="src\ChisatoCore\Layers\layer.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\Layer.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_lib.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\events.h" />
@@ -212,8 +212,8 @@
     <ProjectReference Include="packages\GLAD\GLAD.vcxproj">
       <Project>{5D4A857C-4981-860D-F26D-6C10DE83020F}</Project>
     </ProjectReference>
-    <ProjectReference Include="packages\ImGui\ImGui.vcxproj">
-      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    <ProjectReference Include="packages\ImGui\Imgui.vcxproj">
+      <Project>{E087650D-4C9C-8DBE-151E-311E81F189EF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

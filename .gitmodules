@@ -1,9 +1,4 @@
 [submodule "Chisato/packages/spdlog"]
 	path = Chisato/packages/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "Chisato/packages/GLFW"]
-	path = Chisato/packages/GLFW
-	url = https://github.com/thecherno/glfw
-[submodule "Chisato/packages/ImGui"]
-	path = Chisato/packages/ImGui
-	url = https://github.com/TheCherno/imgui.git
+
