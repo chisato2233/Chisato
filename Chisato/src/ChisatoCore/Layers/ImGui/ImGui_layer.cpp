@@ -1,39 +1,82 @@
 ﻿#include "ImGui_layer.h"
+
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #include"ChisatoCore/application.h"
+//#include "imgui_impl_glfw.h"
+
 namespace cst {
 
 	ImGui_layer::ImGui_layer() : layer{ "ImGui" } {} 
 
 	void ImGui_layer::on_attach() {
+		auto window = static_cast<GLFWwindow*>(application::get().window().get_wnd_ptr());
+		bool show = true;
+
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
 
 		ImGuiIO& io=ImGui::GetIO();
-		io = ImGui::GetIO();
-		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
+		//io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+		//io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+		//
+		
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+
+		ImGui::StyleColorsDark();
+		
+
+		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+		ImGuiStyle& style = ImGui::GetStyle();
+
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			style.WindowRounding = 0.0f;
+			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		}
+		
+		// Setup Platform/Renderer backend
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 410");
 
 	}
 	
 	void ImGui_layer::on_update() {
+		auto window = static_cast<GLFWwindow*>(application::get().window().get_wnd_ptr());
+		bool show = true;
+		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+
 		ImGuiIO& io = ImGui::GetIO();
 
 		io.DisplaySize = ImVec2(static_cast<float>(application::get().window().get_w()),static_cast<float>(application::get().window().get_h()));
 		
 		io.DeltaTime = max(time::delta(), 1.f / 60.f);
 
+		ImGui_ImplGlfw_NewFrame();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
+		
 
-		static bool show = true;
+
 		ImGui::ShowDemoWindow(&show);
 
+		//Render----------------------------------------------------------------------------------------------------------------
 		ImGui::Render();
+
+
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-
+		GLFWwindow* backup_current_context = glfwGetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		glfwMakeContextCurrent(backup_current_context);
 	}
 
 	void ImGui_layer::on_event(event& event) {
@@ -108,6 +151,11 @@ namespace cst {
 			return false;
 		});
 	}
-
+	
+	
+	void ImGui_layer::on_detach() {
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui::DestroyContext();
+	}
 
 }

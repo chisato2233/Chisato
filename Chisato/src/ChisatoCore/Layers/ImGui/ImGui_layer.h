@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include"layer.h"
+#include "imgui.h"
+#include"Chisatocore/Layers/Layer.h"
 #include "ChisatoCore/application.h"
 
 namespace cst {
@@ -11,6 +12,7 @@ namespace cst {
 
 		void on_attach() override;
 		void on_update() override;
+        void on_detach() override;
 		void on_event(event& event) override;
 	};
 

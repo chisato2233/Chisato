@@ -23,12 +23,18 @@ struct ExampleLayer : layer {
 
 class Sandbox : public application {
 public:
-	Sandbox() {
-		layers().push_over(std::make_shared<ImGui_layer>());
+	Sandbox() {}
+
+	void start() override{
+		layers().push(std::make_shared<ImGui_layer>());
+
 	}
 };
 
+
+
 int main() {
+
 	return engine_run<Sandbox>();
 
 }

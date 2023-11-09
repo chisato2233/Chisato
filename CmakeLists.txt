@@ -1,0 +1,123 @@
+cmake_minimum_required(VERSION 3.12)
+
+project(Chisato)
+
+set(CMAKE_CXX_STANDARD 20)
+
+# 配置
+set(    
+    CMAKE_CONFIGURATION_TYPES "Debug;Release;Dist" 
+    CACHE STRING "Build configurations" FORCE
+)
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+# 包含目录
+set(IncludeDir "")
+list(APPEND IncludeDir "Chisato/packages/GLFW/include")
+list(APPEND IncludeDir "Chisato/packages/spdlog/include")
+list(APPEND IncludeDir "Chisato/packages/GLAD/include")
+list(APPEND IncludeDir "Chisato/packages/Imgui")
+
+# 引入CMake文件
+add_subdirectory("Chisato/packages/GLFW")
+add_subdirectory("Chisato/packages/GLAD")
+add_subdirectory("Chisato/packages/Imgui")
+
+# 共享库：Chisato
+add_library(
+    Chisato SHARED
+        "Chisato/src/**.cpp"
+        "Chisato/src/**.h"
+    # Add more source files here
+)
+
+target_include_directories(
+    Chisato PRIVATE
+        "Chisato/src"
+        ${IncludeDir}
+)
+
+target_link_libraries(
+    Chisato
+        PRIVATE GLFW
+        PRIVATE GLAD
+        PRIVATE Imgui
+        PRIVATE opengl32
+        PRIVATE dwmapi
+)
+
+set_target_properties(
+    Chisato PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY 
+            "bin/${CMAKE_BUILD_TYPE}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}/Chisato"
+        LIBRARY_OUTPUT_DIRECTORY 
+            "bin/${CMAKE_BUILD_TYPE}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}/Chisato"
+)
+
+# 设置预编译头
+target_precompile_headers(Chisato PRIVATE "Chisato/src/pch.h")
+
+# 定义宏
+target_compile_definitions(
+Chisato PRIVATE
+    CST_PLATFORM_WINDOWS
+    CST_BUILD_DLL
+    GLFW_INCLUDE_NONE
+    IMGUI_IMPL_OPENGL_LOADER_CUSTOM
+)
+
+# Debug版本
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_definitions(
+        Chisato PRIVATE
+            CST_DEBUGS
+            CST_ASSERT_ENABLE
+    )
+    target_compile_options(Chisato PRIVATE -g)
+    set(
+        CMAKE_CXX_FLAGS_DEBUG 
+            "${CMAKE_CXX_FLAGS_DEBUG} 
+            -static-libgcc 
+            -static-libstdc++"
+    )
+endif()
+
+# Release版本
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    target_compile_definitions(Chisato PRIVATE CST_RELEASE)
+    target_compile_options(Chisato PRIVATE -O2)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -static-libgcc -static-libstdc++")
+endif()
+
+# Dist版本
+if(CMAKE_BUILD_TYPE STREQUAL "Dist")
+    target_compile_definitions(Chisato PRIVATE CST_DIST)
+    target_compile_options(Chisato PRIVATE -O2)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -static-libgcc -static-libstdc++")
+endif()
+
+# 项目：Sandbox
+add_executable(
+Sandbox
+    "Sandbox/src/**.cpp"
+    "Sandbox/src/**.h"
+    # Add more source files here
+)
+
+target_include_directories(
+Sandbox PRIVATE
+    "Chisato/src"
+    ${IncludeDir}
+)
+
+target_link_libraries(Sandbox PRIVATE Chisato)
+
+set_target_properties(Sandbox PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "bin/${CMAKE_BUILD_TYPE}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}/Sandbox"
+)
+
+# 定义宏
+target_compile_definitions(Sandbox PRIVATE CST_PLATFORM_WINDOWS)

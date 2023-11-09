@@ -1,5 +1,6 @@
 #pragma once
 #include<ChisatoCore/input_base.h>
+#include<ChisatoCore/application.h>
 namespace cst {
 	template<cpt_plat P> struct CSTAPI input;
 

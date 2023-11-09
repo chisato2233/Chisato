@@ -80,12 +80,12 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_DEBUGS;CST_ASSERT_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -104,7 +104,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -112,7 +112,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -132,7 +132,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -140,7 +140,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
@@ -156,18 +156,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Chisato.h" />
+    <ClInclude Include="src\ChisatoCore\Async\promise.h" />
+    <ClInclude Include="src\ChisatoCore\Async\system.h" />
     <ClInclude Include="src\ChisatoCore\Core.h" />
     <ClInclude Include="src\ChisatoCore\Events\Event.h" />
     <ClInclude Include="src\ChisatoCore\Events\app_event.h" />
     <ClInclude Include="src\ChisatoCore\Events\event_lib.h" />
     <ClInclude Include="src\ChisatoCore\Events\key_event.h" />
     <ClInclude Include="src\ChisatoCore\Events\mouse_event.h" />
-    <ClInclude Include="src\ChisatoCore\Layers\ImGui_layer.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\ChisatoCore\Layers\Layer.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_lib.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h" />
     <ClInclude Include="src\ChisatoCore\NewEvent\events.h" />
-    <ClInclude Include="src\ChisatoCore\Tools\Coroutine.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Log.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Object.h" />
@@ -180,25 +184,24 @@
     <ClInclude Include="src\ChisatoCore\keycode.h" />
     <ClInclude Include="src\ChisatoCore\platforms.h" />
     <ClInclude Include="src\ChisatoCore\window_base.h" />
-    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3.h" />
-    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\Platforms\Windows\input_from_Windows.h" />
     <ClInclude Include="src\Platforms\Windows\window_from_Windows.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ChisatoCore\Async\Coroutine.cpp" />
+    <ClCompile Include="src\ChisatoCore\Async\system.cpp" />
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp" />
-    <ClCompile Include="src\ChisatoCore\Layers\ImGui_layer.cpp" />
+    <ClCompile Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.cpp" />
+    <ClCompile Include="src\ChisatoCore\Layers\ImGui\ImGui_unity.cpp" />
+    <ClCompile Include="src\ChisatoCore\Layers\layer.cpp" />
+    <ClCompile Include="src\ChisatoCore\Layers\layer_stack.cpp" />
     <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp" />
-    <ClCompile Include="src\ChisatoCore\Tools\Coroutine.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Log.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Object.cpp" />
     <ClCompile Include="src\ChisatoCore\application.cpp" />
     <ClCompile Include="src\ChisatoCore\input_base.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\imgui_impl_glfw.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp" />
     <ClCompile Include="src\Platforms\Windows\window_from_Windows.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -209,11 +212,11 @@
     <ProjectReference Include="packages\GLFW\GLFW.vcxproj">
       <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
     </ProjectReference>
+    <ProjectReference Include="packages\Imgui\Imgui.vcxproj">
+      <Project>{E087650D-4C9C-8DBE-151E-311E81F189EF}</Project>
+    </ProjectReference>
     <ProjectReference Include="packages\GLAD\GLAD.vcxproj">
       <Project>{5D4A857C-4981-860D-F26D-6C10DE83020F}</Project>
-    </ProjectReference>
-    <ProjectReference Include="packages\ImGui\Imgui.vcxproj">
-      <Project>{E087650D-4C9C-8DBE-151E-311E81F189EF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

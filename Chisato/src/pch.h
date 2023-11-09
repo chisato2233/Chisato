@@ -30,12 +30,12 @@
 //opengl
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <imgui.h>
-#include<Platforms/OPenGL/imgui_impl_opengl3.h>
+//#include <imgui.h>
+
 
 //my lib
 #include<ChisatoCore/Core.h>
 #include<ChisatoCore/Events/event_lib.h>
-#include<ChisatoCore/Layers/layer_lib.h>
+//#include<ChisatoCore/Layers/layer_lib.h>
 #include<ChisatoCore/Tools/ToolLib.h>
 #include<ChisatoCore/platforms.h>

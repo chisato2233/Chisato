@@ -18,12 +18,14 @@ workspace "Chisato"
 	IncludeDir["GLFW"]="Chisato/packages/GLFW/include"
 	IncludeDir["spdlog"]="Chisato/packages/spdlog/include"
 	IncludeDir["GLAD"]="Chisato/packages/GLAD/include"
-	IncludeDir["ImGui"]="Chisato/packages/ImGui"
+	IncludeDir["Imgui"]="Chisato/packages/Imgui"
+	IncludeDir["glm"]="Chisato/packages/glm"
 
 	--引入GLFW的premake文件
 	include "Chisato/packages/GLFW"
 	include "Chisato/packages/GLAD"
-	include "Chisato/packages/ImGui"
+	include "Chisato/packages/Imgui"
+	include "Chisato/packages/glm"
 
 	--工程：chisato
 	project"Chisato"
@@ -43,7 +45,10 @@ workspace "Chisato"
 
 		files{
 			"%{prj.name}/src/**.h",
-			"%{prj.name}/src/**.cpp"
+			"%{prj.name}/src/**.cpp",
+			-- "%{IncludeDir.glm}/**cpp",
+			-- "%{IncludeDir.glm}/**inl",
+			-- "%{IncludeDir.glm}/**hpp",
 		}
 
 		includedirs{
@@ -51,20 +56,21 @@ workspace "Chisato"
 			"%{IncludeDir.spdlog}",
 			"%{IncludeDir.GLFW}",
 			"%{IncludeDir.GLAD}",
-			"%{IncludeDir.ImGui}",
+			"%{IncludeDir.Imgui}",
+			"%{IncludeDir.glm}",
 		}
 		
 		links{
 			"GLFW",
 			"opengl32.lib",
 			"dwmapi.lib",
+			"imgui",
 			"GLAD", 
-			"ImGui",
 		}
 
 		-- windows版本
 		filter"system:windows"
-			cppdialect "C++latest"
+			cppdialect "C++20"
 			staticruntime "On"
 			systemversion "latest"
 
@@ -113,7 +119,10 @@ workspace "Chisato"
 
 		files{
 			"%{prj.name}/src/**.h",
-			"%{prj.name}/src/**.cpp"
+			"%{prj.name}/src/**.cpp",
+			-- "%{IncludeDir.glm}/**cpp",
+			-- "%{IncludeDir.glm}/**inl",
+			-- "%{IncludeDir.glm}/**hpp",
 		}
 
 		includedirs{
@@ -121,7 +130,8 @@ workspace "Chisato"
 			"%{IncludeDir.spdlog}",
 			"%{IncludeDir.GLFW}",
 			"%{IncludeDir.GLAD}",
-			"%{IncludeDir.ImGui}",
+			"%{IncludeDir.Imgui}",
+			"%{IncludeDir.glm}",
 		}
 
 		links{

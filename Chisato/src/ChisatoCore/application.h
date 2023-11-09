@@ -18,6 +18,7 @@ namespace cst {
 
 	class CSTAPI application {
 		template<std::derived_from<application> App>
+
 		friend CSTAPI int engine_run();
 
 		static application* handle_;
@@ -34,13 +35,19 @@ namespace cst {
 	public:
 
 		~application() = default;
+
 		void main();
+
+		virtual void start(){}
+		virtual void update() {}
+		virtual void stop(){}
+
 		void on_event(event&);
+
 		static auto& get() {
 			CST_ASSERT(handle_, "Application has not created yet, pleace excute function engine_run to create Chisato Engine Application first");
 			return *handle_;
 		}
-		
 
 
 		auto& window()	const { return *wnd_; }

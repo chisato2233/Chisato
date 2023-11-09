@@ -4,11 +4,17 @@
     <Filter Include="ChisatoCore">
       <UniqueIdentifier>{79DAFBA0-E58F-7496-6E84-6E6DDA386B9A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ChisatoCore\Async">
+      <UniqueIdentifier>{66E0B91D-D2F6-B7B3-1B6E-43D587C3883B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ChisatoCore\Events">
       <UniqueIdentifier>{3DE475DE-29C8-3634-9228-31877E2B21B6}</UniqueIdentifier>
     </Filter>
     <Filter Include="ChisatoCore\Layers">
       <UniqueIdentifier>{18CF58ED-04B3-1943-6D13-1496591604C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ChisatoCore\Layers\ImGui">
+      <UniqueIdentifier>{4236F690-2E5B-4511-57A6-2AA1432A442F}</UniqueIdentifier>
     </Filter>
     <Filter Include="ChisatoCore\NewEvent">
       <UniqueIdentifier>{14354AAC-00C4-D375-A9E2-E7709550E41B}</UniqueIdentifier>
@@ -19,15 +25,18 @@
     <Filter Include="Platforms">
       <UniqueIdentifier>{DDACA145-4917-56BC-9255-0762FEFE3311}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platforms\OpenGL">
-      <UniqueIdentifier>{719BB998-5D94-D8EA-86C6-BD6F721EB8F6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Platforms\Windows">
       <UniqueIdentifier>{17E40808-83FA-069E-CC71-92BF38C7D725}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Chisato.h" />
+    <ClInclude Include="src\ChisatoCore\Async\promise.h">
+      <Filter>ChisatoCore\Async</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Async\system.h">
+      <Filter>ChisatoCore\Async</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Core.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
@@ -46,8 +55,17 @@
     <ClInclude Include="src\ChisatoCore\Events\mouse_event.h">
       <Filter>ChisatoCore\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Layers\ImGui_layer.h">
-      <Filter>ChisatoCore\Layers</Filter>
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.h">
+      <Filter>ChisatoCore\Layers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_glfw.h">
+      <Filter>ChisatoCore\Layers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_opengl3.h">
+      <Filter>ChisatoCore\Layers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_opengl3_loader.h">
+      <Filter>ChisatoCore\Layers\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\Layer.h">
       <Filter>ChisatoCore\Layers</Filter>
@@ -60,9 +78,6 @@
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\NewEvent\events.h">
       <Filter>ChisatoCore\NewEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Tools\Coroutine.h">
-      <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h">
       <Filter>ChisatoCore\Tools</Filter>
@@ -100,15 +115,6 @@
     <ClInclude Include="src\ChisatoCore\window_base.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_glfw.h">
-      <Filter>Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3.h">
-      <Filter>Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\imgui_impl_opengl3_loader.h">
-      <Filter>Platforms\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platforms\Windows\input_from_Windows.h">
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
@@ -118,17 +124,29 @@
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ChisatoCore\Async\Coroutine.cpp">
+      <Filter>ChisatoCore\Async</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Async\system.cpp">
+      <Filter>ChisatoCore\Async</Filter>
+    </ClCompile>
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp">
       <Filter>ChisatoCore\Events</Filter>
     </ClCompile>
-    <ClCompile Include="src\ChisatoCore\Layers\ImGui_layer.cpp">
+    <ClCompile Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.cpp">
+      <Filter>ChisatoCore\Layers\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Layers\ImGui\ImGui_unity.cpp">
+      <Filter>ChisatoCore\Layers\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Layers\layer.cpp">
+      <Filter>ChisatoCore\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Layers\layer_stack.cpp">
       <Filter>ChisatoCore\Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp">
       <Filter>ChisatoCore\NewEvent</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ChisatoCore\Tools\Coroutine.cpp">
-      <Filter>ChisatoCore\Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp">
       <Filter>ChisatoCore\Tools</Filter>
@@ -144,12 +162,6 @@
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\input_base.cpp">
       <Filter>ChisatoCore</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\imgui_impl_glfw.cpp">
-      <Filter>Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\imgui_impl_opengl3.cpp">
-      <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp">
       <Filter>Platforms\Windows</Filter>

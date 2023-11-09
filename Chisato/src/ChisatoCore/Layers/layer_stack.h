@@ -2,6 +2,10 @@
 
 
 namespace cst {
+	class layer;
+	/*template<typename U,typename V>
+	concept same_ptr<V> = std::same_as<V, std::shared_ptr<typename V::elemeny_type>> && std::derived_from<U, typename V::element_type>;*/
+
 	class CSTAPI layer_stack {
 		std::vector<std::shared_ptr<layer>> layer_vec_;
 		std::vector<std::shared_ptr<layer>>::iterator stack_top_=layer_vec_.begin();
@@ -10,21 +14,17 @@ namespace cst {
 		auto begin	() const noexcept { return layer_vec_.begin();	}
 		auto end	() const noexcept { return layer_vec_.end();	}
 
-		void push		(const std::shared_ptr<layer>& layer) { stack_top_ = layer_vec_.emplace(stack_top_, layer), layer->on_attach(); }
-		void push_over	(const std::shared_ptr<layer>& layer) { layer_vec_.emplace_back(layer), layer->on_attach(); }
+		void push		(std::shared_ptr<layer> layer);
+		void push_over	(std::shared_ptr<layer> layer);
 
-		void pop() { layer_vec_.erase(stack_top_--); }
-		void pop_over() {
-			if (stack_top_ == layer_vec_.end() - 1) pop();
-			else layer_vec_.pop_back();
-		}
+		void pop();
+		void pop_over();
 
-		void erase(const std::shared_ptr<layer>& layer) {
-			const auto i = std::ranges::find(layer_vec_, layer);
-			if (i != layer_vec_.end()) {
-				layer_vec_.erase(i);
-				--stack_top_;
-			}
-		}
+		void erase(const std::shared_ptr<layer>& layer);
+		auto size()const->size_t { return layer_vec_.size(); }
+		void attach();
+		void detach();
+		void update();
+		void on_event(event& event);
 	};
 }
