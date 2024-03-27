@@ -2,6 +2,8 @@
 #include "imgui.h"
 #include"Chisatocore/Layers/Layer.h"
 #include "ChisatoCore/application.h"
+#include"glad/glad.h"
+#include"GLFW/glfw3.h"
 
 namespace cst {
     class CSTAPI application;

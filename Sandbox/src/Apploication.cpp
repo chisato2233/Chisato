@@ -1,6 +1,8 @@
 #include<Chisato.h>
 
 
+
+
 using namespace cst;
 
 struct ExampleLayer : layer {
@@ -25,12 +27,10 @@ class Sandbox : public application {
 public:
 	Sandbox() {}
 
-	void start() override{
-		layers().push(std::make_shared<ImGui_layer>());
-
+	void start() {
+		
 	}
 };
-
 
 
 int main() {

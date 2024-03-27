@@ -1,26 +1,30 @@
+#pragma once
+
+
 namespace cst {
-	namespace time {
-		using namespace std::chrono;
-		namespace {
-			time_point<steady_clock> start;
-			time_point<steady_clock> last_frame_time;
-			
-			nanoseconds deltaTime;
+	using game_time_point = std::chrono::duration<float>;
+	struct timer {
+
+		inline static std::chrono::time_point<std::chrono::steady_clock> start_time_point;
+		inline static game_time_point frame_time;
+
+		static void init() {
+			last_frame_time_ = start_time_point = std::chrono::steady_clock::now();
 		}
 
-		inline auto std_now()	{ return steady_clock::now() - start; }
-		inline auto std_delta() { return deltaTime; }
-		
-		inline auto now()	-> float { return duration_cast<milliseconds>(std_now()).	count() / 1000.f; }
-		inline auto delta() -> float { return duration_cast<milliseconds>(std_delta()).	count() / 1000.f; }
-
-		inline void init() { last_frame_time = start = steady_clock::now(); }
-
-		inline void update() {
-			auto now= steady_clock::now();
-			deltaTime = now - last_frame_time;
-			last_frame_time = now;
+		static void update() {
+			auto now = std::chrono::steady_clock::now();
+			frame_time = now - last_frame_time_;
+			last_frame_time_ = now;
 		}
-		
-	}
+
+		static auto now() -> game_time_point {
+			using namespace std::chrono;
+			return steady_clock::now() - start_time_point;
+		}
+		static auto delta() noexcept-> game_time_point { return frame_time; }
+	private:
+		inline static std::chrono::time_point<std::chrono::steady_clock> last_frame_time_;
+
+	};
 }

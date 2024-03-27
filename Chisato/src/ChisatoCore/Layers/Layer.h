@@ -1,5 +1,7 @@
 #pragma once
 #include"layer_stack.h"
+#include"layer_async_runtine.h"
+#include "Platforms/Windows/input_from_Windows.h"
 
 namespace cst {
 	
@@ -7,6 +9,7 @@ namespace cst {
 		friend class layer_stack;
 		std::string name_;
 		layer_stack sub_layer_stack_;
+		layer_runtime async_runtime_;
 
 		void static_attach() ;
 		void static_detach() ;
@@ -25,5 +28,6 @@ namespace cst {
 
 		auto get_name()const noexcept { return name_; }
 		auto& sub_layers() noexcept { return sub_layer_stack_; }
+		auto& async_runtime() noexcept { return async_runtime_.get(); }
 	};
 };

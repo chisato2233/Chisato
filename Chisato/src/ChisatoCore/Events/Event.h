@@ -4,6 +4,7 @@
 #include"ChisatoCore//Tools/Singleton.h"
 
 
+
 namespace cst {
 
 	namespace Tag {
@@ -24,7 +25,7 @@ namespace cst {
 	protected:
 		int tag_;
 	public:
-		bool is_active = true; //记录事件是否可用
+		bool is_active = true; //璁板綍浜嬩欢鏄惁鍙敤
 
 		event(int _tag = Tag::None)
 			:tag_(_tag) { }

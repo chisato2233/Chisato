@@ -1,0 +1,212 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineSystem.cmake:204 (message)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      The system is: Windows - 10.0.22631 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: A:/User/Programs/JB/CLion 2023.2.2/bin/mingw/bin/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+      
+      The C compiler identification is GNU, found in:
+        A:/Code/MyCode/Chisato/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdC/a.exe
+      
+...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: A:/User/Programs/Vistual Studio/Ide/VC/Tools/MSVC/14.38.33129/bin/Hostx64/x64/cl.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      2
+      Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33129 for x64
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      CMakeCXXCompilerId.cpp
+      Microsoft (R) Incremental Linker Version 14.38.33129.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      /out:CMakeCXXCompilerId.exe 
+      CMakeCXXCompilerId.obj 
+      LINK : fatal error LNK1104: cannot open file 'LIBCMT.lib'
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: A:/User/Programs/Vistual Studio/Ide/VC/Tools/MSVC/14.38.33129/bin/Hostx64/x64/cl.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33129 for x64
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      CMakeCXXCompilerId.cpp
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+      
+      The CXX compiler identification is MSVC, found in:
+        A:/Code/MyCode/Chisato/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/CMakeCXXCompilerId.obj
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:1153 (message)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:221 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Detecting CXX compiler /showIncludes prefix:
+        main.c
+        Note: including file: A:\\Code\\MyCode\\Chisato\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
+        
+      Found prefix "Note: including file: "
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "A:/Code/MyCode/Chisato/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-czouye"
+      binary: "A:/Code/MyCode/Chisato/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-czouye"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: A:/Code/MyCode/Chisato/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-czouye
+        
+        Run Build Command(s):A:/User/Programs/JB/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe -v cmTC_8bb86 && [1/2] "A:\\User\\Programs\\Vistual Studio\\Ide\\VC\\Tools\\MSVC\\14.38.33129\\bin\\Hostx64\\x64\\cl.exe"  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_8bb86.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_8bb86.dir\\ /FS -c "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
+        [2/2] cmd.exe /C "cd . && "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_8bb86.dir --rc="A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe" --mt="" --manifests  -- "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\ld.exe" /nologo CMakeFiles\\cmTC_8bb86.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_8bb86.exe /implib:cmTC_8bb86.lib /pdb:cmTC_8bb86.pdb /version:0.0 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        FAILED: cmTC_8bb86.exe 
+        cmd.exe /C "cd . && "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_8bb86.dir --rc="A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe" --mt="" --manifests  -- "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\ld.exe" /nologo CMakeFiles\\cmTC_8bb86.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_8bb86.exe /implib:cmTC_8bb86.lib /pdb:cmTC_8bb86.pdb /version:0.0 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        RC Pass 1: command "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe /fo CMakeFiles\\cmTC_8bb86.dir/manifest.res CMakeFiles\\cmTC_8bb86.dir/manifest.rc" failed (exit code 1) with the following output:
+        Usage: A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe [option(s)] [input-file] [output-file]
+         The options are:
+          -i --input=<file>            Name input file
+          -o --output=<file>           Name output file
+          -J --input-format=<format>   Specify input format
+          -O --output-format=<format>  Specify output format
+          -F --target=<target>         Specify COFF target
+             --preprocessor=<program>  Program to use to preprocess rc file
+             --preprocessor-arg=<arg>  Additional preprocessor argument
+          -I --include-dir=<dir>       Include directory when preprocessing rc file
+          -D --define <sym>[=<val>]    Define SYM when preprocessing rc file
+          -U --undefine <sym>          Undefine SYM when preprocessing rc file
+          -v --verbose                 Verbose - tells you what it's doing
+          -c --codepage=<codepage>     Specify default codepage
+          -l --language=<val>          Set language when reading rc file
+             --use-temp-file           Use a temporary file instead of popen to read
+                                       the preprocessor output
+             --no-use-temp-file        Use popen (default)
+          -r                           Ignored for compatibility with rc
+          @<file>                      Read options from <file>
+          -h --help                    Print this help message
+          -V --version                 Print version information
+        FORMAT is one of rc, res, or coff, and is deduced from the file name
+        extension if not specified.  A single file name is an input file.
+        No input-file is stdin, default rc.  No output-file is stdout, default rc.
+        A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe: supported targets: pe-x86-64 pei-x86-64 pe-bigobj-x86-64 elf64-x86-64 pe-i386 pei-i386 elf32-i386 elf32-iamcu pdb elf64-little elf64-big elf32-little elf32-big srec symbolsrec verilog tekhex binary ihex plugin
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "A:/User/Programs/JB/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeTestCXXCompiler.cmake:49 (try_compile)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Check for working CXX compiler: A:/User/Programs/Vistual Studio/Ide/VC/Tools/MSVC/14.38.33129/bin/Hostx64/x64/cl.exe"
+    directories:
+      source: "A:/Code/MyCode/Chisato/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9kq8nc"
+      binary: "A:/Code/MyCode/Chisato/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9kq8nc"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: A:/Code/MyCode/Chisato/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9kq8nc
+        
+        Run Build Command(s):A:/User/Programs/JB/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe -v cmTC_7c895 && [1/2] "A:\\User\\Programs\\Vistual Studio\\Ide\\VC\\Tools\\MSVC\\14.38.33129\\bin\\Hostx64\\x64\\cl.exe"  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_7c895.dir\\testCXXCompiler.cxx.obj /FdCMakeFiles\\cmTC_7c895.dir\\ /FS -c A:\\Code\\MyCode\\Chisato\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-9kq8nc\\testCXXCompiler.cxx
+        [2/2] cmd.exe /C "cd . && "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_7c895.dir --rc="A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe" --mt="" --manifests  -- "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\ld.exe" /nologo CMakeFiles\\cmTC_7c895.dir\\testCXXCompiler.cxx.obj  /out:cmTC_7c895.exe /implib:cmTC_7c895.lib /pdb:cmTC_7c895.pdb /version:0.0 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        FAILED: cmTC_7c895.exe 
+        cmd.exe /C "cd . && "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_7c895.dir --rc="A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe" --mt="" --manifests  -- "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\ld.exe" /nologo CMakeFiles\\cmTC_7c895.dir\\testCXXCompiler.cxx.obj  /out:cmTC_7c895.exe /implib:cmTC_7c895.lib /pdb:cmTC_7c895.pdb /version:0.0 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        RC Pass 1: command "A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe /fo CMakeFiles\\cmTC_7c895.dir/manifest.res CMakeFiles\\cmTC_7c895.dir/manifest.rc" failed (exit code 1) with the following output:
+        Usage: A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe [option(s)] [input-file] [output-file]
+         The options are:
+          -i --input=<file>            Name input file
+          -o --output=<file>           Name output file
+          -J --input-format=<format>   Specify input format
+          -O --output-format=<format>  Specify output format
+          -F --target=<target>         Specify COFF target
+             --preprocessor=<program>  Program to use to preprocess rc file
+             --preprocessor-arg=<arg>  Additional preprocessor argument
+          -I --include-dir=<dir>       Include directory when preprocessing rc file
+          -D --define <sym>[=<val>]    Define SYM when preprocessing rc file
+          -U --undefine <sym>          Undefine SYM when preprocessing rc file
+          -v --verbose                 Verbose - tells you what it's doing
+          -c --codepage=<codepage>     Specify default codepage
+          -l --language=<val>          Set language when reading rc file
+             --use-temp-file           Use a temporary file instead of popen to read
+                                       the preprocessor output
+             --no-use-temp-file        Use popen (default)
+          -r                           Ignored for compatibility with rc
+          @<file>                      Read options from <file>
+          -h --help                    Print this help message
+          -V --version                 Print version information
+        FORMAT is one of rc, res, or coff, and is deduced from the file name
+        extension if not specified.  A single file name is an input file.
+        No input-file is stdin, default rc.  No output-file is stdout, default rc.
+        A:\\User\\Programs\\JB\\CLion 2023.2.2\\bin\\mingw\\bin\\windres.exe: supported targets: pe-x86-64 pei-x86-64 pe-bigobj-x86-64 elf64-x86-64 pe-i386 pei-i386 elf32-i386 elf32-iamcu pdb elf64-little elf64-big elf32-little elf32-big srec symbolsrec verilog tekhex binary ihex plugin
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+...

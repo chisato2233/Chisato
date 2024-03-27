@@ -15,6 +15,13 @@ namespace cst {
 
 	window<platforms::Windows>::~window() { glfwDestroyWindow(wnd_ptr_); }
 
+
+	void window<platforms::Windows>::on_update() {
+		glfwPollEvents();
+		renderer_context_->swap_buffers();
+		
+	}
+
 	//init function
 	void window<platforms::Windows>::init(const wnd_props& props)  {
 		if (!s_GLFWInitialized) {
@@ -24,11 +31,12 @@ namespace cst {
 		}
 
 		wnd_ptr_ = glfwCreateWindow(static_cast<int>(data_.size.first), static_cast<int>(data_.size.second), data_.title.c_str(), nullptr, nullptr);
-		
-		glfwMakeContextCurrent(wnd_ptr_);
+		renderer_context_ = std::make_unique<opengl_renderer_context>(wnd_ptr_);
 
-		int _ = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-		CST_ASSERT(_ , "Could not initialize GLAD!!");
+		renderer_context_->init();
+
+
+
 
 		glfwSetWindowUserPointer(wnd_ptr_, &data_);
 		set_v_sync(true);

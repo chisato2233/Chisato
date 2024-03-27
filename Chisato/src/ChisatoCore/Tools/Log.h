@@ -28,11 +28,38 @@ namespace cst::debug {
 		static void trace		(std::string_view s, auto&&... args) { L::p_logger->trace		(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
 		static void critical	(std::string_view s, auto&&... args) { L::p_logger->critical	(std::vformat(s, std::make_format_args(std::forward<decltype(args)>(args)...))); }
 
-		static void info (auto&&... args) {
+		static void info_arg (auto&&... args) {
 			std::ostringstream oss;
 			[[maybe_unused]] int _[]{ (oss << std::forward<decltype(args)>(args) << ' ', 0)... };
 			L::p_logger->info(oss.str());
 		}
+		static void critical_arg(auto&&... args) {
+			std::ostringstream oss;
+			[[maybe_unused]] int _[]{ (oss << std::forward<decltype(args)>(args) << ' ', 0)... };
+			L::p_logger->critical(oss.str());
+		}
+
+		static void warn_arg(auto&&... args) {
+			std::ostringstream oss;
+			((oss << std::forward<decltype(args)>(args) << ' '), ...);
+			L::p_logger->warn(oss.str());
+		}
+
+		static void error_arg(auto&&... args) {
+			std::ostringstream oss;
+			((oss << std::forward<decltype(args)>(args) << ' '), ...);
+			L::p_logger->error(oss.str());
+		}
+
+		static void trace_arg(auto&&... args) {
+			std::ostringstream oss;
+			((oss << std::forward<decltype(args)>(args) << ' '), ...);
+			L::p_logger->trace(oss.str());
+		}
+
+
+
+
 		/*static void warn		(auto&&... args) { L::p_logger->warn		(std::forward<decltype(args)>(args)...); }
 		static void error		(auto&&... args) { L::p_logger->error		(std::forward<decltype(args)>(args)...); }
 		static void trace		(auto&&... args) { L::p_logger->trace		(std::forward<decltype(args)>(args)...); }

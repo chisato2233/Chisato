@@ -24,7 +24,8 @@ namespace cst {
 	void layer_stack::detach() { for (auto& i : layer_vec_) i->static_detach(); }
 
 	void layer_stack::update() {
-		for (auto& i : layer_vec_) i->static_update();
+		for (auto& i : layer_vec_) 
+			i->static_update();
 	}
 
 	void layer_stack::on_event(event& event) {

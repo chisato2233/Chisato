@@ -1,6 +1,6 @@
 #pragma once
 
-//Í³Ò»µÄChisato¿â¡£
+//ç»Ÿä¸€çš„Chisatoåº“ã€‚
 #include"ChisatoCore/application.h"
 #include<ChisatoCore/Core.h>
 #include<ChisatoCore/Events/event_lib.h>
@@ -10,7 +10,7 @@
 #include<ChisatoCore/platforms.h>
 
 
-/*************************************Ö÷º¯Êý***********************************/
+/*************************************ä¸»å‡½æ•°***********************************/
 #ifdef CST_PLATFORM_WINDOWS
 
 //int main() {

@@ -3,7 +3,7 @@
 
 namespace cst{
 	
-	class CSTAPI mouse_event :public event {
+	class CSTAPI mouse_event :public event{
 	protected:
 		mouse_event(int t = Tag::Input | Tag::Mouse) : event(t) { }
 	};

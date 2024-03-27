@@ -1,9 +1,17 @@
-﻿#include "ImGui_layer.h"
+﻿#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+
+
+#include "ImGui_layer.h"
 
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
 #include"ChisatoCore/application.h"
+#include"GLFW/glfw3.h"
+
+
 //#include "imgui_impl_glfw.h"
 
 namespace cst {
@@ -56,7 +64,7 @@ namespace cst {
 
 		io.DisplaySize = ImVec2(static_cast<float>(application::get().window().get_w()),static_cast<float>(application::get().window().get_h()));
 		
-		io.DeltaTime = max(time::delta(), 1.f / 60.f);
+		io.DeltaTime = max(timer::delta().count(), 1.f / 60.f);
 
 		ImGui_ImplGlfw_NewFrame();
 

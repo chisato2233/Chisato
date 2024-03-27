@@ -16,8 +16,11 @@
     <Filter Include="ChisatoCore\Layers\ImGui">
       <UniqueIdentifier>{4236F690-2E5B-4511-57A6-2AA1432A442F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ChisatoCore\NewEvent">
-      <UniqueIdentifier>{14354AAC-00C4-D375-A9E2-E7709550E41B}</UniqueIdentifier>
+    <Filter Include="ChisatoCore\Layers\Render">
+      <UniqueIdentifier>{87C23FC4-F384-734E-3C35-02DBA8364C2C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ChisatoCore\Rendering">
+      <UniqueIdentifier>{06CFD999-723B-9594-3B2F-2DF2A75AB7FC}</UniqueIdentifier>
     </Filter>
     <Filter Include="ChisatoCore\Tools">
       <UniqueIdentifier>{B9550F1F-256C-0DB5-6EE3-98D6DA38DE3C}</UniqueIdentifier>
@@ -25,16 +28,28 @@
     <Filter Include="Platforms">
       <UniqueIdentifier>{DDACA145-4917-56BC-9255-0762FEFE3311}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platforms\OpenGL">
+      <UniqueIdentifier>{719BB998-5D94-D8EA-86C6-BD6F721EB8F6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platforms\Windows">
       <UniqueIdentifier>{17E40808-83FA-069E-CC71-92BF38C7D725}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Chisato.h" />
-    <ClInclude Include="src\ChisatoCore\Async\promise.h">
+    <ClInclude Include="src\ChisatoCore\Async\AsyncLib.h">
       <Filter>ChisatoCore\Async</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Async\system.h">
+    <ClInclude Include="src\ChisatoCore\Async\awaiter.h">
+      <Filter>ChisatoCore\Async</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Async\co_task.h">
+      <Filter>ChisatoCore\Async</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Async\promise_base.h">
+      <Filter>ChisatoCore\Async</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Async\runtime.h">
       <Filter>ChisatoCore\Async</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Core.h">
@@ -70,14 +85,50 @@
     <ClInclude Include="src\ChisatoCore\Layers\Layer.h">
       <Filter>ChisatoCore\Layers</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layers\Render\Drawable.h">
+      <Filter>ChisatoCore\Layers\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layers\Render\Render_layer.h">
+      <Filter>ChisatoCore\Layers\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layers\layer_async_runtine.h">
+      <Filter>ChisatoCore\Layers</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\layer_lib.h">
       <Filter>ChisatoCore\Layers</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h">
       <Filter>ChisatoCore\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\NewEvent\events.h">
-      <Filter>ChisatoCore\NewEvent</Filter>
+    <ClInclude Include="src\ChisatoCore\Macro.h">
+      <Filter>ChisatoCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\Renderer.h">
+      <Filter>ChisatoCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\buffer.h">
+      <Filter>ChisatoCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\orthographic_camera.h">
+      <Filter>ChisatoCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\render_command.h">
+      <Filter>ChisatoCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\renderer_api.h">
+      <Filter>ChisatoCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\renderer_context.h">
+      <Filter>ChisatoCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\shader.h">
+      <Filter>ChisatoCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\vertex_array.h">
+      <Filter>ChisatoCore\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\Delegate.h">
+      <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h">
       <Filter>ChisatoCore\Tools</Filter>
@@ -91,10 +142,16 @@
     <ClInclude Include="src\ChisatoCore\Tools\Singleton.h">
       <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\StateMachine.h">
+      <Filter>ChisatoCore\Tools</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Time.h">
       <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\ToolLib.h">
+      <Filter>ChisatoCore\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\property.h">
       <Filter>ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\application.h">
@@ -103,7 +160,7 @@
     <ClInclude Include="src\ChisatoCore\engine_run.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\input_base.h">
+    <ClInclude Include="src\ChisatoCore\input.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\keycode.h">
@@ -115,6 +172,21 @@
     <ClInclude Include="src\ChisatoCore\window_base.h">
       <Filter>ChisatoCore</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\gl_buffer.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\gl_renderer_impl.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\gl_shader.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\gl_vertex_array.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\opengl_renderer_context.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platforms\Windows\input_from_Windows.h">
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
@@ -124,12 +196,6 @@
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ChisatoCore\Async\Coroutine.cpp">
-      <Filter>ChisatoCore\Async</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ChisatoCore\Async\system.cpp">
-      <Filter>ChisatoCore\Async</Filter>
-    </ClCompile>
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp">
       <Filter>ChisatoCore\Events</Filter>
     </ClCompile>
@@ -139,14 +205,17 @@
     <ClCompile Include="src\ChisatoCore\Layers\ImGui\ImGui_unity.cpp">
       <Filter>ChisatoCore\Layers\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\ChisatoCore\Layers\Render\Render_layer.cpp">
+      <Filter>ChisatoCore\Layers\Render</Filter>
+    </ClCompile>
     <ClCompile Include="src\ChisatoCore\Layers\layer.cpp">
       <Filter>ChisatoCore\Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\Layers\layer_stack.cpp">
       <Filter>ChisatoCore\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="src\ChisatoCore\NewEvent\events.cpp">
-      <Filter>ChisatoCore\NewEvent</Filter>
+    <ClCompile Include="src\ChisatoCore\Rendering\render_object.cpp">
+      <Filter>ChisatoCore\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\Tools\Exception.cpp">
       <Filter>ChisatoCore\Tools</Filter>
@@ -158,9 +227,6 @@
       <Filter>ChisatoCore\Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\ChisatoCore\application.cpp">
-      <Filter>ChisatoCore</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ChisatoCore\input_base.cpp">
       <Filter>ChisatoCore</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp">

@@ -2,6 +2,7 @@
 #include <pch.h>
 
 namespace cst {
+	struct renderer_context;
 	using uint = unsigned int;
 	
 	struct wnd_props {
@@ -17,11 +18,12 @@ namespace cst {
 
 		virtual void on_update() = 0;
 
-		virtual uint					get_w()			const noexcept = 0;
-		virtual uint					get_h()			const noexcept = 0;
-		virtual std::pair<uint, uint>	get_size()		const noexcept = 0;
-		virtual void*					get_wnd_ptr()	const noexcept = 0;
-		virtual std::string				get_name()		const noexcept = 0;
+		virtual uint					get_w()					const noexcept = 0;
+		virtual uint					get_h()					const noexcept = 0;
+		virtual std::pair<uint, uint>	get_size()				const noexcept = 0;
+		virtual void*					get_wnd_ptr()			const noexcept = 0;
+		virtual std::string				get_name()				const noexcept = 0;
+		virtual renderer_context*		get_renderer_context()	const noexcept = 0;
 
 		virtual void set_event_callback	(const std::function<void(event&)>& callback)	= 0;
 		virtual void set_v_sync			(bool enabled)									= 0;

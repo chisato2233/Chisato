@@ -28,13 +28,13 @@
 #include<variant>
 
 //opengl
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
 //#include <imgui.h>
 
 
 //my lib
 #include<ChisatoCore/Core.h>
+#include<ChisatoCore/Macro.h>
 #include<ChisatoCore/Events/event_lib.h>
 //#include<ChisatoCore/Layers/layer_lib.h>
 #include<ChisatoCore/Tools/ToolLib.h>
