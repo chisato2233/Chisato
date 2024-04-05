@@ -1,0 +1,56 @@
+cmake_minimum_required(VERSION 3.12)
+project(Imgui)
+
+set(CMAKE_CXX_STANDARD 17)
+
+# Set the output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE})
+
+# Define the source files
+add_library(
+    imgui STATIC
+    imconfig.h
+    imgui.h
+    imgui.cpp
+    imgui_draw.cpp
+    imgui_internal.h
+    imgui_tables.cpp
+    imgui_widgets.cpp
+    imstb_rectpack.h
+    imstb_textedit.h
+    imstb_truetype.h
+    imgui_demo.cpp
+)
+
+# Define preprocessor definitions
+add_compile_definitions(IMGUI_IMPL_OPENGL_LOADER_CUSTOM)
+
+# Windows specific settings
+if(WIN32)
+    add_compile_definitions(_WIN32_WINNT=0x0601)  # Set to target Windows 7 and later
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_CXX_EXTENSIONS OFF)
+endif()
+
+# Enable position-independent code for Linux
+if(UNIX)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
+
+# Define the library
+add_library(Imgui STATIC ${SOURCE_FILES})
+
+# Debug configuration settings
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(Imgui PRIVATE -g)
+    target_compile_definitions(Imgui PRIVATE DEBUG)
+endif()
+
+# Release and Distribution configuration settings
+if(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_BUILD_TYPE STREQUAL "Dist")
+    target_compile_options(Imgui PRIVATE -O3)
+    target_compile_definitions(Imgui PRIVATE NDEBUG)
+endif()
