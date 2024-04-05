@@ -8,7 +8,7 @@
 namespace cst {
     class CSTAPI application;
 
-	class CSTAPI ImGui_layer : public layer {
+	class CSTAPI ImGui_layer final : public layer {
 	public:
         ImGui_layer();
 
@@ -16,6 +16,11 @@ namespace cst {
 		void on_update() override;
         void on_detach() override;
 		void on_event(event& event) override;
+        
+        void draw_ui();
+
+	public:
+        inline static delegate<void()> UI_drawer;
 	};
 
 

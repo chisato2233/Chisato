@@ -2,14 +2,16 @@
 #include"event.h"
 #include<ChisatoCore/Tools/Log.h>
 
+#include "ChisatoCore/keycode.h"
+
 namespace cst {
 
 		class CSTAPI key_event :public event {
 		protected:
-			int keycode_;
+			codes::code<codes::key> keycode_;
 			key_event (int _code,int _tag = Tag::None) : event(_tag), keycode_(_code) { }
 		public:
-			int get_key() const noexcept { return keycode_; }
+			auto get_key() const noexcept { return keycode_; }
 		};
 
 		struct CSTAPI key_down_event : key_event {

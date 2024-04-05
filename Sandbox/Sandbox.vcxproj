@@ -78,7 +78,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_DEBUGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;CST_DEBUGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -95,7 +95,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -116,7 +116,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>

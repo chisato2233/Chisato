@@ -145,6 +145,7 @@ workspace "Chisato"
 
 			defines{
 				"CST_PLATFORM_WINDOWS",
+				"GLFW_INCLUDE_NONE",
 			}
 
 		filter "configurations:Debug"

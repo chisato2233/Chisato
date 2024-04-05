@@ -9,6 +9,7 @@
 #include "imgui_impl_opengl3.h"
 
 #include"ChisatoCore/application.h"
+#include "ChisatoCore/UI/test.h"
 #include"GLFW/glfw3.h"
 
 
@@ -56,26 +57,38 @@ namespace cst {
 	
 	void ImGui_layer::on_update() {
 		auto window = static_cast<GLFWwindow*>(application::get().window().get_wnd_ptr());
-		bool show = true;
+		
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 
 		ImGuiIO& io = ImGui::GetIO();
 
+		//io.Fonts->AddFontFromFileTTF("path/to/your/font.ttf", 16.0f);
+		//if (ImGui::GetIO().Fonts->IsBuilt()) {
+		//	ImGui_ImplOpenGL3_DestroyFontsTexture();
+		//}
+		//ImGuiFreeType::BuildFontAtlas(io.Fonts, ImGuiFreeType::ForceAutoHint);
+		//if (ImGui::GetIO().Fonts->IsBuilt()) {
+		//	ImGui_ImplOpenGL3_CreateFontsTexture();
+		//}
+
+
+
 		io.DisplaySize = ImVec2(static_cast<float>(application::get().window().get_w()),static_cast<float>(application::get().window().get_h()));
 		
 		io.DeltaTime = max(timer::delta().count(), 1.f / 60.f);
+
+
+
 
 		ImGui_ImplGlfw_NewFrame();
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
-		
+		//-------------------------
+		draw_ui();
 
-
-		ImGui::ShowDemoWindow(&show);
-
-		//Render----------------------------------------------------------------------------------------------------------------
+		//--------------------------
 		ImGui::Render();
 
 
@@ -94,10 +107,10 @@ namespace cst {
 			auto& io = ImGui::GetIO();
 			auto& input = application::get().input();
 
-			io.AddKeyEvent(ImGuiMod_Ctrl,	input.is_key_pressed(GLFW_KEY_LEFT_CONTROL)	|| input.is_key_pressed(GLFW_KEY_RIGHT_CONTROL));
-			io.AddKeyEvent(ImGuiMod_Shift,	input.is_key_pressed(GLFW_KEY_LEFT_SHIFT)	|| input.is_key_pressed(GLFW_KEY_RIGHT_SHIFT));
-			io.AddKeyEvent(ImGuiMod_Alt,	input.is_key_pressed(GLFW_KEY_LEFT_ALT)		|| input.is_key_pressed(GLFW_KEY_RIGHT_ALT));
-			io.AddKeyEvent(ImGuiMod_Super,	input.is_key_pressed(GLFW_KEY_LEFT_SUPER)	|| input.is_key_pressed(GLFW_KEY_RIGHT_SUPER));
+			io.AddKeyEvent(ImGuiMod_Ctrl,	input.is_pressed(static_cast<key_code_map>(GLFW_KEY_LEFT_CONTROL))	|| input.is_pressed(static_cast<key_code_map>(GLFW_KEY_RIGHT_CONTROL)));
+			io.AddKeyEvent(ImGuiMod_Shift,	input.is_pressed(static_cast<key_code_map>(GLFW_KEY_LEFT_SHIFT))	|| input.is_pressed(static_cast<key_code_map>(GLFW_KEY_RIGHT_SHIFT)));
+			io.AddKeyEvent(ImGuiMod_Alt,	input.is_pressed(static_cast<key_code_map>(GLFW_KEY_LEFT_ALT))		|| input.is_pressed(static_cast<key_code_map>(GLFW_KEY_RIGHT_ALT)));
+			io.AddKeyEvent(ImGuiMod_Super,	input.is_pressed(static_cast<key_code_map>(GLFW_KEY_LEFT_SUPER))	|| input.is_pressed(static_cast<key_code_map>(GLFW_KEY_RIGHT_SUPER)));
 		};
 		//App Event*******************************************************************
 		m.Dispatch<window_resize_event>([](auto& e) {
@@ -143,14 +156,14 @@ namespace cst {
 		m.Dispatch<key_down_event>([modifier](const key_down_event& e) {
 			auto& io = ImGui::GetIO();
 			modifier();
-			io.AddKeyEvent(translate(e.get_key()), GLFW_PRESS);
+			io.AddKeyEvent(translate((int)e.get_key().val), GLFW_PRESS);
 			return false;
 		});
 
 		m.Dispatch<key_up_event>([modifier](const key_up_event& e) {
 			auto& io = ImGui::GetIO();
 			modifier();
-			io.AddKeyEvent(translate(e.get_key()), GLFW_RELEASE);
+			io.AddKeyEvent(translate((int)e.get_key().val), GLFW_RELEASE);
 			return false;
 		});
 
@@ -159,11 +172,33 @@ namespace cst {
 			return false;
 		});
 	}
-	
-	
+
 	void ImGui_layer::on_detach() {
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui::DestroyContext();
 	}
+
+	void ImGui_layer::draw_ui() {
+		bool show = true;
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize |
+			ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings |
+			ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoBackground;
+
+		ImGui::Begin("Overlay", nullptr, window_flags);
+		//ImGui::SetWindowPos(ImVec2(20, 20)); // 根据需要调整位置
+		ImGui::SetWindowFontScale(3); // 根据需要调整字体大小
+
+
+		ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "FPS: %f", 1/timer::delta().count()); // 红色
+		
+		ImGui::End();
+
+
+		ImGui::ShowDemoWindow(&show);
+
+		UI_drawer();
+	}
+
+
 
 }

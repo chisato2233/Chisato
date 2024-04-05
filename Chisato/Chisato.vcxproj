@@ -168,6 +168,7 @@
     <ClInclude Include="src\ChisatoCore\Events\key_event.h" />
     <ClInclude Include="src\ChisatoCore\Events\mouse_event.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_freetype.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_glfw.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_opengl3_loader.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\ChisatoCore\Layers\layer_lib.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h" />
     <ClInclude Include="src\ChisatoCore\Macro.h" />
+    <ClInclude Include="src\ChisatoCore\Rendering\matearial.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\Renderer.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\buffer.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\orthographic_camera.h" />
@@ -200,6 +202,7 @@
     <ClInclude Include="src\ChisatoCore\input.h" />
     <ClInclude Include="src\ChisatoCore\keycode.h" />
     <ClInclude Include="src\ChisatoCore\platforms.h" />
+    <ClInclude Include="src\ChisatoCore\UI\test.h" />
     <ClInclude Include="src\ChisatoCore\window_base.h" />
     <ClInclude Include="src\Platforms\OpenGL\gl_buffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\gl_renderer_impl.h" />
@@ -222,6 +225,7 @@
     <ClCompile Include="src\ChisatoCore\Tools\Log.cpp" />
     <ClCompile Include="src\ChisatoCore\Tools\Object.cpp" />
     <ClCompile Include="src\ChisatoCore\application.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\gl_shader.cpp" />
     <ClCompile Include="src\Platforms\Windows\input_from_Windows.cpp" />
     <ClCompile Include="src\Platforms\Windows\window_from_Windows.cpp" />
     <ClCompile Include="src\pch.cpp">

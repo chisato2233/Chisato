@@ -1,0 +1,46 @@
+# 设置这个项目为库
+
+file(GLOB_RECURSE CHISATO_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+
+add_library(Chisato SHARED
+    ./src/pch.h
+    ./src/pch.cpp
+ ${CHISATO_SOURCES}
+)
+
+target_include_directories(Chisato PUBLIC
+    "${PROJECT_SOURCE_DIR}/src"
+    "${spdlog_DIR}"
+    "${GLFW_DIR}"
+    "${GLAD_DIR}"
+    "${Imgui_DIR}"
+    "${glm_DIR}"
+)
+
+target_compile_definitions(Chisato PRIVATE
+    CST_PLATFORM_WINDOWS
+    CST_BUILD_DLL
+    GLFW_INCLUDE_NONE
+    IMGUI_IMPL_OPENGL_LOADER_CUSTOM
+)
+
+target_link_libraries(Chisato
+    glfw
+    opengl32
+    dwmapi
+    imgui
+    glad
+    # 其他链接库
+)
+
+# 针对不同的配置设置不同的编译选项
+target_compile_options(Chisato PRIVATE
+    $<$<CONFIG:Debug>:-DCST_DEBUGS -DCST_ASSERT_ENABLE>
+    $<$<CONFIG:Release>:-DCST_RELEASE>
+    $<$<CONFIG:Dist>:-DCST_DIST>
+)
+
+# 配置后处理命令
+add_custom_command(TARGET Chisato POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Chisato> "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Sandbox"
+)

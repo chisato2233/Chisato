@@ -49,7 +49,8 @@ namespace cst {
 			return *next_delegate_;
 		}
 
-		auto add(func_type&& f) {
+		template<std::convertible_to<func_type> F>
+		auto add(F&& f) {
 			func_map_.insert({ ++next_func_id_, std::move(f) });
 			return next_func_id_ - 1;
 		}
@@ -67,17 +68,21 @@ namespace cst {
 		void unfreeze() { is_frozen_ = false; }
 
 		auto call_all(Args&&... args) -> typename delegate_result<Re>::type {
-			if (!is_frozen_) ++call_count_;
+			if (!is_frozen_) {
+				++call_count_;
+				_call_next(std::forward<Args>(args)...);
+			}
 
-			if (is_banned || empty() || is_frozen_)
+			if (is_banned || empty() || is_frozen_) {
 				return delegate_result<Re>::null();
+			}
 
 			_update_erase_queue();
-			return _call_next(std::forward<Args>(args)...), _for_each_call(std::forward<Args>(args)...);
+			return _for_each_call(std::forward<Args>(args)...);
 		}
 
-
-		auto& operator +=(func_type&& f) {
+		template<std::convertible_to<func_type> F>
+		auto& operator +=(F&& f) {
 			add(std::move(f));
 			return *this;
 		}
@@ -115,7 +120,7 @@ namespace cst {
 		}
 
 		auto _update_erase_queue() {
-			while (!erase_queue_.empty() && call_count_ <= erase_queue_.top().index) {
+			while (!erase_queue_.empty() && call_count_ >= erase_queue_.top().index) {
 				func_map_.erase(erase_queue_.top().get<0>());
 				erase_queue_.pop();
 			}

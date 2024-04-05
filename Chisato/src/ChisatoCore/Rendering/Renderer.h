@@ -1,4 +1,5 @@
 #pragma once
+#include "matearial.h"
 #include "orthographic_camera.h"
 #include"renderer_api.h"
 #include "render_command.h"
@@ -14,10 +15,11 @@ namespace cst {
 		}
 
 
-		static void submit(rptr<vertex_array> va,rptr<shader> shader) {
+		static void submit(rptr<vertex_array> va,rptr<rendering::material> material,glm::mat4 trans_matrix = glm::mat4{1}) {
 			va->bind();
-			shader->bind();
-			shader->set_uniform_matrix("uVpMat", scene_data.get_vp_mat());
+			material->bind();
+			material->get_shader().set_uniform_matrix4("uVpMat", scene_data.get_vp_mat());
+			material->get_shader().set_uniform_matrix4("uTransMat", trans_matrix);
 			render_command::draw_index(va);
 		}
 

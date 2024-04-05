@@ -1,7 +1,7 @@
 #pragma once
 #include"pch.h"
 #include"ChisatoCore/Core.h"
-#include"ChisatoCore//Tools/Singleton.h"
+
 
 
 

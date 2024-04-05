@@ -97,7 +97,7 @@ namespace cst {
 					element.size = element.type.size * element.type.count;
 					element.count = element.type.count;
 					element.gl_type = element.type.gl_type;
-					debug::log<>::trace_arg(shader_type::Mat<4>.gl_type);
+					
 				}
 
 				element.offset = offset;

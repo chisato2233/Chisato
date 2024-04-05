@@ -184,7 +184,7 @@ namespace cst::async{
 
 
 	template<standard_awaitable A, standard_awaitable... B>
-	constexpr auto operator||(A&& a, multi_awaiter<B...>&& b) {
+	constexpr auto operator|(A&& a, multi_awaiter<B...>&& b) {
 		return _create_multi_awaiter(
 			std::forward<A>(a),
 			std::forward<multi_awaiter<B...>>(b),
@@ -193,7 +193,7 @@ namespace cst::async{
 	}
 
 	template<standard_awaitable A, standard_awaitable... B>
-	constexpr auto operator||(multi_awaiter<B...>&& b, A&& a) {
+	constexpr auto operator|(multi_awaiter<B...>&& b, A&& a) {
 		return _create_multi_awaiter(
 			std::forward<multi_awaiter<B...>>(b),
 			std::forward<A>(a),
@@ -205,7 +205,7 @@ namespace cst::async{
 		requires
 		(!std::is_base_of_v<_multi_awaiter_tag, A>) &&
 		(!std::is_base_of_v<_multi_awaiter_tag, B>)
-		constexpr auto operator||(A&& a, B&& b) {
+		constexpr auto operator|(A&& a, B&& b) {
 		return multi_awaiter<A, B>{std::forward<A>(a), std::forward<B>(b)};
 	}
 
@@ -326,7 +326,7 @@ namespace cst::async{
 
 	// 单个awaitable与unit_awaiter组合的运算符重载
 	template<standard_awaitable A, standard_awaitable... B>
-	constexpr auto operator&&(A&& a, unit_awaiter<B...>&& b) {
+	constexpr auto operator&(A&& a, unit_awaiter<B...>&& b) {
 		return _create_unit_awaiter(
 			std::forward<A>(a),
 			std::forward<unit_awaiter<B...>>(b),
@@ -336,7 +336,7 @@ namespace cst::async{
 
 	// unit_awaiter与单个awaitable组合的运算符重载
 	template<standard_awaitable A, standard_awaitable... B>
-	constexpr auto operator&&(unit_awaiter<B...>&& b, A&& a) {
+	constexpr auto operator&(unit_awaiter<B...>&& b, A&& a) {
 		return _create_unit_awaiter(
 			std::forward<unit_awaiter<B...>>(b),
 			std::forward<A>(a),
@@ -346,7 +346,7 @@ namespace cst::async{
 
 	// 两个awaitable组合成unit_awaiter的运算符重载
 	template<standard_awaitable A, standard_awaitable B>
-	constexpr auto operator&&(A&& a, B&& b) requires
+	constexpr auto operator&(A&& a, B&& b) requires
 		(!std::is_base_of_v<_unit_awaiter_tag, A>) &&
 		(!std::is_base_of_v<_unit_awaiter_tag, B>)
 	{
@@ -374,11 +374,11 @@ namespace cst::async{
 
 		_delegate_awaiter(_delegate_impl<Re,Args...>* delegate_ptr) :delegate_{delegate_ptr}{}
 
-		auto await_resume()noexcept {
-			
+		auto await_resume()noexcept ->opt<tuple<std::remove_cvref_t<Args&&>...>> {
+			return args_;
 		}
 
-		bool await_ready() const { return delegate_->empty(); }
+		bool await_ready() const { return false; }
 		template<class P>
 		void await_suspend(std::coroutine_handle<P> caller) {
 			auto rt = caller.promise().runtime_ref;
@@ -386,7 +386,8 @@ namespace cst::async{
 
 			rt->suspend_task(tk.get());
 
-			auto id = delegate_->on_call().add( [=,this](auto&&... values){
+			auto id = delegate_->on_call().add( [=,this]<class... Args2>(Args2&&... values){
+				args_.emplace(std::make_tuple(values...));
 				rt->resume_task(tk.get());
 			});
 			delegate_->on_call().delay_remove(id);
@@ -394,32 +395,42 @@ namespace cst::async{
 
 	private:
 		_delegate_impl<Re, Args...>* delegate_ = nullptr;
+		opt<tuple<std::remove_cvref_t<Args&&>...>> args_{};
 		
 	};
 
 	
 	
 	template<class Re, class... Args, standard_awaitable Awaitable>
-	constexpr auto operator||(_delegate_impl<Re, Args...>& delegate, Awaitable&& awaitable) {
-		return _delegate_awaiter<Re, Args...>{&delegate} || std::forward<Awaitable>(awaitable);
+	constexpr auto operator|(_delegate_impl<Re, Args...>& delegate, Awaitable&& awaitable) {
+		return _delegate_awaiter<Re, Args...>{&delegate} | std::forward<Awaitable>(awaitable);
 	}
 
 	template<class Re, class... Args, standard_awaitable Awaitable>
-	constexpr auto operator||(Awaitable&& awaitable, _delegate_impl<Re, Args...>& delegate) {
-		return std::forward<Awaitable>(awaitable) || _delegate_awaiter<Re, Args...>{&delegate};
+	constexpr auto operator|(Awaitable&& awaitable, _delegate_impl<Re, Args...>& delegate) {
+		return std::forward<Awaitable>(awaitable) | _delegate_awaiter<Re, Args...>{&delegate};
 	}
 	template<class Re, class... Args, standard_awaitable Awaitable>
-	constexpr auto operator&&(_delegate_impl<Re, Args...>& delegate, Awaitable&& awaitable) {
-		return _delegate_awaiter<Re, Args...>{&delegate} && std::forward<Awaitable>(awaitable);
+	constexpr auto operator&(_delegate_impl<Re, Args...>& delegate, Awaitable&& awaitable) {
+		return _delegate_awaiter<Re, Args...>{&delegate} & std::forward<Awaitable>(awaitable);
 	}
 
 	template<class Re, class... Args, standard_awaitable Awaitable>
-	constexpr auto operator&&(Awaitable&& awaitable, _delegate_impl<Re, Args...>& delegate) {
-		return std::forward<Awaitable>(awaitable) && _delegate_awaiter<Re, Args...>{&delegate};
+	constexpr auto operator&(Awaitable&& awaitable, _delegate_impl<Re, Args...>& delegate) {
+		return std::forward<Awaitable>(awaitable) & _delegate_awaiter<Re, Args...>{&delegate};
 	}
 
+	template<class Re1, class... Args1,class Re2,class... Args2>
+	constexpr auto operator|(_delegate_impl<Re1,Args1...>& delegate1, _delegate_impl<Re2, Args2...>& delegate2) {
+		return _delegate_awaiter<Re1, Args1...>{&delegate1} |  _delegate_awaiter<Re2, Args2...>{&delegate2};
+	}
 
+	template<class Re1, class... Args1, class Re2, class... Args2>
+	constexpr auto operator&(_delegate_impl<Re1, Args1...>& delegate1, _delegate_impl<Re2, Args2...>& delegate2) {
+		return _delegate_awaiter<Re1, Args1...>{&delegate1} &_delegate_awaiter<Re2, Args2...>{&delegate2};
+	}
 
+	
 
 
 
@@ -455,31 +466,58 @@ namespace cst::async{
 	
 	
 	template<class T, standard_awaitable Awaitable>
-	constexpr auto operator||(co_task<T>&& task, Awaitable&& awaitable) {
-		return _co_task_awaiter<T>{&task} || std::forward<Awaitable>(awaitable);
+	constexpr auto operator|(co_task<T>&& task, Awaitable&& awaitable) {
+		return _co_task_awaiter<T>{&task} | std::forward<Awaitable>(awaitable);
 	}
 
 	template<class T, standard_awaitable Awaitable>
-	constexpr auto operator||(Awaitable&& awaitable, co_task<T>&& task) {
-		return std::forward<Awaitable>(awaitable) || _co_task_awaiter<T>{&task};
+	constexpr auto operator|(Awaitable&& awaitable, co_task<T>&& task) {
+		return std::forward<Awaitable>(awaitable) | _co_task_awaiter<T>{&task};
 	}
 
 	template<class T, standard_awaitable Awaitable>
-	constexpr auto operator&&(co_task<T>&& task, Awaitable&& awaitable) {
-		return _co_task_awaiter<T>{&task}&& std::forward<Awaitable>(awaitable);
+	constexpr auto operator&(co_task<T>&& task, Awaitable&& awaitable) {
+		return _co_task_awaiter<T>{&task} & std::forward<Awaitable>(awaitable);
 	}
 
 	template<class T, standard_awaitable Awaitable>
-	constexpr auto operator&&(Awaitable&& awaitable, co_task<T>&& task) {
-		return std::forward<Awaitable>(awaitable) && _co_task_awaiter<T>{&task};
+	constexpr auto operator&(Awaitable&& awaitable, co_task<T>&& task) {
+		return std::forward<Awaitable>(awaitable) & _co_task_awaiter<T>{&task};
 	}
 	
-	
+
+	template<class T1,class T2>
+	constexpr auto operator|(co_task<T1>&& task1, co_task<T2>& task2) {
+		return _co_task_awaiter<T1>{&task1} | _co_task_awaiter<T1>{&task2};
+	}
+
+
+	template<class T1,class T2>
+	constexpr auto operator&(co_task<T1>&& task1, co_task<T2>& task2) {
+		return _co_task_awaiter<T1>{&task1} & _co_task_awaiter<T1>{&task2};
+	}
 
 
 
 
+	template<class Re,class T,class... Args>
+	constexpr auto operator|(_delegate_impl<Re(Args...)>& func, co_task<T>&& task) {
+		return _delegate_awaiter<Re,Args...>{&func} | _co_task_awaiter<T>{&task};
+	}
 
+	template<class Re,class T,class... Args>
+	constexpr auto operator & (_delegate_impl<Re(Args...)>& func, co_task<T>&& task) {
+		return _delegate_awaiter<Re,Args...>{&func} & _co_task_awaiter<T>{&task};
+	}
+
+	template<class Re, class T, class... Args>
+	constexpr auto operator|(co_task<T>&& task, _delegate_impl<Re(Args...)>& func) {
+		return _co_task_awaiter<T>{&task} | _delegate_awaiter<Re, Args...>{&func};
+	}
+	template<class Re, class T, class... Args>
+	constexpr auto operator&(co_task<T>&& task, _delegate_impl<Re(Args...)>& func) {
+		return _co_task_awaiter<T>{&task} & _delegate_awaiter<Re, Args...>{&func};
+	}
 
 
 

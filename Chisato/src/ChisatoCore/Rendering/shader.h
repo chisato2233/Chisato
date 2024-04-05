@@ -44,8 +44,8 @@ namespace cst {
 
 		virtual ~shader() = default;
 		virtual void bind() = 0;
-		virtual void set_uniform_matrix(const std::string_view name, const glm::mat4& mat) = 0;
-
+		virtual void set_uniform_matrix4(const std::string_view name, const glm::mat4& mat) = 0;
+		virtual void set_uniform_float4(const std::string_view name, const glm::vec4& vec) = 0;
 		inline static ptr<shader> create(const ptr<vertex_shader>& v_shader,const ptr<fragment_shader>& f_shader);
 
 		void add_shader(const ptr<shader_source>& shader) const { program->shader_src.push_back(shader); }

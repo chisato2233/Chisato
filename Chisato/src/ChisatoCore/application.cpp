@@ -1,9 +1,15 @@
-﻿#include "application.h"
+﻿
+
+
+
+#include "application.h"
+
 
 #include"Layers/layer.h"
 
 #include "Layers/ImGui/ImGui_layer.h"
 #include "Layers/Render/Render_layer.h"
+#include "UI/test.h"
 
 
 namespace cst {
@@ -31,9 +37,12 @@ namespace cst {
 
 		{
 			on_start();
+			input::mouse::on_scroll+= [](const mouse_scroll_event& event) {
+				debug::log<>::info("scroll x: ", event.get_x(), " y: ", event.get_y());
+			};
 			while (is_running) {
 				timer::update();
-
+				
 
 				layer_stack_.update();
 

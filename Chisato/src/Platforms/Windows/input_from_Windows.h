@@ -4,20 +4,20 @@
 #include"GLFW/glfw3.h"
 
 namespace cst {
-	template<cpt_plat P> struct CSTAPI input_information;
+	template<cpt_plat P = platforms::Windows> struct CSTAPI input_information;
 
 
 	template<>
 	struct CSTAPI input_information<platforms::Windows> : input_base {
 
-		bool is_key_pressed(int key) override {
+		bool is_pressed(key_code_map key) override {
 			const auto p_wnd = static_cast<GLFWwindow*>(application::get().window().get_wnd_ptr());
-			return glfwGetKey(p_wnd, key) == GLFW_PRESS;
+			return glfwGetKey(p_wnd, static_cast<int>(key)) == GLFW_PRESS;
 		}
 
-		bool is_mouse_button_pressed(int button)override {
+		bool is_pressed(mouse_code_map button)override {
 			const auto p_wnd = static_cast<GLFWwindow*>(application::get().window().get_wnd_ptr());
-			return glfwGetMouseButton(p_wnd, button) == GLFW_PRESS;
+			return glfwGetMouseButton(p_wnd, static_cast<int>(button)) == GLFW_PRESS;
 		}
 
 		std::pair<float, float> get_mouse_pos() override {

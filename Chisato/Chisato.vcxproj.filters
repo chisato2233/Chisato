@@ -73,6 +73,9 @@
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.h">
       <Filter>ChisatoCore\Layers\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_freetype.h">
+      <Filter>ChisatoCore\Layers\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_glfw.h">
       <Filter>ChisatoCore\Layers\ImGui</Filter>
     </ClInclude>
@@ -194,6 +197,8 @@
       <Filter>Platforms\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\ChisatoCore\UI\test.h" />
+    <ClInclude Include="src\ChisatoCore\Rendering\matearial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ChisatoCore\Events\mouse_event.cpp">
@@ -236,5 +241,6 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\gl_shader.cpp" />
   </ItemGroup>
 </Project>

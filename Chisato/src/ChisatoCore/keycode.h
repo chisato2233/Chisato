@@ -1,5 +1,6 @@
 #pragma once
-
+#include<format>
+#include<string_view>
 namespace cst {
 
 	namespace codes {
@@ -17,7 +18,7 @@ namespace cst {
 			_end,
 		};
 		struct CSTAPI mouse{
-			std::string get_name() {
+			std::string get_name() const{
 				switch(val) {
 				case e_mouse::_left:						return	"left";
 				case e_mouse::_right:						return	"right";
@@ -155,10 +156,9 @@ namespace cst {
 			_right_alt = 346,
 			_right_super = 347,
 			_menu = 348,
-			_end
 		};
 		struct CSTAPI key{
-			std::string get_name() {
+			std::string get_name()const  {
 				switch (val) {
 				case e_key::_space:				return "space";
 				case e_key::_apostrophe:		return "apostrophe";
@@ -291,7 +291,31 @@ namespace cst {
 		template<> struct CSTAPI code<key>:		key		{ code(int c):	key		{static_cast<e_key>		(c)} { }};
 		template<> struct CSTAPI code<mouse>:	mouse	{ code(int c):	mouse	{static_cast<e_mouse>	(c)} { }};
 	}
+
 	using key_code		=codes::code<codes::key>;
+	using key_code_map = codes::e_key;
 	using mouse_code	=codes::code<codes::mouse>;
-	
+	using mouse_code_map = codes::e_mouse;
 }
+
+
+
+namespace std {
+	template<>
+	struct ::std::formatter<cst::key_code> {
+		constexpr auto parse(auto& ctx) { return ctx.begin(); }
+
+		auto format(const cst::key_code& kc, auto& ctx) const {
+			return std::format_to(ctx.out(), "{}",kc.get_name());
+		}
+	};
+
+	template<>
+	struct ::std::formatter<cst::mouse_code> {
+		constexpr auto parse(auto& ctx) { return ctx.begin(); }
+
+		auto format(const cst::mouse_code& kc, auto& ctx) const {
+			return std::format_to(ctx.out(), "{}", kc.get_name());
+		}
+	};
+} // namespace std
