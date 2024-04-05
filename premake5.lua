@@ -20,6 +20,7 @@ workspace "Chisato"
 	IncludeDir["GLAD"]="Chisato/packages/GLAD/include"
 	IncludeDir["Imgui"]="Chisato/packages/Imgui"
 	IncludeDir["glm"]="Chisato/packages/glm"
+	IncludeDir["stb"] ="Chisato/packages/stb"
 
 	--引入GLFW的premake文件
 	include "Chisato/packages/GLFW"
@@ -46,9 +47,13 @@ workspace "Chisato"
 		files{
 			"%{prj.name}/src/**.h",
 			"%{prj.name}/src/**.cpp",
-			-- "%{IncludeDir.glm}/**cpp",
-			-- "%{IncludeDir.glm}/**inl",
-			-- "%{IncludeDir.glm}/**hpp",
+
+			"%{IncludeDir.stb}/**.cpp",
+			"%{IncludeDir.stb}/**.h",
+		
+			"%{IncludeDir.glm}/**cpp",
+			"%{IncludeDir.glm}/**inl",
+			"%{IncludeDir.glm}/**hpp",
 		}
 
 		includedirs{
@@ -58,6 +63,7 @@ workspace "Chisato"
 			"%{IncludeDir.GLAD}",
 			"%{IncludeDir.Imgui}",
 			"%{IncludeDir.glm}",
+			"%{IncludeDir.stb}",
 		}
 		
 		links{
@@ -120,9 +126,13 @@ workspace "Chisato"
 		files{
 			"%{prj.name}/src/**.h",
 			"%{prj.name}/src/**.cpp",
-			-- "%{IncludeDir.glm}/**cpp",
-			-- "%{IncludeDir.glm}/**inl",
-			-- "%{IncludeDir.glm}/**hpp",
+
+			"%{IncludeDir.stb}/**.cpp",
+			"%{IncludeDir.stb}/**.h",
+
+			"%{IncludeDir.glm}/**cpp",
+			"%{IncludeDir.glm}/**inl",
+			"%{IncludeDir.glm}/**hpp",
 		}
 
 		includedirs{
@@ -132,6 +142,7 @@ workspace "Chisato"
 			"%{IncludeDir.GLAD}",
 			"%{IncludeDir.Imgui}",
 			"%{IncludeDir.glm}",
+			"%{IncludeDir.stb}",
 		}
 
 		links{

@@ -2,17 +2,18 @@
 #include "buffer.h"
 #include"vertex_array.h"
 #include"shader.h"
-
+#include"texture.h"
 #include "Platforms/OpenGL/gl_buffer.h"
 #include "Platforms/OpenGL/gl_vertex_array.h"
 #include "Platforms/OpenGL/gl_shader.h"
+#include"Platforms/OpenGL/gl_texture.h"
 
 #include"Renderer.h"
 
 
 
 namespace cst {
-
+	using namespace rendering;
 
 	inline auto vertex_buffer::create(const float* vertices, size_t size) ->ptr<vertex_buffer> {
 		
@@ -94,6 +95,21 @@ namespace cst {
 
 		case render_api::OpenGL:
 			return std::make_shared<gl_fragment_shader>(src);
+		}
+
+		return nullptr;
+	}
+
+
+	inline auto texture_2D::create(std::string_view path) ->ptr<texture_2D > {
+		switch (renderer::current_render_api) {
+		case render_api::None:
+		{
+			debug::log<>::error("render_api::None is not supported");
+		}break;
+
+		case render_api::OpenGL:
+			return std::make_shared<gl_texture_2D>(path);
 		}
 
 		return nullptr;

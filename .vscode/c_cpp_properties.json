@@ -1,0 +1,43 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "a:/Code/MyCode/Chisato/**",
+                "A:/Code/GitHub/vcpkg/installed/x64-windows/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "compilerPath": "a:/user/programs/vistual studio/ide/vc/tools/msvc/14.39.33321/bin/hostx64/x64/cl.exe",
+            "compilerPathInCppPropertiesJson": "a:/user/programs/vistual studio/ide/vc/tools/msvc/14.39.33321/bin/hostx64/x64/cl.exe",
+            "configurationProviderInCppPropertiesJson": "ms-vscode.cmake-tools",
+            "mergeConfigurations": false,
+            "browse": {
+                "path": [
+                    "a:/Code/MyCode/Chisato/**",
+                    "A:/Code/GitHub/vcpkg/installed/x64-windows/include",
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "cppStandard": "c++20"
+        },
+        {
+            "name": "arm",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${vcpkgRoot}/x64-windows/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ]
+        }
+    ],
+    "version": 4
+}

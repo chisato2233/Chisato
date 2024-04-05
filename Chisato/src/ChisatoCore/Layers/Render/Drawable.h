@@ -54,6 +54,53 @@ namespace cst {
 			}
 		)");
 		ptr<shader> shaders = shader::create(p_v_shader, p_f_shader);
+
+		//======================================================================
+
+
+		ptr<vertex_shader> texture_v_shader = vertex_shader::create(R"(
+			#version 330 core
+			layout(location = 0) in vec3 aPos;
+			layout(location = 1) in vec2 aTexCoord;
+			
+			uniform mat4 uVpMat;
+			uniform mat4 uTransMat;
+			out vec4 vColor;
+
+			void main(){
+				vColor = vec4(aTexCoord,0.0,1.0);
+				
+				gl_Position = uVpMat * uTransMat * vec4(aPos.x,aPos.y,aPos.z,1.0);
+			}
+		)");
+
+		ptr<fragment_shader> texture_f_shader = fragment_shader::create(R"(
+			#version 330 core
+			out vec4 FragColor;
+			in vec4 vColor;
+			uniform mat4 uVpMat;
+			uniform mat4 uTransMat;
+			uniform vec4 uColor;
+			void main(){
+				FragColor = vColor;
+			}
+		)");
+		ptr<shader> texture_shaders = shader::create(texture_v_shader, texture_f_shader);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		ptr<rendering::material> material ;
 
 		rendering::color color = { 1.0f,1.0f,1.0f,1.0f };
@@ -67,7 +114,17 @@ namespace cst {
 			0.5f,-0.5f,0.0f,   0.9f,0.0f,0.0f,1.0f,
 		};
 
+
+		std::array<float, 5 * 4> squre_vertex = {
+			-0.5f,	-0.5f,	0.0f,	0.f,0.f,
+			0.5f,	-0.5f,	0.0f,	1.f,0.f,
+			-0.5f,	0.5f,	0.0f,	0.f,1.f,
+			0.5f,	0.5f,	0.0f,	1.f,1.f,
+		};
+
+
 		std::array<uint, 3> indices = { 0,1,2, };
+		std::array<uint, 6> squre_indices = { 0,1,2,1,3,2};
 
 		transform transform;
 
@@ -84,6 +141,9 @@ namespace cst {
 							},
 						}
 					},
+					.auto_resize = false,
+					.saved = true,
+
 				}.build();
 			};
 		}
@@ -94,6 +154,7 @@ namespace cst {
 			vbo = vertex_buffer::create(vertices.data(), vertices.size());
 			ibo = index_buffer::create(indices.data(), indices.size());
 			
+			
 
 
 			buffer_layout layout = {
@@ -102,32 +163,36 @@ namespace cst {
 			};
 
 			vbo->bind_layout(layout);
-
 			vao->add_vertex_buffer(vbo);
 			vao->set_index_buffer(ibo);
 
 
+
+			//=======================
+			ptr<vertex_array> squre_VA = vertex_array::create();
+
+			ptr<vertex_buffer> squre_VB = vertex_buffer::create(squre_vertex.data(), squre_vertex.size());
+			squre_VB->bind_layout({
+				{shader_type::Float<3>,"aPos"},
+				{shader_type::Float<2>,"aTexCoord" }
+			});
+			squre_VA->add_vertex_buffer(squre_VB);
+
+			ptr<index_buffer> IB = index_buffer::create(squre_indices.data(), squre_indices.size());
+			squre_VA->set_index_buffer(IB);
+
+
 			set_ui();
 			std::vector<cst::transform> transforms;
-			for (int x = 0; x <= 100; x++) {
-				for (int y = 0; y <= 200; y++) {
-					std::random_device rd;
-					std::default_random_engine eng(rd());
-					std::uniform_real_distribution<float> distx(0.0f, x);
-					std::uniform_real_distribution<float> disty(0.0f, y);
-					
-
-					ptr<triangle> tri = std::make_shared<triangle>();
-					auto p = cst::transform{ .position = {{distx(eng), disty(eng), 0.0f} } };
-					transforms.push_back(std::move(p));
-				}
-			}
+			transform.scale.set(glm::vec3(1.5f));
 			// draw frame loop
+			
 			while (1) {
 				co_await async::wait_next_frame{};
-				renderer::submit(vao, material,transform);
-				//for(auto i : transforms)
-				//	renderer::submit(vao, shaders, i);
+				vao->bind();
+				glDrawElements(GL_STATIC_DRAW, 4, GL_UNSIGNED_INT, nullptr);
+				renderer::submit(squre_VA, std::make_shared<rendering::material>(texture_shaders),transform);
+
 			}
 
 		}

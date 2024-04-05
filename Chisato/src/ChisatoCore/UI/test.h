@@ -88,8 +88,8 @@ namespace cst {
 				ImGui::End();
 			}
 
-			element_layout body = {};
 			std::string title = "window";
+			element_layout body = {};
 			
 			bool title_bar = true;
 			bool enable_resize = true;
