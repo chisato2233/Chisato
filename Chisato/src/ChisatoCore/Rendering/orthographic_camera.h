@@ -2,8 +2,8 @@
 #include<glm/glm.hpp>
 #include<ChisatoCore/Tools/property.h>
 
-#include "glm/ext/matrix_clip_space.hpp"
-#include "glm/ext/matrix_transform.hpp"
+#include "ChisatoCore/application.h"
+#include"transform.h"
 
 
 namespace cst {
@@ -13,48 +13,69 @@ namespace cst {
 		glm::mat4 vp_matrix;
 	};
 
-	struct transform {
-		property<glm::vec3> position {.value = { 0,0,0 }};
-		property<float> rotation {.value = 0.0f};
-		property<glm::vec3> scale {.value = { 1,1,1 }};
-
-		auto transform_matrix() -> glm::mat4 {
-			return	position_matrix() *
-					rotation_matrix() *
-					scale_matrix();
-		}
-		auto position_matrix()-> glm::mat4 { return glm::translate(glm::mat4(1.0f), position()); }
-		auto rotation_matrix() -> glm::mat4 { return glm::rotate(glm::mat4(1.0f), rotation(), glm::vec3(0, 0, 1)); }
-		auto scale_matrix() -> glm::mat4 { return glm::scale(glm::mat4(1.0f), scale()); }
-
-		operator glm::mat4() { return transform_matrix(); }
-	};
 
 
-	struct CSTAPI orthographic_camera {
-
-		orthographic_camera(float left, float right, float bottom, float top) {
-			matrix.projection_matrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-			matrix.view_matrix = glm::mat4(1.0f);
-			matrix.vp_matrix = matrix.projection_matrix * matrix.view_matrix;
-			auto f = [this](auto...) {
-				recalcu_matrix();
-			};
+	class CSTAPI camera {
+	public:
+		camera() {
+			auto f = [this](auto...) { recalculate_matrices(); };
 			transform.position.on_change().add(f);
 			transform.rotation.on_change().add(f);
-			
+			input::window::on_resize += [this](window_resize_event e) {
+				update_projection();
+			};
+		};
+		virtual ~camera() = default;
+
+		virtual void update_projection() = 0;
+
+		void recalculate_matrices() {
+			glm::mat4 inverseTransform = glm::inverse(static_cast<glm::mat4>(transform));
+			matrix.view_matrix = inverseTransform;
+			matrix.vp_matrix = matrix.projection_matrix * matrix.view_matrix;
 		}
-
-
-		~orthographic_camera() = default;
 
 		transform transform;
 		camera_matrix matrix;
+	};
+	
+	class CSTAPI orthographic_camera : public camera {
+	public:
+		orthographic_camera(float left, float right, float bottom, float top)
+			: left_(left), right_(right), bottom_(bottom), top_(top)
+		{
+			update_projection();
+		}
+
+		void update_projection() override {
+			float aspectRatio = application::get().window().get_w() / (float)application::get().window().get_h();
+			matrix.projection_matrix = glm::ortho(left_ * aspectRatio, right_ * aspectRatio, bottom_, top_, -1.0f, 1.0f);
+			recalculate_matrices();
+		}
 
 	private:
-		void recalcu_matrix() {
-			matrix.view_matrix = transform.transform_matrix();
-			matrix.vp_matrix = matrix.projection_matrix * matrix.view_matrix;
-		}
+		float left_, right_, bottom_, top_;
 	};
+
+
+
+
+	class CSTAPI perspective_camera : public camera {
+	public:
+		perspective_camera(float fov, float aspectRatio, float nearPlane, float farPlane)
+			: fov_(fov), aspect_ratio_(aspectRatio), near_(nearPlane), far_(farPlane)
+		{
+			update_projection();
+		}
+
+		void update_projection() override {
+			matrix.projection_matrix = glm::perspective(glm::radians(fov_), aspect_ratio_, near_, far_);
+			recalculate_matrices();
+		}
+
+	private:
+		float fov_, aspect_ratio_, near_, far_;
+	};
+	
+
 }

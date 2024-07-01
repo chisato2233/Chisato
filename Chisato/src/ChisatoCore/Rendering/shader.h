@@ -39,14 +39,27 @@ namespace cst {
 	};
 
 
-	struct CSTAPI shader {
-		shader(uptr<shader_program>&& sp):program(std::move(sp)) {}
+	struct CSTAPI shader_set {
+		shader_set(uptr<shader_program>&& sp):program(std::move(sp)) {}
 
-		virtual ~shader() = default;
+		virtual ~shader_set() = default;
 		virtual void bind() = 0;
 		virtual void set_uniform_matrix4(const std::string_view name, const glm::mat4& mat) = 0;
-		virtual void set_uniform_float4(const std::string_view name, const glm::vec4& vec) = 0;
-		inline static ptr<shader> create(const ptr<vertex_shader>& v_shader,const ptr<fragment_shader>& f_shader);
+		virtual void set_uniform_matrix3(const std::string_view name, const glm::mat3& mat) =0;
+		virtual void set_uniform_matrix2(const std::string_view name, const glm::mat2& mat) =0;
+		virtual void set_uniform_float4(const std::string_view name, const glm::vec4& vec)=0;
+		virtual void set_uniform_float3(const std::string_view name, const glm::vec3& vec) =0;
+		virtual void set_uniform_float2(const std::string_view name, const glm::vec2& vec) =0;
+		virtual void set_uniform_float(const std::string_view name, float f) =0;
+		virtual void set_uniform_int(const std::string_view name, int i) =0;
+
+
+
+
+
+
+
+		inline static ptr<shader_set> create(const ptr<vertex_shader>& v_shader,const ptr<fragment_shader>& f_shader);
 
 		void add_shader(const ptr<shader_source>& shader) const { program->shader_src.push_back(shader); }
 

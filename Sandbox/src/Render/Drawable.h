@@ -13,18 +13,20 @@
 #include "ChisatoCore/Rendering/render_command.h"
 #include "ChisatoCore/Rendering/shader.h"
 #include"ChisatoCore/Rendering/orthographic_camera.h"
+#include "ChisatoCore/Rendering/Texture.h"
 #include "ChisatoCore/UI/test.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "Platforms/OpenGL/gl_shader.h"
 
 namespace cst {
-	struct CSTAPI drawable {
+	struct  drawable {
 		virtual async::co_task<> draw() = 0;
-
 		virtual ~drawable() = default;
+		async::runtime* runtime;
 	};
 
-	struct CSTAPI triangle : drawable {
-
+	struct  triangle : drawable {
+		uint ui_drawer_id = 0;
 
 		ptr<vertex_shader> p_v_shader = vertex_shader::create(R"(
 			#version 330 core
@@ -53,7 +55,7 @@ namespace cst {
 				FragColor = uColor;
 			}
 		)");
-		ptr<shader> shaders = shader::create(p_v_shader, p_f_shader);
+		ptr<shader_set> shaders = shader_set::create(p_v_shader, p_f_shader);
 
 		//======================================================================
 
@@ -63,34 +65,48 @@ namespace cst {
 			layout(location = 0) in vec3 aPos;
 			layout(location = 1) in vec2 aTexCoord;
 			
+			out vec3 vPos;
+			out vec2 vTexCoord;
+			
 			uniform mat4 uVpMat;
 			uniform mat4 uTransMat;
-			out vec4 vColor;
+			uniform vec4 uColor;
+			uniform sampler2D uTexture;
+			
 
 			void main(){
-				vColor = vec4(aTexCoord,0.0,1.0);
-				
+				vTexCoord = aTexCoord;
+				vPos = aPos;
 				gl_Position = uVpMat * uTransMat * vec4(aPos.x,aPos.y,aPos.z,1.0);
 			}
 		)");
 
 		ptr<fragment_shader> texture_f_shader = fragment_shader::create(R"(
 			#version 330 core
-			out vec4 FragColor;
-			in vec4 vColor;
+
+			in vec2 vTexCoord;
+			in vec3 vPos;
+
+			layout(location = 0)out vec4 FragColor;
+			
+			
 			uniform mat4 uVpMat;
 			uniform mat4 uTransMat;
 			uniform vec4 uColor;
+			uniform sampler2D uTexture;
+
 			void main(){
-				FragColor = vColor;
+				FragColor = texture(uTexture,vTexCoord);
 			}
 		)");
-		ptr<shader> texture_shaders = shader::create(texture_v_shader, texture_f_shader);
+		
+
+		
 
 
-
-
-
+		~triangle(){
+			ImGui_layer::UI_drawer.remove(ui_drawer_id);
+		}
 
 
 
@@ -128,33 +144,41 @@ namespace cst {
 
 		transform transform;
 
-		void set_ui()const  {
-			ImGui_layer::UI_drawer += [this] {
-				cst::ui::window{
+		void set_ui(rptr<rendering::color> p_color)  {
+			auto ui_drawer_id = ImGui_layer::UI_drawer.add( [this,p_color] {
+				ui::window{
 					.body = {
-						ui::ui_element{
-							.on_build = [this] {
-								ImGui::ColorEdit4(
-									"color",
-									value_ptr(*dynamic_cast<glm::vec4*>(&material->ambient))
-								);
-							},
+						ui::color_editor{
+							.label = "Edit",
+							.color = p_color
 						}
 					},
-					.auto_resize = false,
-					.saved = true,
-
 				}.build();
-			};
+			});
+
+
 		}
+
 		auto draw() -> async::co_task<> override {
+			runtime->start_task(random_position());
+			runtime->start_task(draw_impl());
+		}
+
+		auto random_position()->async::co_task<> {
+			while(1) {
+				co_await async::wait_time{ 1.0f };
+				transform.position.set(glm::vec3(random::range(-10.0, 10.0), random::range(-10.0, 10.0), 0.0f));
+			}
+
+		}
+
+		auto draw_impl()->async::co_task<> {
 			material = std::make_shared<rendering::material>(shaders);
+			auto p_color = ptr<rendering::color>(&material->ambient);
 
 			vao = vertex_array::create();
 			vbo = vertex_buffer::create(vertices.data(), vertices.size());
 			ibo = index_buffer::create(indices.data(), indices.size());
-			
-			
 
 
 			buffer_layout layout = {
@@ -175,27 +199,38 @@ namespace cst {
 			squre_VB->bind_layout({
 				{shader_type::Float<3>,"aPos"},
 				{shader_type::Float<2>,"aTexCoord" }
-			});
+				});
 			squre_VA->add_vertex_buffer(squre_VB);
 
 			ptr<index_buffer> IB = index_buffer::create(squre_indices.data(), squre_indices.size());
 			squre_VA->set_index_buffer(IB);
 
 
-			set_ui();
+			set_ui(p_color);
+
 			std::vector<cst::transform> transforms;
 			transform.scale.set(glm::vec3(1.5f));
+
+			ptr<rendering::texture_2D> texture = rendering::texture_2D::create("./Assest/test.png");
+			ptr<shader_set> texture_shaders = shader_set::create(texture_v_shader, texture_f_shader);
+
+
+
 			// draw frame loop
-			
+
 			while (1) {
 				co_await async::wait_next_frame{};
-				vao->bind();
-				glDrawElements(GL_STATIC_DRAW, 4, GL_UNSIGNED_INT, nullptr);
-				renderer::submit(squre_VA, std::make_shared<rendering::material>(texture_shaders),transform);
 
+				debug::log<>::info("test");
+				texture_shaders->bind();
+				texture_shaders->set_uniform_int("uTexture", 0);
+				renderer::submit(
+					squre_VA,
+					std::make_shared<rendering::material>(texture_shaders, texture),
+					transform
+				);
 			}
 
 		}
-
 	};
 }

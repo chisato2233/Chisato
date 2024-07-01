@@ -11,7 +11,7 @@ namespace cst {
 		if (!success) {
 			char infoLog[512];
 			glGetShaderInfoLog(id, 512, nullptr, infoLog);
-			debug::log<>::error("vertex shader compile error\n{}", infoLog);
+			debug::log<>::error("vertex shader_set compile error\n{}", infoLog);
 
 		}
 
@@ -50,13 +50,13 @@ namespace cst {
 		if (!success) {
 			char infoLog[512];
 			glGetProgramInfoLog(id, 512, nullptr, infoLog);
-			debug::log<>::error("shader program link error:\n{}", infoLog);
+			debug::log<>::error("shader_set program link error:\n{}", infoLog);
 
 		}
 	}
 
 	gl_shader::gl_shader(const ptr<vertex_shader>& vertex_shader, const ptr<fragment_shader>& fragment_shader):
-		shader(std::make_unique<gl_shader_program>()) {
+		shader_set(std::make_unique<gl_shader_program>()) {
 			
 		add_shader(vertex_shader);
 		add_shader(fragment_shader);
@@ -118,5 +118,12 @@ namespace cst {
 
 		auto location = glGetUniformLocation(gl_program.id, name.data());
 		glUniform1f(location, f);
+	}
+
+	void gl_shader::set_uniform_int(const std::string_view name, int i) {
+		const auto& gl_program = dynamic_cast<gl_shader_program&>(*program);
+
+		auto location = glGetUniformLocation(gl_program.id, name.data());
+		glUniform1i(location, i);
 	}
 }

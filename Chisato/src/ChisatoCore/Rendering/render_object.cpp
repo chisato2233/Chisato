@@ -8,6 +8,7 @@
 #include "Platforms/OpenGL/gl_shader.h"
 #include"Platforms/OpenGL/gl_texture.h"
 
+
 #include"Renderer.h"
 
 
@@ -59,7 +60,7 @@ namespace cst {
 		return nullptr;
 	}
 
-	inline auto shader::create(const ptr<vertex_shader>& v_shader,const ptr<fragment_shader>& f_shader ) ->ptr<shader> {
+	inline auto shader_set::create(const ptr<vertex_shader>& v_shader,const ptr<fragment_shader>& f_shader ) ->ptr<shader_set> {
 		switch (renderer::current_render_api) {
 		case render_api::None:
 		{
@@ -101,7 +102,7 @@ namespace cst {
 	}
 
 
-	inline auto texture_2D::create(std::string_view path) ->ptr<texture_2D > {
+	inline auto texture_2D::create(std::filesystem::path path) ->ptr<texture_2D > {
 		switch (renderer::current_render_api) {
 		case render_api::None:
 		{
@@ -109,7 +110,7 @@ namespace cst {
 		}break;
 
 		case render_api::OpenGL:
-			return std::make_shared<gl_texture_2D>(path);
+			return std::make_shared<gl_texture_2D>(std::filesystem::absolute(path));
 		}
 
 		return nullptr;

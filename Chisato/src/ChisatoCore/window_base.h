@@ -20,6 +20,7 @@ namespace cst {
 
 		virtual uint					get_w()					const noexcept = 0;
 		virtual uint					get_h()					const noexcept = 0;
+		virtual float					get_aspect_ratio()		const noexcept = 0;
 		virtual std::pair<uint, uint>	get_size()				const noexcept = 0;
 		virtual void*					get_wnd_ptr()			const noexcept = 0;
 		virtual std::string				get_name()				const noexcept = 0;

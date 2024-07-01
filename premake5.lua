@@ -50,10 +50,6 @@ workspace "Chisato"
 
 			"%{IncludeDir.stb}/**.cpp",
 			"%{IncludeDir.stb}/**.h",
-		
-			"%{IncludeDir.glm}/**cpp",
-			"%{IncludeDir.glm}/**inl",
-			"%{IncludeDir.glm}/**hpp",
 		}
 
 		includedirs{
@@ -123,6 +119,11 @@ workspace "Chisato"
 		targetdir ("bin/".. outputdir .."/%{prj.name}")
 		objdir ("bin-int/".. outputdir .."/%{prj.name}")
 
+		--预编译头
+		pchheader "pch.h"
+		pchsource "%{prj.name}/src/pch.cpp"
+		forceincludes{"pch.h"}
+		
 		files{
 			"%{prj.name}/src/**.h",
 			"%{prj.name}/src/**.cpp",
@@ -130,9 +131,6 @@ workspace "Chisato"
 			"%{IncludeDir.stb}/**.cpp",
 			"%{IncludeDir.stb}/**.h",
 
-			"%{IncludeDir.glm}/**cpp",
-			"%{IncludeDir.glm}/**inl",
-			"%{IncludeDir.glm}/**hpp",
 		}
 
 		includedirs{

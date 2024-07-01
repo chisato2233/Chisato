@@ -20,8 +20,6 @@ project "Imgui"
 		"imstb_textedit.h",
 		"imstb_truetype.h",
 		"imgui_demo.cpp",
-		"misc/**.h",
-		"misc/**.cpp"
 	}
 	defines{
 		"IMGUI_IMPL_OPENGL_LOADER_CUSTOM"

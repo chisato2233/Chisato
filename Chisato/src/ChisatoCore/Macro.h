@@ -7,7 +7,6 @@
 
 namespace cst {
 	template<class T> using opt = std::optional<T>;
-	template<class T> using ref = std::reference_wrapper<T>;
 	template<class T> using ptr = std::shared_ptr<T>;
 	template<class T> using uptr = std::unique_ptr<T>;
 	template<class T> using wptr = std::weak_ptr<T>;
@@ -81,6 +80,16 @@ namespace cst {
 	struct no_copy_move :no_copy, no_move {};
 	using no_cpmv = no_copy_move;
 
+
+	template<typename T>
+	struct ref{
+		ref(ptr<T> ptr):ptr_{ptr}{}
+
+		operator T&() { return *ptr_; }
+		T& get() { return *ptr_; }
+
+		ptr<T> ptr_;
+	};
 
 	template<class Index, class... Source>
 	struct unit {

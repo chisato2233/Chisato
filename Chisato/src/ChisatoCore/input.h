@@ -14,6 +14,7 @@ namespace cst {
 		virtual bool is_pressed(codes::e_mouse)			= 0;
 
 		virtual std::pair<float, float>	get_mouse_pos() = 0;
+		virtual std::pair<float, float> get_mouse_pos_delta() = 0;
 	};
 	
 

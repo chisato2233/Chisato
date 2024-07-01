@@ -47,124 +47,45 @@ namespace cst::async {
 		// register a task which well not start immediately, call start_task is a better choice
 		// this function will return some options, which you can choose when you want to start the task
 		template<class T>
-		auto register_task(co_task<T>&& task)->register_option {
-			task.bind_runtime(this);
-			const auto id = task.task_id();
-			auto res = task_map.insert({ id, std::make_shared<co_task<T>>(std::move(task)) });
-			return {
-				.task_ref = res.first->second,
-				.runtime_ref = this
-			};
-
-		}
+		auto register_task(co_task<T>&& task)->register_option ;
 
 		//cancel a task will destroy the task immediately, which is dangerous;
 		//if you want to stop a task, call stop_task
-		void cancel_task(co_task_base* task_ref) {
-			auto id = task_ref->task_id();
-			auto state = task_ref->task_state();
-			if(state == task_state::suspend) 
-				suspend_list_.remove(task_ref);
+		void cancel_task(co_task_base* task_ref);
 
-			task_map.erase(id);
-			
-		}
-
-		void cancel_task(uint64_t id) {
-			auto res = task_map.find(id);
-				if (res == task_map.end()) return;
-			cancel_task(res->second.get());
-		}
+		void cancel_task(uint64_t id);
 
 		//registrite and start a task
 		//do not use the capture of lambda to create a task, it will cause a dangling pointer
 		template<class T>
-		auto start_task(co_task<T>&& task) -> co_task<T>&{
-			std::cout << std::format("call runtime start task{}\n", task.task_id());
-			co_task_base* task_ref;
-			if (!task.has_runtime()) {
-				task_ref = register_task(std::move(task)).task_ref.get();
-			}
-			else task_ref = &task;
-			
-			_start_task_from_point(task_ref);
-			return *static_cast<co_task<T>*>(task_ref);
-
-		}
+		auto start_task(co_task<T>&& task) -> co_task<T>&;
 
 		//registrite (if it doesn't) and start a task by task id 
 		//do not use the capture of lambda to create a task, it will cause a dangling pointer
-		auto start_task(uint64_t id) -> ptr<co_task_base> {
-			auto res = task_map.find(id);
-			if (res == task_map.end()) return nullptr;
-
-			_start_task_from_point(res->second.get());
-			return res->second;
-		}
+		auto start_task(uint64_t id) -> ptr<co_task_base> ;
 
 		//stop a task by point;
 		//please 
-		void stop_task(co_task_base* task) {
-			if (!task) return;
-			std::cout << std::format("call runtime stop task{}\n", task->task_id());
-
-			auto& state = task->task_state();
-			if (state == task_state::suspend)
-				suspend_list_.remove(task);
-			state = task_state::stop;
-			task->on_stop()();
-			stop_queue_.emplace(task->task_id(), task);
-		}
+		void stop_task(co_task_base* task);
 
 		//stop a task by id
-		void stop_task(uint64_t id) {
-			auto res = task_map.find(id);
-			if (res == task_map.end()) 
-				return;
-
-			stop_task(res->second.get());
-		}
+		void stop_task(uint64_t id);
 
 		//suspend a task by point
-		void suspend_task(co_task_base* task) {
-			if (!task || task->task_state() == task_state::stop || task->task_state() == task_state::suspend)
-				return;
-
-			task->task_state() = task_state::suspend;
-			suspend_list_.push_back(task);
-		}
+		void suspend_task(co_task_base* task);
 
 		//suspend a task by id
-		void suspend_task(uint64_t id) {
-			auto res = task_map.find(id);
-			if (res == task_map.end()) return;
-			suspend_task(res->second.get());
-		}
+		void suspend_task(uint64_t id);
 
 		//resume a task by point
 		//if the task is not suspend, it will do nothing
-		void resume_task(co_task_base* task) {
-			
-			if (!task) return;
-			suspend_list_.remove(task);
-			if(task->task_state() == task_state::suspend) {
-				_start_task_from_point(task);
-			}
-		}
+		void resume_task(co_task_base* task);
 
 		//resume a task by id
 		//if the task is not suspend, it will do nothing
-		void resume_task(uint64_t id) {
-			auto res = task_map.find(id);
-			if (res == task_map.end()) return;
-			resume_task(res->second.get());
-		} 
+		void resume_task(uint64_t id);
 
-		void stop_all() {
-			for (auto& [id, task] : task_map) {
-				stop_task(task.get());
-			}
-		}
+		void stop_all();
 
 
 		void update() {
@@ -310,6 +231,111 @@ namespace cst::async {
 		> timer_queue_;
 		
 	};
+
+	inline void runtime::cancel_task(co_task_base* task_ref) {
+		auto id = task_ref->task_id();
+		auto state = task_ref->task_state();
+		if(state == task_state::suspend) 
+			suspend_list_.remove(task_ref);
+
+		task_map.erase(id);
+			
+	}
+
+	inline void runtime::cancel_task(uint64_t id) {
+		auto res = task_map.find(id);
+		if (res == task_map.end()) return;
+		cancel_task(res->second.get());
+	}
+
+	inline auto runtime::start_task(uint64_t id) -> ptr<co_task_base> {
+		auto res = task_map.find(id);
+		if (res == task_map.end()) return nullptr;
+
+		_start_task_from_point(res->second.get());
+		return res->second;
+	}
+
+	inline void runtime::stop_task(co_task_base* task) {
+		if (!task) return;
+		std::cout << std::format("call runtime stop task{}\n", task->task_id());
+
+		auto& state = task->task_state();
+		if (state == task_state::suspend)
+			suspend_list_.remove(task);
+		state = task_state::stop;
+		task->on_stop()();
+		stop_queue_.emplace(task->task_id(), task);
+	}
+
+	inline void runtime::stop_task(uint64_t id) {
+		auto res = task_map.find(id);
+		if (res == task_map.end()) 
+			return;
+
+		stop_task(res->second.get());
+	}
+
+	inline void runtime::suspend_task(co_task_base* task) {
+		if (!task || task->task_state() == task_state::stop || task->task_state() == task_state::suspend)
+			return;
+
+		task->task_state() = task_state::suspend;
+		suspend_list_.push_back(task);
+	}
+
+	inline void runtime::suspend_task(uint64_t id) {
+		auto res = task_map.find(id);
+		if (res == task_map.end()) return;
+		suspend_task(res->second.get());
+	}
+
+	inline void runtime::resume_task(co_task_base* task) {
+			
+		if (!task) return;
+		suspend_list_.remove(task);
+		if(task->task_state() == task_state::suspend) {
+			_start_task_from_point(task);
+		}
+	}
+
+	inline void runtime::resume_task(uint64_t id) {
+		auto res = task_map.find(id);
+		if (res == task_map.end()) return;
+		resume_task(res->second.get());
+	}
+
+	inline void runtime::stop_all() {
+		for (auto& [id, task] : task_map) {
+			stop_task(task.get());
+		}
+	}
+
+	template <class T>
+	auto runtime::register_task(co_task<T>&& task) -> register_option {
+		task.bind_runtime(this);
+		const auto id = task.task_id();
+		auto res = task_map.insert({ id, std::make_shared<co_task<T>>(std::move(task)) });
+		return {
+			.task_ref = res.first->second,
+			.runtime_ref = this
+		};
+
+	}
+
+	template <class T>
+	auto runtime::start_task(co_task<T>&& task) -> co_task<T>& {
+		std::cout << std::format("call runtime start task{}\n", task.task_id());
+		co_task_base* task_ref;
+		if (!task.has_runtime()) {
+			task_ref = register_task(std::move(task)).task_ref.get();
+		}
+		else task_ref = &task;
+			
+		_start_task_from_point(task_ref);
+		return *static_cast<co_task<T>*>(task_ref);
+
+	}
 
 
 	template <class T>

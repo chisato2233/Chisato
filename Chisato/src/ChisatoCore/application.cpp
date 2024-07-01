@@ -8,7 +8,8 @@
 #include"Layers/layer.h"
 
 #include "Layers/ImGui/ImGui_layer.h"
-#include "Layers/Render/Render_layer.h"
+#include "Rendering/render_command.h"
+
 #include "UI/test.h"
 
 
@@ -33,7 +34,7 @@ namespace cst {
 	void application::main() {
 
 		layers().push(std::make_shared<ImGui_layer>());
-		layers().push(std::make_shared<Render_layer>());
+
 
 		{
 			on_start();

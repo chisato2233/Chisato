@@ -2,7 +2,7 @@
 #include "ChisatoCore/Rendering/shader.h"
 #include <glad/glad.h>
 
-#include "glm/gtc/type_ptr.inl"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace cst {
 	struct CSTAPI gl_shader_source : virtual shader_source {
@@ -36,19 +36,21 @@ namespace cst {
 		uint id = 0;
 	};
 
-	struct CSTAPI gl_shader : shader {
+	struct CSTAPI gl_shader : shader_set {
 		gl_shader(const ptr<vertex_shader> &vertex_shader,const ptr<fragment_shader>& fragment_shader);
 
 		void bind() override;
 
 		void set_uniform_matrix4(const std::string_view name, const glm::mat4& mat) override;
-		void set_uniform_matrix3(const std::string_view name, const glm::mat3& mat);
-		void set_uniform_matrix2(const std::string_view name, const glm::mat2& mat);
+		void set_uniform_matrix3(const std::string_view name, const glm::mat3& mat) override;
+		void set_uniform_matrix2(const std::string_view name, const glm::mat2& mat) override;
 
 
 		void set_uniform_float4(const std::string_view name, const glm::vec4& vec)override;
-		void set_uniform_float3(const std::string_view name, const glm::vec3& vec);
-		void set_uniform_float2(const std::string_view name, const glm::vec2& vec);
-		void set_uniform_float(const std::string_view name, float f);
+		void set_uniform_float3(const std::string_view name, const glm::vec3& vec) override;
+		void set_uniform_float2(const std::string_view name, const glm::vec2& vec) override;
+		void set_uniform_float(const std::string_view name, float f) override;
+
+		void set_uniform_int(const std::string_view name, int i) override;
 	};
 }

@@ -27,5 +27,15 @@ namespace cst {
 
 			return { static_cast<float>(x),static_cast<float>(y) };
 		}
+
+		std::pair<float,float> get_mouse_pos_delta()override {
+			auto current_pos = get_mouse_pos();
+			pair delta{ current_pos.first - last_mouse_pos.first,current_pos.second - last_mouse_pos.second };
+			last_mouse_pos = current_pos;
+			return delta;
+		}
+
+		private:
+			std::pair<float, float> last_mouse_pos ={0,0};
 	};
 }

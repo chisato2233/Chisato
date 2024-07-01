@@ -1,16 +1,18 @@
 #pragma once
+#include "ChisatoCore/Rendering/matearial.h"
 #include"ChisatoCore/Tools/property.h"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace cst {
 	namespace ui {
-		struct ui_element {
+		struct CSTAPI ui_element {
 			void build() const {
 				on_build();
 			}
 			std::function<void()> on_build;
 		};
 
-		struct button: ui_element {
+		struct CSTAPI button: ui_element {
 			std::string text = " ";
 			std::function<void()> on_click = []{};
 			void build() {
@@ -41,7 +43,7 @@ namespace cst {
 
 
 		
-		struct element_layout {
+		struct CSTAPI element_layout {
 			template<class... Args>
 			element_layout(Args&&... args) :
 				data(std::make_shared<tuple_wrapper<Args...>>(std::forward<Args>(args)...)) {}
@@ -56,7 +58,7 @@ namespace cst {
 
 
 		
-		struct window : ui_element{
+		struct CSTAPI window : ui_element{
 
 			void build() {
 
@@ -112,7 +114,7 @@ namespace cst {
 			bool unsaved_document = false;
 		};
 
-		struct text : ui_element {
+		struct CSTAPI text : ui_element {
 			std::string content = " ";
 			void build() {
 				ImGui::Text(content.c_str());
@@ -121,7 +123,7 @@ namespace cst {
 		};
 
 		
-		struct slider : ui_element {
+		struct CSTAPI slider : ui_element {
 			void build() {
 				
 				if(ImGui::SliderFloat(lable.c_str(), value.get(), min, max)) {
@@ -141,7 +143,7 @@ namespace cst {
 			
 		};
 
-		struct checkbox : ui_element {
+		struct CSTAPI checkbox : ui_element {
 			std::string label = "check box";
 			bool default_checked = false;
 			ptr<bool> is_checked = std::make_shared<bool>(false);
@@ -151,7 +153,7 @@ namespace cst {
 			}
 		};
 
-		struct input_text : ui_element {
+		struct CSTAPI input_text : ui_element {
 			std::string label = "input text";
 			
 			ptr<std::string>input_content = std::make_shared<std::string>();
@@ -165,6 +167,36 @@ namespace cst {
 			}
 		};
 
+		struct CSTAPI color_editor {
+			std::string label = "color editor";
+			rendering::color default_color = rendering::colors::white;
+			ptr<rendering::color> color = std::make_shared<rendering::color>(default_color);
+
+
+			std::function<void(const color_editor&)> on_change = [](auto&&...) {};
+			void build() {
+				float data[] = { (*color)[0],(*color)[1],(*color)[2],(*color)[3] };
+
+				if(ImGui::ColorEdit4(label.c_str(),glm::value_ptr(dynamic_cast<glm::vec4&>(*color)))){
+					on_change(*this);
+				}
+				
+			}
+		};
+
+		struct CSTAPI color_picker {
+			std::string label = "color picker";
+			rendering::color default_color = rendering::colors::white;
+			ptr<rendering::color> color = std::make_shared<rendering::color>(default_color);
+
+			std::function<void(const color_picker&)> on_change = [](auto&&...) {};
+			void build() {
+				float data[] = { (*color)[0],(*color)[1],(*color)[2],(*color)[3] };
+				if(ImGui::ColorPicker4(label.c_str(), glm::value_ptr(dynamic_cast<glm::vec4&>(*color)))) {
+					on_change(*this);
+				}
+			}
+		};
 
 	}
 

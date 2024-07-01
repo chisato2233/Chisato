@@ -3,7 +3,7 @@
 
 namespace cst {
 	using game_time_point = std::chrono::duration<float>;
-	struct timer {
+	struct CSTAPI timer {
 
 		inline static std::chrono::time_point<std::chrono::steady_clock> start_time_point;
 		inline static game_time_point frame_time;

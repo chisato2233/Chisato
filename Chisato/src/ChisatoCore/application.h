@@ -31,7 +31,9 @@ namespace cst {
 		std::unique_ptr<input_base> input_;
 		std::unique_ptr<async::runtime> app_runtime_;
 		layer_stack layer_stack_;
+
 	public:
+		delegate<application, void()> on_app_created{ this };
 		delegate<application, void()> on_start	{ this };
 		delegate<application, void()> on_stop	{ this };
 		delegate<application, void()> on_update	{ this };
@@ -55,13 +57,13 @@ namespace cst {
 		}
 
 
-		auto& window()	const { return *wnd_; }
-		auto& input()	const { return *input_; }
-		auto& async_runtime() const { return *app_runtime_; }
+		static auto& window() { return *get().wnd_; }
+		static auto& async_runtime()  { return *get().app_runtime_; }
+		static auto& input()	 { return *get().input_; }
 	};
 
 
-	#include"ChisatoCore/engine_run.h"
+	
 }
 
 

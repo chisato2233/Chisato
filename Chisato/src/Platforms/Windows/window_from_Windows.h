@@ -25,6 +25,7 @@ namespace cst {
 
 		uint					get_w()					const noexcept override { return data_.size.first;}
 		uint					get_h()					const noexcept override { return data_.size.second; }
+		float					get_aspect_ratio()		const noexcept override { return static_cast<float>(data_.size.first) / data_.size.second; }
 		std::pair<uint, uint>	get_size()				const noexcept override { return data_.size; }
 		std::string				get_name()				const noexcept override { return std::format("Window {},from Windows", data_.title); }
 		void*					get_wnd_ptr()			const noexcept override { return wnd_ptr_; }

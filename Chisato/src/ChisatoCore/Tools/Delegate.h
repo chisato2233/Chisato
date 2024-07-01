@@ -50,9 +50,10 @@ namespace cst {
 		}
 
 		template<std::convertible_to<func_type> F>
-		auto add(F&& f) {
+		auto add(F&& f, int count = -1) {
 			func_map_.insert({ ++next_func_id_, std::move(f) });
-			return next_func_id_ - 1;
+			if (count != -1) erase_queue_.emplace(count + call_count_, next_func_id_);
+			return next_func_id_;
 		}
 
 
@@ -147,7 +148,7 @@ namespace cst {
 			std::greater<>
 		> erase_queue_;
 
-		uint64_t next_func_id_ = 0;
+		uint32_t next_func_id_ = 0;
 
 
 		unsigned int call_count_ = 0;

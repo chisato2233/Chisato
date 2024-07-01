@@ -10,7 +10,7 @@
 namespace cst {
 
 	struct CSTAPI renderer {
-		static void begin_scene(rptr<orthographic_camera> camera) {
+		static void begin_scene(rptr<camera> camera) {
 			scene_data.view_projection_matrix = ptr<glm::mat4>(&camera->matrix.vp_matrix);
 		}
 
@@ -19,6 +19,7 @@ namespace cst {
 			va->bind();
 			material->bind();
 			material->get_shader().set_uniform_matrix4("uVpMat", scene_data.get_vp_mat());
+			
 			material->get_shader().set_uniform_matrix4("uTransMat", trans_matrix);
 			render_command::draw_index(va);
 		}

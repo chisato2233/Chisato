@@ -12,11 +12,11 @@ namespace cst {
 			setter(new_val);
 			on_change()(old, value);
 		}
+
+		explicit operator T() { return get(); }
+
 		T& get_ref() { return value; }
-
-
-
-		T operator()() { return get(); }
+		T& operator()() { return get_ref(); }
 
 		delegate<void(T, const T&)>& on_change() { return *_on_change; }
 
@@ -25,43 +25,43 @@ namespace cst {
 			return *this;
 		}
 
-		template<class T2> requires requires { declval<T>() + declval<T2>(); }
+		template<class T2> requires requires { std::declval<T>() + std::declval<T2>(); }
 		auto operator+=(const T2& new_val) {
 			set(get() + new_val);
 			return *this;
 		}
 
-		template<class T2> requires requires { declval<T>() - declval<T2>(); }
+		template<class T2> requires requires { std::declval<T>() - std::declval<T2>(); }
 		auto operator-=(const T2& new_val) {
 			set(get() - new_val);
 			return *this;
 		}
-		template<class T2> requires requires { declval<T>() * declval<T2>(); }
+		template<class T2> requires requires { std::declval<T>() * std::declval<T2>(); }
 		auto operator*=(const T2& new_val) {
 			set(get() * new_val);
 			return *this;
 		}
-		template<class T2> requires requires { declval<T>() / declval<T2>(); }
+		template<class T2> requires requires { std::declval<T>() / std::declval<T2>(); }
 		auto operator/=(const T2& new_val) {
 			set(get() / new_val);
 			return *this;
 		}
-		template<class T2> requires requires { declval<T>() & declval<T2>(); }
+		template<class T2> requires requires { std::declval<T>() & std::declval<T2>(); }
 		auto operator&=(const T2& new_val) {
 			set(get() & new_val);
 			return *this;
 		}
-		template<class T2> requires requires { declval<T>() | declval<T2>(); }
+		template<class T2> requires requires { std::declval<T>() | std::declval<T2>(); }
 		auto operator|=(const T2& new_val) {
 			set(get() | new_val);
 			return *this;
 		}
-		template<class T2> requires requires { declval<T>() << declval<T2>(); }
+		template<class T2> requires requires { std::declval<T>() << std::declval<T2>(); }
 		auto operator<<=(const T2& new_val) {
 			set(get() << new_val);
 			return *this;
 		}
-		template<class T2> requires requires { declval<T>() >> declval<T2>(); }
+		template<class T2> requires requires { std::declval<T>() >> std::declval<T2>(); }
 		auto operator>>=(const T2& new_val) {
 			set(get() >> new_val);
 			return *this;
