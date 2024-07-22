@@ -105,7 +105,7 @@ namespace cst {
 
 		auto modifier = [this] {
 			auto& io = ImGui::GetIO();
-			auto& input = application::get().input();
+			auto& input = application::get().input_info();
 
 			io.AddKeyEvent(ImGuiMod_Ctrl,	input.is_pressed(static_cast<key_code_map>(GLFW_KEY_LEFT_CONTROL))	|| input.is_pressed(static_cast<key_code_map>(GLFW_KEY_RIGHT_CONTROL)));
 			io.AddKeyEvent(ImGuiMod_Shift,	input.is_pressed(static_cast<key_code_map>(GLFW_KEY_LEFT_SHIFT))	|| input.is_pressed(static_cast<key_code_map>(GLFW_KEY_RIGHT_SHIFT)));

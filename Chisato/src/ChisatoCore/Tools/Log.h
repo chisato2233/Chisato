@@ -9,8 +9,8 @@
 
 #ifdef CST_DEBUGS
 	#define CST_DEBUG_DEFAULT_LOGGER ::cst::debug::engine
-#elif
-	#define CST_DEBUG_DEFAULT_LOGGER ::cst::Debug::application
+#else
+	#define CST_DEBUG_DEFAULT_LOGGER ::cst::debug::application
 #endif
 
 

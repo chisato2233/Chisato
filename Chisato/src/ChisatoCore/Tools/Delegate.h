@@ -27,6 +27,53 @@ namespace cst {
 	namespace async {
 		template<class Re, class...Args> struct _delegate_awaiter;
 	}
+	template<class Re, class... Args> struct _delegate_impl;
+
+
+
+
+
+	struct delegate_id_pair_base {
+		virtual void register_new_id(uint64_t id) = 0;
+		virtual void remove_ids_from_delegate() = 0;
+	};
+
+	template<class Re,class... Args>
+	struct delegate_id_pair : delegate_id_pair_base {
+		std::list<uint64_t> ids;
+		_delegate_impl<Re, Args...>* delegate;
+
+		delegate_id_pair(std::list<uint64_t> ids, _delegate_impl<Re, Args...>* delegate) : ids{ ids }, delegate{ delegate } {}
+		void register_new_id(uint64_t id) override {
+			ids.push_back(id);
+		}
+
+		void remove_ids_from_delegate() override {
+			for (auto id : ids)
+				delegate->remove(id);
+		}
+	};
+
+	struct auto_remove_from_delegate {
+		std::unordered_map<void*, uptr<delegate_id_pair_base>> delegate_map;
+
+
+		template<typename Re, typename... Args>
+		auto register_delegate(_delegate_impl<Re, Args...>* delegate, uint64_t id) {
+			const auto ptr = static_cast<void*>(delegate);
+			if (delegate_map.find(ptr) == delegate_map.end())
+				delegate_map[ptr] = std::make_unique<delegate_id_pair<Re, Args...>>(std::list<uint64_t>{id}, delegate);
+			else delegate_map[ptr]->register_new_id(id);
+
+		}
+
+		~auto_remove_from_delegate() {
+			for (const auto& pair : delegate_map | std::views::values)
+				pair->remove_ids_from_delegate();
+		}
+
+		
+	};
 
 	template<class Re, class... Args>
 	struct _delegate_impl : no_copy {
@@ -51,11 +98,21 @@ namespace cst {
 
 		template<std::convertible_to<func_type> F>
 		auto add(F&& f, int count = -1) {
-			func_map_.insert({ ++next_func_id_, std::move(f) });
+			func_map_.insert({ ++next_func_id_, std::forward<F>(f) });
+			
 			if (count != -1) erase_queue_.emplace(count + call_count_, next_func_id_);
 			return next_func_id_;
 		}
+		
 
+		template<std::derived_from<auto_remove_from_delegate> Obj, std::convertible_to<func_type> F>
+		auto add(Obj* obj, F&& f, int count = -1) {
+			func_map_.insert({ ++next_func_id_, std::forward<F>(f) });
+			if (count != -1) erase_queue_.emplace(count + call_count_, next_func_id_);
+			static_cast<auto_remove_from_delegate*>(obj)->register_delegate(this,next_func_id_);
+			return next_func_id_;
+
+		}
 
 		auto remove(uint64_t id) { func_map_.erase(id); }
 
@@ -84,7 +141,7 @@ namespace cst {
 
 		template<std::convertible_to<func_type> F>
 		auto& operator +=(F&& f) {
-			add(std::move(f));
+			add(std::forward<F>(f));
 			return *this;
 		}
 
@@ -169,6 +226,31 @@ namespace cst {
 	template<class Re, class... Args>
 	struct _get_delegate_impl<Re(Args...)> {
 		using type = _delegate_impl<Re, Args...>;
+	};
+
+	template<std::derived_from<auto_remove_from_delegate> Obj, class Re, class... Args>
+	struct _get_delegate_impl<Obj, Re(Args...)> {
+		using type = struct _ :_delegate_impl<Re, Obj*, Args...> {
+			auto operator()(Args&&... args) {
+				std::invoke(
+					&_delegate_impl<Re, Obj*, Args...>::operator(),
+					this,
+					std::move(static_cast<delegate<Obj, Re(Args...)>*>(this)->obj_),
+					std::forward<Args>(args)...
+				);
+			}
+
+			template<std::convertible_to<std::function<Re(Args...)>> F >
+			auto add(F&& f, int count = -1) {
+				return _delegate_impl<Re, Obj*, Args...>::add(std::move(static_cast<delegate<Obj, Re(Args...)>*>(this)->obj_), std::move(f), count);
+			}
+
+			template<std::convertible_to<std::function<Re(Args...)>> F>
+			auto& operator +=(F&& f) {
+				add(std::move(static_cast<delegate<Obj, Re(Args...)>*>(this)->obj_), std::forward<F>(f));
+				return *this;
+			}
+		};
 	};
 
 	template<class Obj, class Re, class... Args>

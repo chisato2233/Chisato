@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="A:\Code\MyCode\Chisato\Chisato\packages\ultralight\samples\Sample 8 - Web Browser\src\Browser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="A:\Code\MyCode\Chisato\Chisato\packages\ultralight\samples\Sample 8 - Web Browser\src\Tab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="A:\Code\MyCode\Chisato\Chisato\packages\ultralight\samples\Sample 8 - Web Browser\src\UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="A:\Code\MyCode\Chisato\Chisato\packages\ultralight\samples\Sample 8 - Web Browser\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="A:\Code\MyCode\Chisato\Chisato\packages\ultralight\samples\Sample 8 - Web Browser\src\Browser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="A:\Code\MyCode\Chisato\Chisato\packages\ultralight\samples\Sample 8 - Web Browser\src\Tab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="A:\Code\MyCode\Chisato\Chisato\packages\ultralight\samples\Sample 8 - Web Browser\src\UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="A:\Code\MyCode\Chisato\Chisato\packages\ultralight\samples\Sample 8 - Web Browser\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{EE936933-F95A-3F33-BFD8-4EBAF99A531B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{D66D2EF6-225E-3441-A7D3-0164714BB971}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

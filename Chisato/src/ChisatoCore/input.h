@@ -18,15 +18,15 @@ namespace cst {
 	};
 	
 
-	struct CSTAPI input {
+	struct  CSTAPI input {
 		inline static delegate<void()> on_input;
 
-		struct window {
+		struct CSTAPI window {
 			inline static delegate<void(window_close_event)> on_close;
 			inline static delegate<void(window_resize_event)> on_resize;
 		};
 
-		struct mouse {
+		struct CSTAPI mouse {
 			inline static delegate<void(mouse_down_event)> on_left_down;
 			inline static delegate<void(mouse_down_event)> on_right_down;
 			inline static delegate<void(mouse_down_event)> on_middle_down;
@@ -44,7 +44,7 @@ namespace cst {
 
 		};
 
-		struct keyboard {
+		struct CSTAPI keyboard {
 			inline static delegate<void(key_down_event)> on_down;
 			inline static delegate<void(key_up_event)> on_up;
 			inline static delegate<void(key_char_event)> on_char;

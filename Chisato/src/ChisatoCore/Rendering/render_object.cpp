@@ -59,8 +59,21 @@ namespace cst {
 
 		return nullptr;
 	}
+	inline auto shader::create(std::filesystem::path shader_file_path)->ptr<shader> {
+		switch (renderer::current_render_api) {
+		case render_api::None:
+		{
+			debug::log<>::error("render_api::None is not supported");
+		}break;
 
-	inline auto shader_set::create(const ptr<vertex_shader>& v_shader,const ptr<fragment_shader>& f_shader ) ->ptr<shader_set> {
+		case render_api::OpenGL:
+			return std::make_shared<gl_shader>(shader_file_path);
+		}
+
+		return nullptr;
+	}
+
+	inline auto shader::create(const ptr<vertex_shader>& v_shader,const ptr<fragment_shader>& f_shader ) ->ptr<shader> {
 		switch (renderer::current_render_api) {
 		case render_api::None:
 		{
@@ -111,6 +124,20 @@ namespace cst {
 
 		case render_api::OpenGL:
 			return std::make_shared<gl_texture_2D>(std::filesystem::absolute(path));
+		}
+
+		return nullptr;
+	}
+
+	ptr<texture_2D> texture_2D::create(void* data, uint width, uint height, int channels) {
+		switch (renderer::current_render_api) {
+		case render_api::None:
+		{
+			debug::log<>::error("render_api::None is not supported");
+		}break;
+
+		case render_api::OpenGL:
+			return std::make_shared<gl_texture_2D>(data, width, height, channels);
 		}
 
 		return nullptr;

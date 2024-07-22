@@ -33,7 +33,7 @@ namespace cst {
 		}
 
 		wnd_ptr_ = glfwCreateWindow(static_cast<int>(data_.size.first), static_cast<int>(data_.size.second), data_.title.c_str(), nullptr, nullptr);
-		renderer_context_ = std::make_unique<opengl_renderer_context>(wnd_ptr_);
+		renderer_context_ = std::make_shared<opengl_renderer_context>(wnd_ptr_);
 
 		renderer_context_->init();
 

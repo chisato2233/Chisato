@@ -59,7 +59,7 @@ namespace cst {
 
 		static auto& window() { return *get().wnd_; }
 		static auto& async_runtime()  { return *get().app_runtime_; }
-		static auto& input()	 { return *get().input_; }
+		static auto& input_info()	 { return *get().input_; }
 	};
 
 

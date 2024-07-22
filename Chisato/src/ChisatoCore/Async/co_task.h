@@ -119,7 +119,7 @@ namespace cst::async{
 
 			constexpr auto initial_suspend() noexcept {return std::suspend_always{};}
 			auto final_suspend() noexcept {
-				std::cout << std::format("task {} done", id);
+				
 				on_done();
 				_builtin_call_runtime_stop_task(runtime_ref, task_ref);
 				return std::suspend_always{};

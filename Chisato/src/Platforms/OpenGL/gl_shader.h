@@ -36,7 +36,8 @@ namespace cst {
 		uint id = 0;
 	};
 
-	struct CSTAPI gl_shader : shader_set {
+	struct CSTAPI gl_shader : shader {
+		gl_shader(std::filesystem::path path);
 		gl_shader(const ptr<vertex_shader> &vertex_shader,const ptr<fragment_shader>& fragment_shader);
 
 		void bind() override;

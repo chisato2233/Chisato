@@ -60,7 +60,7 @@ namespace cst {
 			
 		};
 		
-		struct CSTAPI colors {
+		struct CSTAPI color_library {
 			inline static color red = { 1.0,0.0,0.0,1.0 };
 			inline static color blue = { 0.0,0.0,1.0,1.0 };
 			inline static color green = { 0.0,1.0,0.0,1.0 };
@@ -70,13 +70,13 @@ namespace cst {
 
 
 		struct CSTAPI material {
-			material(rptr<shader_set> p_shader,rptr<texture_2D> texture = nullptr,color ambient = colors::white):
+			material(const std::shared_ptr<shader>& p_shader, const std::shared_ptr<texture_2D>& texture = nullptr,ptr<color> ambient = std::make_shared<color>(color_library::white)):
 				ambient(ambient), texture(texture),p_shader(p_shader) {}
 
 			void bind() {
 				p_shader->bind();
 		
-				p_shader->set_uniform_float4("uColor", ambient);
+				p_shader->set_uniform_float4("uColor", *ambient);
 				if(texture!=nullptr) {
 					int slot = 0;
 					texture->bind(slot);
@@ -85,12 +85,12 @@ namespace cst {
 			}
 
 			auto& get_shader() const { return *p_shader; }
-			void set_shader(rptr<shader_set> s) { p_shader = s; }
+			void set_shader(rptr<shader> s) { p_shader = s; }
 
-			color ambient;
-			ptr<rendering::texture_2D> texture;
+			ptr<color> ambient;
+			ptr<texture_2D> texture;
 		private:
-			ptr<shader_set> p_shader;
+			ptr<shader> p_shader;
 
 		};
 	}

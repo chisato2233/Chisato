@@ -8,6 +8,8 @@
 #include"Layers/layer.h"
 
 #include "Layers/ImGui/ImGui_layer.h"
+#include "Layers/Web/Web_Layer.h"
+#include "Rendering/Renderer.h"
 #include "Rendering/render_command.h"
 
 #include "UI/test.h"
@@ -19,8 +21,8 @@ namespace cst {
 	application::application(){
 		timer::	init();
 		debug::	init();
-		
-
+		file_path::init();
+		shader_library::init();
 
 		wnd_	= std::unique_ptr<window_base>	(window_base::create());
 		input_	= std::unique_ptr<input_base>	(input_base	::create());
@@ -32,15 +34,13 @@ namespace cst {
 
 
 	void application::main() {
+		renderer::init();
 
 		layers().push(std::make_shared<ImGui_layer>());
-
+		//wlayers().push(std::make_shared<Web_layer>());
 
 		{
 			on_start();
-			input::mouse::on_scroll+= [](const mouse_scroll_event& event) {
-				debug::log<>::info("scroll x: ", event.get_x(), " y: ", event.get_y());
-			};
 			while (is_running) {
 				timer::update();
 				
@@ -71,7 +71,7 @@ namespace cst {
 		event_dispatch<window_close_event>{ [this](auto&) {is_running = false; } }(e);
 
 
-		if (e.is_active) log<>::trace(e.get_name());
+		
 	}
 
 	

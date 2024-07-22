@@ -19,11 +19,17 @@
     <Filter Include="src\ChisatoCore\Events">
       <UniqueIdentifier>{F4474DD5-E041-7627-C9AE-0C38B547DC93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ChisatoCore\Gameplay">
+      <UniqueIdentifier>{0FE9BFF7-FB0D-0F78-2459-F40710DD0D96}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\ChisatoCore\Layers">
       <UniqueIdentifier>{CF3230E4-BB2C-5936-A499-EF469032BFA2}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\ChisatoCore\Layers\ImGui">
       <UniqueIdentifier>{39476DD9-2502-5D85-CEB9-D5CFBA53A715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ChisatoCore\Layers\Web">
+      <UniqueIdentifier>{9C47B613-8857-62E4-F110-C702DD3F517D}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\ChisatoCore\Rendering">
       <UniqueIdentifier>{5DABFEEB-C96D-3276-121E-C1027E1F0B54}</UniqueIdentifier>
@@ -33,6 +39,9 @@
     </Filter>
     <Filter Include="src\ChisatoCore\UI">
       <UniqueIdentifier>{3DE7CC18-29CB-8D6E-922B-88C17E2E78F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ChisatoCore\Web">
+      <UniqueIdentifier>{5DDB6932-C93C-4740-52AA-8DF2BE0A7EFF}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platforms">
       <UniqueIdentifier>{B40E5C85-20CF-D7BB-E909-213955891C98}</UniqueIdentifier>
@@ -84,6 +93,9 @@
     <ClInclude Include="src\ChisatoCore\Events\mouse_event.h">
       <Filter>src\ChisatoCore\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Gameplay\camera.h">
+      <Filter>src\ChisatoCore\Gameplay</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.h">
       <Filter>src\ChisatoCore\Layers\ImGui</Filter>
     </ClInclude>
@@ -101,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\Layer.h">
       <Filter>src\ChisatoCore\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Layers\Web\Web_Layer.h">
+      <Filter>src\ChisatoCore\Layers\Web</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\layer_async_runtine.h">
       <Filter>src\ChisatoCore\Layers</Filter>
@@ -123,10 +138,10 @@
     <ClInclude Include="src\ChisatoCore\Rendering\buffer.h">
       <Filter>src\ChisatoCore\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Rendering\matearial.h">
+    <ClInclude Include="src\ChisatoCore\Rendering\camera.h">
       <Filter>src\ChisatoCore\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Rendering\orthographic_camera.h">
+    <ClInclude Include="src\ChisatoCore\Rendering\matearial.h">
       <Filter>src\ChisatoCore\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Rendering\render_command.h">
@@ -153,10 +168,16 @@
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h">
       <Filter>src\ChisatoCore\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\FilePathes.h">
+      <Filter>src\ChisatoCore\Tools</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Log.h">
       <Filter>src\ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Object.h">
+      <Filter>src\ChisatoCore\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\Random.h">
       <Filter>src\ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Singleton.h">
@@ -176,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\UI\test.h">
       <Filter>src\ChisatoCore\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Web\web_app.h">
+      <Filter>src\ChisatoCore\Web</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\application.h">
       <Filter>src\ChisatoCore</Filter>
@@ -222,7 +246,8 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Tools\Random.h" />
+    <ClInclude Include="src\ChisatoCore\Rendering\Drawable\Drawable.h" />
+    <ClInclude Include="src\ChisatoCore\Gameplay\position.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="packages\stb\stb_image.cpp">
@@ -270,5 +295,9 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\FlatColor.glsl" />
+    <None Include="Resources\Shaders\Texture.glsl" />
   </ItemGroup>
 </Project>

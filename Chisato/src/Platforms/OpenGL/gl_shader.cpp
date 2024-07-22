@@ -55,8 +55,55 @@ namespace cst {
 		}
 	}
 
+	gl_shader::gl_shader(std::filesystem::path path) :shader(std::make_unique<gl_shader_program>()) {
+		auto in = std::ifstream{ path,std::ios::in,std::ios::binary };
+		if(in) {
+			std::string source;
+			in.seekg(0, std::ios::end);
+			source.resize(in.tellg());
+			in.seekg(0, std::ios::beg);
+			in.read(source.data(), source.size());
+			in.close();
+
+			auto type_token = "#type";
+			auto pos = source.find(type_token, 0);
+			while (pos != std::string::npos) {
+				const auto eol = source.find_first_of("\r\n", pos);
+				auto type = source.substr(pos + strlen(type_token), eol - pos - strlen(type_token));
+
+				auto start = type.begin();
+				while (start != type.end() && std::isspace(*start)) {
+					++start;
+				}
+
+				auto end = type.end();
+				do {
+					--end;
+				} while (std::distance(start, end) > 0 && std::isspace(*end));
+
+				type = std::string(start, end + 1);
+
+				auto next_pos = source.find(type_token, eol);
+				auto shader_src = source.substr(eol + 1, next_pos- eol - 1);
+				if (type ==  "vertex") {
+					add_shader(std::make_shared<gl_vertex_shader>(shader_src));
+				}
+				else if (type == "fragment" || type == "pixel") {
+					add_shader(std::make_shared<gl_fragment_shader>(shader_src));
+				}
+				else debug::log<>::error("Invalid shader type: {}", type);
+				pos = next_pos;
+			}
+
+			auto& gl_program = dynamic_cast<gl_shader_program&>(*program);
+			gl_program.compile();
+			gl_program.link();
+		}
+		else debug::log<>::error("Failed to open file: {}", path.string());
+	}
+
 	gl_shader::gl_shader(const ptr<vertex_shader>& vertex_shader, const ptr<fragment_shader>& fragment_shader):
-		shader_set(std::make_unique<gl_shader_program>()) {
+		shader(std::make_unique<gl_shader_program>()) {
 			
 		add_shader(vertex_shader);
 		add_shader(fragment_shader);

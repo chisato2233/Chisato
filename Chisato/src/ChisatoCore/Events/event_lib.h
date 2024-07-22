@@ -1,5 +1,5 @@
 #pragma once
-//统一的Event库
+//统一锟斤拷Event锟斤拷
 
 #include"key_event.h"
 #include"mouse_event.h"

@@ -446,7 +446,7 @@ namespace cst::async{
 		void await_suspend(std::coroutine_handle<Promise> caller) {
 			auto rt = caller.promise().runtime_ref;
 			auto caller_task = caller.promise().get_task();
-			std::cout << std::format("task {} call task {} \n", caller_task->task_id(), this_task->task_id());
+			
 			if (rt && !this_task->has_runtime())
 				caller_task->derived_task(*this_task);
 
@@ -584,13 +584,13 @@ namespace cst::async{
 		auto await_suspend(std::coroutine_handle<P> caller) {
 			auto rt = caller.promise().runtime_ref;
 			auto tk = caller.promise().get_task();
-			std::cout << std::format("task {} add time {}\n", tk->task_id(),time);
+			
 
 			//老式的方法
 			rt->suspend_task(tk.get());
 			auto task = rt->register_task([](auto rt,auto tk)->co_task<> {
 				if(tk) rt->resume_task(tk.get());
-				std::cout << std::format("try to resume task {} \n", tk->task_id());
+				
 				co_return;
 			}(rt,tk)).add_timer(time);
 			tk->on_stop() += [task, rt](auto&&...) {rt->stop_task(task.get()); };

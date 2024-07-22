@@ -13,6 +13,21 @@
 namespace cst::async {
 
 	struct runtime{
+		inline static constexpr int task_queue_num = 2;
+		using task_id = uint64_t;
+		using predicate_id = uint64_t;
+		
+		using task_queue_container = std::array<std::queue<co_task_base*>,task_queue_num >;
+		using stop_queue_container = std::queue<unit<task_id, co_task_base*>>;
+		using timer_queue_container = std::priority_queue<
+			unit<game_time_point, task_id, co_task_base*>,
+			std::vector<unit<game_time_point, task_id, co_task_base*>>,
+			std::greater<>
+		>;
+
+		using predicate_container = std::unordered_map <predicate_id, unit<predicate_id, std::function<bool()>, co_task_base*>>;
+		using suspend_container = std::list<co_task_base*>;
+
 		runtime() = default;
 		~runtime() { stop_all(); }
 
@@ -43,7 +58,9 @@ namespace cst::async {
 			}
 		};
 
-		
+
+
+
 		// register a task which well not start immediately, call start_task is a better choice
 		// this function will return some options, which you can choose when you want to start the task
 		template<class T>
@@ -53,7 +70,7 @@ namespace cst::async {
 		//if you want to stop a task, call stop_task
 		void cancel_task(co_task_base* task_ref);
 
-		void cancel_task(uint64_t id);
+		void cancel_task(task_id id);
 
 		//registrite and start a task
 		//do not use the capture of lambda to create a task, it will cause a dangling pointer
@@ -62,20 +79,20 @@ namespace cst::async {
 
 		//registrite (if it doesn't) and start a task by task id 
 		//do not use the capture of lambda to create a task, it will cause a dangling pointer
-		auto start_task(uint64_t id) -> ptr<co_task_base> ;
+		auto start_task(task_id id) -> ptr<co_task_base> ;
 
 		//stop a task by point;
 		//please 
 		void stop_task(co_task_base* task);
 
 		//stop a task by id
-		void stop_task(uint64_t id);
+		void stop_task(task_id id);
 
 		//suspend a task by point
 		void suspend_task(co_task_base* task);
 
 		//suspend a task by id
-		void suspend_task(uint64_t id);
+		void suspend_task(task_id id);
 
 		//resume a task by point
 		//if the task is not suspend, it will do nothing
@@ -83,7 +100,7 @@ namespace cst::async {
 
 		//resume a task by id
 		//if the task is not suspend, it will do nothing
-		void resume_task(uint64_t id);
+		void resume_task(task_id id);
 
 		void stop_all();
 
@@ -124,112 +141,51 @@ namespace cst::async {
 			_get_task_queue().push(task_ref);
 		}
 
+		void _resume_task(void* task_ref) {
+			static_cast<co_task_base*>(task_ref)->resume();
+		}
+
 		void _update_cancel_queue() {
 			while (!cancel_queue.empty()) {
 				cancel_queue.pop();
 			}
 		}
 
-		void _update_run_task_queue() {
-			auto& this_task_queue_ = _get_task_queue();
-			(++task_queue_flag_) %= task_queue_num;
+		void _update_run_task_queue();
 
-			while (!this_task_queue_.empty()) {
-				const auto task = this_task_queue_.front();
-				if (task) {
-					auto state = task->task_state();
+		void _update_suspend_task();
 
-					state == task_state::ready ? task->resume() :
-					state == task_state::suspend ? suspend_task(task):
-					state == task_state::stop ? stop_task(task) :
-					[]{}();
-				}
-				this_task_queue_.pop();
-			}
-		}
+		void _update_stop_task();
 
-		void _update_suspend_task() {
-			[[likely]]if (!enable_check_suspend_list) return;
+		void _update_timer_queue();
 
-			for (auto it = suspend_list_.begin(); it != suspend_list_.end(); ++it) {
-				bool is_clear = false;
-				task_state state;
-				if (*it) {
-					state = (*it)->task_state();
-					auto id = (*it)->task_id();
-
-					state == task_state::ready ? resume_task(*it), is_clear = true :
-					state == task_state::suspend ? is_clear = false :
-					state == task_state::stop ? stop_task(*it), is_clear = true
-						: false;
-				}
-				else is_clear = true;
-
-				if (is_clear)
-					suspend_list_.erase(it);
-			}
-		}
-
-		void _update_stop_task() {
-			while (!stop_queue_.empty()) {
-				const auto it = task_map.find(stop_queue_.front().index);
-				if (it != task_map.end()) {
-					task_map.erase(it);
-				}
-				stop_queue_.pop();
-			}
-
-		}
-
-		void _update_timer_queue() {
-			while (!timer_queue_.empty() && timer_queue_.top().index <= timer::now()) {
-				const auto [id, task] = timer_queue_.top().value;
-				timer_queue_.pop();
-				if (task_map.contains(id)) {
-					std::cout << std::format("add time task [{}]\n", id);
-					_start_task_from_point(task);
-				}
-			}
-		}
-
-		void _update_predicate() {
-			for (auto [id, src] : predicate_map_) {
-				auto task_id = src.index;
-				auto& [predicate, task] = src.value;
-				if (predicate()) {
-					if(task_map.contains(task_id))
-						_start_task_from_point(task);
-
-					predicate_map_.erase(id);
-				}
-			}
-		}
-
-
+		void _update_predicate();
 
 	public:
-		inline static constexpr int task_queue_num = 2;
-		std::map<uint64_t , ptr<co_task_base>> task_map;
+
+		std::map<task_id , ptr<co_task_base>> task_map;
 		std::queue<ptr<co_task_base>> cancel_queue;
 		bool enable_check_suspend_list = false;
 
 
 	private:
 		char task_queue_flag_ = 0;
-		inline static uint64_t next_predicate_id_ = 0;
+		inline static predicate_id next_predicate_id_ = 0;
 
-		std::array<std::queue<co_task_base*>,task_queue_num> task_queue_array_;
-		std::queue<unit<uint64_t,co_task_base*>> stop_queue_;
+		task_queue_container task_queue_array_;
+		std::mutex task_queue_mutex_;
 
-		std::list<co_task_base*> suspend_list_;
+		stop_queue_container stop_queue_;
+		std::mutex stop_queue_mutex_;
 
-		std::unordered_map <uint64_t, unit<uint64_t,std::function<bool()>,co_task_base*>> predicate_map_;
-		std::priority_queue<
-			unit<game_time_point, uint64_t, co_task_base*>,
-			std::vector<unit<game_time_point,uint64_t,co_task_base*>>,
-			std::greater<>
-		> timer_queue_;
-		
+		suspend_container suspend_list_;
+		std::mutex suspend_list_mutex_;
+
+		predicate_container predicate_map_;
+		std::mutex predicate_map_mutex_;
+
+		timer_queue_container timer_queue_;
+		std::mutex timer_queue_mutex_;
 	};
 
 	inline void runtime::cancel_task(co_task_base* task_ref) {
@@ -242,13 +198,13 @@ namespace cst::async {
 			
 	}
 
-	inline void runtime::cancel_task(uint64_t id) {
+	inline void runtime::cancel_task(task_id id) {
 		auto res = task_map.find(id);
 		if (res == task_map.end()) return;
 		cancel_task(res->second.get());
 	}
 
-	inline auto runtime::start_task(uint64_t id) -> ptr<co_task_base> {
+	inline auto runtime::start_task(task_id id) -> ptr<co_task_base> {
 		auto res = task_map.find(id);
 		if (res == task_map.end()) return nullptr;
 
@@ -258,7 +214,7 @@ namespace cst::async {
 
 	inline void runtime::stop_task(co_task_base* task) {
 		if (!task) return;
-		std::cout << std::format("call runtime stop task{}\n", task->task_id());
+		
 
 		auto& state = task->task_state();
 		if (state == task_state::suspend)
@@ -268,7 +224,7 @@ namespace cst::async {
 		stop_queue_.emplace(task->task_id(), task);
 	}
 
-	inline void runtime::stop_task(uint64_t id) {
+	inline void runtime::stop_task(task_id id) {
 		auto res = task_map.find(id);
 		if (res == task_map.end()) 
 			return;
@@ -284,7 +240,7 @@ namespace cst::async {
 		suspend_list_.push_back(task);
 	}
 
-	inline void runtime::suspend_task(uint64_t id) {
+	inline void runtime::suspend_task(task_id id) {
 		auto res = task_map.find(id);
 		if (res == task_map.end()) return;
 		suspend_task(res->second.get());
@@ -299,7 +255,7 @@ namespace cst::async {
 		}
 	}
 
-	inline void runtime::resume_task(uint64_t id) {
+	inline void runtime::resume_task(task_id id) {
 		auto res = task_map.find(id);
 		if (res == task_map.end()) return;
 		resume_task(res->second.get());
@@ -308,6 +264,80 @@ namespace cst::async {
 	inline void runtime::stop_all() {
 		for (auto& [id, task] : task_map) {
 			stop_task(task.get());
+		}
+	}
+
+	inline void runtime::_update_run_task_queue() {
+		auto& this_task_queue_ = _get_task_queue();
+		(++task_queue_flag_) %= task_queue_num;
+
+		while (!this_task_queue_.empty()) {
+			if (const auto task = this_task_queue_.front()) {
+				auto state = task->task_state();
+
+				state == task_state::ready ? _resume_task(task) :
+					state == task_state::suspend ? suspend_task(task):
+					state == task_state::stop ? stop_task(task) :
+					[]{}();
+			}
+			this_task_queue_.pop();
+		}
+	}
+
+	inline void runtime::_update_suspend_task() {
+		[[likely]]if (!enable_check_suspend_list) return;
+
+		for (auto it = suspend_list_.begin(); it != suspend_list_.end(); ++it) {
+			bool is_clear = false;
+			task_state state;
+			if (*it) {
+				state = (*it)->task_state();
+				auto id = (*it)->task_id();
+
+				state == task_state::ready ? resume_task(*it), is_clear = true :
+					state == task_state::suspend ? is_clear = false :
+					state == task_state::stop ? stop_task(*it), is_clear = true
+					: false;
+			}
+			else is_clear = true;
+
+			if (is_clear)
+				suspend_list_.erase(it);
+		}
+	}
+
+	inline void runtime::_update_stop_task() {
+		while (!stop_queue_.empty()) {
+			const auto it = task_map.find(stop_queue_.front().index);
+			if (it != task_map.end()) {
+				task_map.erase(it);
+			}
+			stop_queue_.pop();
+		}
+
+	}
+
+	inline void runtime::_update_timer_queue() {
+		while (!timer_queue_.empty() && timer_queue_.top().index <= timer::now()) {
+			const auto [id, task] = timer_queue_.top().value;
+			timer_queue_.pop();
+			if (task_map.contains(id)) {
+				
+				_start_task_from_point(task);
+			}
+		}
+	}
+
+	inline void runtime::_update_predicate() {
+		for (auto [id, src] : predicate_map_) {
+			auto task_id = src.index;
+			auto& [predicate, task] = src.value;
+			if (predicate()) {
+				if(task_map.contains(task_id))
+					_start_task_from_point(task);
+
+				predicate_map_.erase(id);
+			}
 		}
 	}
 
@@ -325,7 +355,7 @@ namespace cst::async {
 
 	template <class T>
 	auto runtime::start_task(co_task<T>&& task) -> co_task<T>& {
-		std::cout << std::format("call runtime start task{}\n", task.task_id());
+		
 		co_task_base* task_ref;
 		if (!task.has_runtime()) {
 			task_ref = register_task(std::move(task)).task_ref.get();

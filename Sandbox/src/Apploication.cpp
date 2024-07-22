@@ -10,6 +10,7 @@ public:
 	Sandbox() {
 		on_app_created += [this](auto&&...) {
 			layers().push(std::make_shared<Render_layer>());
+			
 		};
 		
 	}

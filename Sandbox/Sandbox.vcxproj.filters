@@ -21,9 +21,6 @@
     <ClInclude Include="..\Chisato\packages\stb\stb_image.h">
       <Filter>Chisato\packages\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Render\Drawable.h">
-      <Filter>src\Render</Filter>
-    </ClInclude>
     <ClInclude Include="src\Render\Render_layer.h">
       <Filter>src\Render</Filter>
     </ClInclude>

@@ -48,12 +48,21 @@ namespace cst {
 			element_layout(Args&&... args) :
 				data(std::make_shared<tuple_wrapper<Args...>>(std::forward<Args>(args)...)) {}
 
+			template<class... Args>
+			auto add(Args&&... args) {
+				dynamic_data.push_back(std::make_shared<tuple_wrapper<Args...>>(std::forward<Args>(args)...));
+			}
+
 			void build() {
 				data->build();
+				for (auto&& item : dynamic_data) {
+					item->build();
+				}
 			}
 
 
 			ptr<tuple_wrapper_base_> data;
+			std::vector<ptr<tuple_wrapper_base_>> dynamic_data;
 		};
 
 
@@ -99,7 +108,7 @@ namespace cst {
 			bool scroll_bar = true;
 			bool scroll_with_mouse = true;
 			bool collapse = true;
-			bool auto_resize = false;
+			bool auto_resize = true;
 			bool translate = false;
 			bool saved = false;
 			bool mouse_input = true;
@@ -163,13 +172,13 @@ namespace cst {
 				input_content->resize(buffer_size);
 				if(ImGui::InputText(label.c_str(),input_content->data(), buffer_size)) {
 					on_change(*this);
-				};
+				}
 			}
 		};
 
 		struct CSTAPI color_editor {
 			std::string label = "color editor";
-			rendering::color default_color = rendering::colors::white;
+			rendering::color default_color = rendering::color_library::white;
 			ptr<rendering::color> color = std::make_shared<rendering::color>(default_color);
 
 
@@ -186,7 +195,7 @@ namespace cst {
 
 		struct CSTAPI color_picker {
 			std::string label = "color picker";
-			rendering::color default_color = rendering::colors::white;
+			rendering::color default_color = rendering::color_library::white;
 			ptr<rendering::color> color = std::make_shared<rendering::color>(default_color);
 
 			std::function<void(const color_picker&)> on_change = [](auto&&...) {};

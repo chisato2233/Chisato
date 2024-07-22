@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;CST_DEBUGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;..\Chisato\packages\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;..\Chisato\packages\stb;..\Chisato\packages\ultralight\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -99,7 +99,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;..\Chisato\packages\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;..\Chisato\packages\stb;..\Chisato\packages\ultralight\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -122,7 +122,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;..\Chisato\packages\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Chisato\src;..\Chisato\packages\spdlog\include;..\Chisato\packages\GLFW\include;..\Chisato\packages\GLAD\include;..\Chisato\packages\Imgui;..\Chisato\packages\glm;..\Chisato\packages\stb;..\Chisato\packages\ultralight\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -141,7 +141,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Chisato\packages\stb\stb_image.h" />
-    <ClInclude Include="src\Render\Drawable.h" />
     <ClInclude Include="src\Render\Render_layer.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>

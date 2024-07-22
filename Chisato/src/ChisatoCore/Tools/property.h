@@ -17,6 +17,10 @@ namespace cst {
 
 		T& get_ref() { return value; }
 		T& operator()() { return get_ref(); }
+		T* operator->() { return &get_ref(); }
+		T& operator*() { return get_ref(); }
+
+
 
 		delegate<void(T, const T&)>& on_change() { return *_on_change; }
 

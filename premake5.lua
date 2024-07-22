@@ -21,12 +21,20 @@ workspace "Chisato"
 	IncludeDir["Imgui"]="Chisato/packages/Imgui"
 	IncludeDir["glm"]="Chisato/packages/glm"
 	IncludeDir["stb"] ="Chisato/packages/stb"
+	IncludeDir["ultralight"] = "Chisato/packages/ultralight/include" 
+
+
+
+	LibDir = {}
+	LibDir["ultralight"] = "Chisato/packages/ultralight/lib"
+	ultralight_bin_dir = path.getabsolute("Chisato/Chisato/packages/ultralight/bin")
 
 	--引入GLFW的premake文件
 	include "Chisato/packages/GLFW"
 	include "Chisato/packages/GLAD"
 	include "Chisato/packages/Imgui"
 	include "Chisato/packages/glm"
+	include "Chisato/packages/ultralight"
 
 	--工程：chisato
 	project"Chisato"
@@ -60,14 +68,23 @@ workspace "Chisato"
 			"%{IncludeDir.Imgui}",
 			"%{IncludeDir.glm}",
 			"%{IncludeDir.stb}",
+			"%{IncludeDir.ultralight}"
 		}
-		
+
+		libdirs {
+			"%{LibDir.ultralight}" -- 指定 Ultralight 库文件路径
+		}
+	
 		links{
 			"GLFW",
 			"opengl32.lib",
 			"dwmapi.lib",
 			"imgui",
 			"GLAD", 
+			"AppCore.lib",
+			"UltralightCore.lib",
+			"Ultralight.lib",
+			"WebCore.lib",
 		}
 
 		-- windows版本
@@ -84,7 +101,8 @@ workspace "Chisato"
 			}
 
 			postbuildcommands{
-				("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
+				("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\""),
+				--("{COPY} " .. ultralight_bin_dir .. " \"../bin/" .. outputdir .. "/Sandbox/\"")
 			}
 		
 		-- Debug版本
@@ -141,6 +159,7 @@ workspace "Chisato"
 			"%{IncludeDir.Imgui}",
 			"%{IncludeDir.glm}",
 			"%{IncludeDir.stb}",
+			"%{IncludeDir.ultralight}"
 		}
 
 		links{

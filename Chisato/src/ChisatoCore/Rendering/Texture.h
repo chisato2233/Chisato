@@ -12,5 +12,6 @@ namespace cst::rendering {
 	struct CSTAPI texture_2D : texture {
 		virtual ~texture_2D() = default;
 		static ptr<texture_2D> create(std::filesystem::path path);
+		static ptr<texture_2D> create(void* data, uint width, uint height, int channels = 3);
 	};
 }

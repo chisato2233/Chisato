@@ -19,21 +19,35 @@ namespace cst::rendering {
 			
 			width_ = width;
 			height_ = height;
-			glCreateTextures(GL_TEXTURE_2D, 1, &id);
-			glTextureStorage2D(id, 1, GL_RGB8, width, height);
 
-			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-			glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+			load_image_data(data, width, height, channels);
 
 			stbi_image_free(data);
 
 
 		}
+
+		gl_texture_2D(void* data, uint width, uint height,int channels = 3) : width_(width), height_(height) {
+			load_image_data(data, width, height, channels);
+		}
+		
 		~gl_texture_2D() override {
 			glDeleteTextures(1, &id);
 		}
+
+		void load_image_data(void* data, uint width, uint height, int channels = 3) {
+			const GLenum internal_format = channels == 3 ? GL_RGB8 : GL_RGBA8;
+			const GLenum format = channels == 3 ? GL_RGB : GL_RGBA;
+			glCreateTextures(GL_TEXTURE_2D, 1, &id);
+			glTextureStorage2D(id, 1, internal_format, width, height);
+
+			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+			glTextureSubImage2D(id, 0, 0, 0, width, height, format, GL_UNSIGNED_BYTE, data);
+
+		}
+
 
 		uint get_width() const noexcept override { return width_; }
 		uint get_height() const noexcept override { return height_; }

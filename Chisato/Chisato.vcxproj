@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_DEBUGS;CST_ASSERT_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;packages\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;packages\stb;packages\ultralight\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -91,7 +91,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;dwmapi.lib;AppCore.lib;UltralightCore.lib;Ultralight.lib;WebCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>packages\ultralight\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Chisato\Chisato.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -104,7 +105,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;packages\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;packages\stb;packages\ultralight\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -119,7 +120,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;dwmapi.lib;AppCore.lib;UltralightCore.lib;Ultralight.lib;WebCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>packages\ultralight\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Release-windows-x86_64\Chisato\Chisato.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -132,7 +134,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CST_PLATFORM_WINDOWS;CST_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_CUSTOM;CST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;packages\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;packages\spdlog\include;packages\GLFW\include;packages\GLAD\include;packages\Imgui;packages\glm;packages\stb;packages\ultralight\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -147,7 +149,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;dwmapi.lib;AppCore.lib;UltralightCore.lib;Ultralight.lib;WebCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>packages\ultralight\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Dist-windows-x86_64\Chisato\Chisato.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -168,21 +171,25 @@
     <ClInclude Include="src\ChisatoCore\Events\event_lib.h" />
     <ClInclude Include="src\ChisatoCore\Events\key_event.h" />
     <ClInclude Include="src\ChisatoCore\Events\mouse_event.h" />
+    <ClInclude Include="src\ChisatoCore\Gameplay\camera.h" />
+    <ClInclude Include="src\ChisatoCore\Gameplay\position.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_freetype.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_glfw.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\ChisatoCore\Layers\Layer.h" />
+    <ClInclude Include="src\ChisatoCore\Layers\Web\Web_Layer.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_async_runtine.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_lib.h" />
     <ClInclude Include="src\ChisatoCore\Layers\layer_stack.h" />
     <ClInclude Include="src\ChisatoCore\Macro.h" />
+    <ClInclude Include="src\ChisatoCore\Rendering\Drawable\Drawable.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\Renderer.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\Texture.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\buffer.h" />
+    <ClInclude Include="src\ChisatoCore\Rendering\camera.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\matearial.h" />
-    <ClInclude Include="src\ChisatoCore\Rendering\orthographic_camera.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\render_command.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\renderer_api.h" />
     <ClInclude Include="src\ChisatoCore\Rendering\renderer_context.h" />
@@ -191,6 +198,7 @@
     <ClInclude Include="src\ChisatoCore\Rendering\vertex_array.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Delegate.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Exception.h" />
+    <ClInclude Include="src\ChisatoCore\Tools\FilePathes.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Log.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Object.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Random.h" />
@@ -200,6 +208,7 @@
     <ClInclude Include="src\ChisatoCore\Tools\ToolLib.h" />
     <ClInclude Include="src\ChisatoCore\Tools\property.h" />
     <ClInclude Include="src\ChisatoCore\UI\test.h" />
+    <ClInclude Include="src\ChisatoCore\Web\web_app.h" />
     <ClInclude Include="src\ChisatoCore\application.h" />
     <ClInclude Include="src\ChisatoCore\engine_run.h" />
     <ClInclude Include="src\ChisatoCore\input.h" />
@@ -245,6 +254,10 @@
     <ProjectReference Include="packages\GLAD\GLAD.vcxproj">
       <Project>{5D4A857C-4981-860D-F26D-6C10DE83020F}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\FlatColor.glsl" />
+    <None Include="Resources\Shaders\Texture.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

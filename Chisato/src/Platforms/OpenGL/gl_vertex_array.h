@@ -23,7 +23,7 @@ namespace cst {
 
 			uint32_t index = 0;
 			for (auto& elements : vertex_buffer->get_layout()) {
-				glEnableVertexAttribArray(index);
+				
 				glVertexAttribPointer(
 					index,
 					elements.count,
@@ -32,6 +32,7 @@ namespace cst {
 					vertex_buffer->get_layout().stride,
 					reinterpret_cast<const void*>(elements.offset)
 				);
+				glEnableVertexAttribArray(index);
 				index++;
 			}
 			vertex_buffers_.push_back(vertex_buffer);

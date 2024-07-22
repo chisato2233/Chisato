@@ -10,7 +10,7 @@ namespace cst {
 	template<>
 	class CSTAPI window<platforms::Windows> :public window_base {
 		GLFWwindow* wnd_ptr_;
-		std::unique_ptr<renderer_context> renderer_context_;
+		ptr<renderer_context> renderer_context_;
 
 		struct WndData : wnd_props {
 			bool v_sync;
