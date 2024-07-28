@@ -8,21 +8,24 @@ namespace cst {
 
 		T get() { return getter(); }
 		void set(const T& new_val) {
-			T old = value;
 			setter(new_val);
-			on_change()(old, value);
+			on_change();
 		}
 
 		explicit operator T() { return get(); }
 
 		T& get_ref() { return value; }
-		T& operator()() { return get_ref(); }
-		T* operator->() { return &get_ref(); }
-		T& operator*() { return get_ref(); }
+
+		//this will call the on change delegate
+		T& operator()() { on_change(); return get_ref(); }
 
 
 
-		delegate<void(T, const T&)>& on_change() { return *_on_change; }
+		const T* operator->() { return &get_ref(); }
+		const T& operator*() { return get_ref(); }
+
+
+
 
 		property& operator=(const T& new_val) {
 			set(new_val);
@@ -75,7 +78,7 @@ namespace cst {
 		T value;
 		std::function<T()> getter{ [this] {return get_ref(); } };
 		std::function<void(const T&)> setter{ [this](const T& new_val) {return get_ref() = new_val; }};
-		ptr<delegate<void(T,const T&)>> _on_change{ std::make_shared<delegate<void(T,const T&)>>() };
+		delegate_ptr<property, void()> on_change{ this };
 		
 	};
 

@@ -21,8 +21,10 @@ namespace cst {
 	application::application(){
 		timer::	init();
 		debug::	init();
+		tag_system::init();
 		file_path::init();
 		shader_library::init();
+
 
 		wnd_	= std::unique_ptr<window_base>	(window_base::create());
 		input_	= std::unique_ptr<input_base>	(input_base	::create());

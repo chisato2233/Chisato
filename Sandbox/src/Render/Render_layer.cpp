@@ -10,7 +10,7 @@ namespace cst {
 		auto quad = std::make_shared<graph::quad>();
 		graphics.push_back(tri2);
 		//graphics.push_back(quad);
-		quad->transform.position->x += 0.5f;
+		quad->transform.position().x += 0.5f;
 
 		auto a = application::window().get_aspect_ratio();
 		viewport =

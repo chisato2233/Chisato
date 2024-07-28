@@ -19,11 +19,11 @@ namespace cst::rendering {
 	public:
 		viewport() {
 			auto f = [this](auto...) { recalculate_matrices(); };
-			transform.position.on_change().add(f);
-			transform.rotation.on_change().add(f);
-			transform.scale.on_change().add(f);
+			transform.position.on_change->add(f);
+			transform.rotation.on_change->add(f);
+			transform.scale.on_change->add(f);
 
-			zoom_factor.on_change() += [this](auto...) {
+			zoom_factor.on_change += [this](auto...) {
 				update_projection();
 			};
 

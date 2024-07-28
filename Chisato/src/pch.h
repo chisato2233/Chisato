@@ -1,6 +1,7 @@
 #pragma once
 
 #ifdef CST_PLATFORM_WINDOWS
+	
 	#include<Windows.h>
 #endif 
 

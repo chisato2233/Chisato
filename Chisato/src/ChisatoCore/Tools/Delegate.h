@@ -34,6 +34,7 @@ namespace cst {
 
 
 	struct delegate_id_pair_base {
+		virtual ~delegate_id_pair_base() = default;
 		virtual void register_new_id(uint64_t id) = 0;
 		virtual void remove_ids_from_delegate() = 0;
 	};
@@ -57,13 +58,16 @@ namespace cst {
 	struct auto_remove_from_delegate {
 		std::unordered_map<void*, uptr<delegate_id_pair_base>> delegate_map;
 
+		auto_remove_from_delegate() = default;
+		auto_remove_from_delegate(auto_remove_from_delegate&&) = default;
+		auto_remove_from_delegate(auto_remove_from_delegate& other) {}
 
 		template<typename Re, typename... Args>
 		auto register_delegate(_delegate_impl<Re, Args...>* delegate, uint64_t id) {
 			const auto ptr = static_cast<void*>(delegate);
-			if (delegate_map.find(ptr) == delegate_map.end())
+			if (auto it = delegate_map.find(ptr); it == delegate_map.end())
 				delegate_map[ptr] = std::make_unique<delegate_id_pair<Re, Args...>>(std::list<uint64_t>{id}, delegate);
-			else delegate_map[ptr]->register_new_id(id);
+			else it->second->register_new_id(id);
 
 		}
 
@@ -140,7 +144,7 @@ namespace cst {
 		}
 
 		template<std::convertible_to<func_type> F>
-		auto& operator +=(F&& f) {
+		_delegate_impl& operator +=(F&& f) {
 			add(std::forward<F>(f));
 			return *this;
 		}
@@ -226,31 +230,8 @@ namespace cst {
 	template<class Re, class... Args>
 	struct _get_delegate_impl<Re(Args...)> {
 		using type = _delegate_impl<Re, Args...>;
-	};
-
-	template<std::derived_from<auto_remove_from_delegate> Obj, class Re, class... Args>
-	struct _get_delegate_impl<Obj, Re(Args...)> {
-		using type = struct _ :_delegate_impl<Re, Obj*, Args...> {
-			auto operator()(Args&&... args) {
-				std::invoke(
-					&_delegate_impl<Re, Obj*, Args...>::operator(),
-					this,
-					std::move(static_cast<delegate<Obj, Re(Args...)>*>(this)->obj_),
-					std::forward<Args>(args)...
-				);
-			}
-
-			template<std::convertible_to<std::function<Re(Args...)>> F >
-			auto add(F&& f, int count = -1) {
-				return _delegate_impl<Re, Obj*, Args...>::add(std::move(static_cast<delegate<Obj, Re(Args...)>*>(this)->obj_), std::move(f), count);
-			}
-
-			template<std::convertible_to<std::function<Re(Args...)>> F>
-			auto& operator +=(F&& f) {
-				add(std::move(static_cast<delegate<Obj, Re(Args...)>*>(this)->obj_), std::forward<F>(f));
-				return *this;
-			}
-		};
+		using return_type = Re;
+		using params = std::tuple<Args...>;
 	};
 
 	template<class Obj, class Re, class... Args>
@@ -291,6 +272,50 @@ namespace cst {
 		Obj* obj_ = nullptr;
 	};
 
-	delegate()->delegate<void()>;
 	template<class Obj, class Fx> delegate(Obj*) -> delegate<Obj, Fx>;
+
+	template<typename... A>struct delegate_ptr;
+
+	template<class Fx >
+	struct delegate_ptr<Fx> : ptr<delegate<Fx>> {
+		using return_type = typename delegate_result<typename _get_delegate_impl<Fx>::return_type>::type;
+		using impl_type = typename _get_delegate_impl<Fx>::type;
+
+		impl_type& get_impl() { return *std::dynamic_pointer_cast<impl_type>(*this); }
+
+		delegate_ptr() :ptr<delegate<Fx>>{ std::make_shared<delegate<Fx>>() } {}
+
+		template<typename F> requires requires (F f) { std::declval<delegate< Fx>>().operator+=(std::forward<F>(f)); }
+		impl_type& operator+=(F&& f) {
+			return get_impl().operator+=(std::forward<F>(f));
+		}
+
+		template<typename... Args> requires requires(Args... args) { std::declval<delegate<Fx>>().operator()(std::forward<Args>(args)...); }
+		return_type operator()(Args&&... args) {
+			return get_impl().operator()(std::forward<Args>(args)...);
+		}
+	};
+
+
+	template<class Obj,class Fx >
+	struct delegate_ptr<Obj,Fx> : ptr<delegate<Obj,Fx>> {
+		delegate_ptr(Obj* self) : ptr<delegate<Obj,Fx>>{ std::make_shared<delegate<Obj,Fx>>(self) } {}
+
+		using return_type = typename delegate_result<typename _get_delegate_impl<Fx>::return_type>::type;
+		using impl_type = typename _get_delegate_impl<Obj, Fx>::type;
+
+		impl_type& get_impl() { return *std::dynamic_pointer_cast<impl_type>(*this); }
+
+		template<typename F> requires requires (F f){ std::declval<delegate<Obj,Fx>>().operator+=(std::forward<F>(f)); }
+		impl_type& operator+=(F&& f) {
+			static_assert(requires (F) { std::declval<delegate<Obj, Fx>>().operator+=(std::forward<F>(f)); });
+			return static_cast<impl_type&>(get_impl().operator+=(std::forward<F>(f)));
+		}
+
+		template<typename... Args> requires requires(Args... args) { std::declval<delegate<Obj, Fx>>().operator()(std::forward<Args>(args)...); }
+		return_type operator()(Args&&... args) {
+			static_assert(requires(Args...) { std::declval<delegate<Obj, Fx>>().operator()(std::forward<Args>(args)...); });
+			return get_impl().operator()(std::forward<Args>(args)...);
+		}
+	};
 }

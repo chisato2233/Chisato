@@ -204,6 +204,7 @@
     <ClInclude Include="src\ChisatoCore\Tools\Random.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Singleton.h" />
     <ClInclude Include="src\ChisatoCore\Tools\StateMachine.h" />
+    <ClInclude Include="src\ChisatoCore\Tools\Tag.h" />
     <ClInclude Include="src\ChisatoCore\Tools\Time.h" />
     <ClInclude Include="src\ChisatoCore\Tools\ToolLib.h" />
     <ClInclude Include="src\ChisatoCore\Tools\property.h" />
@@ -254,10 +255,6 @@
     <ProjectReference Include="packages\GLAD\GLAD.vcxproj">
       <Project>{5D4A857C-4981-860D-F26D-6C10DE83020F}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Shaders\FlatColor.glsl" />
-    <None Include="Resources\Shaders\Texture.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

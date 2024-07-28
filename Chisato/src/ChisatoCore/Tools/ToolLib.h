@@ -5,3 +5,4 @@
 #include"Delegate.h"
 #include"Random.h"
 #include"FilePathes.h"
+#include"Tag.h"

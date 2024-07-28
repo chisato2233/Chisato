@@ -34,6 +34,9 @@
     <Filter Include="src\ChisatoCore\Rendering">
       <UniqueIdentifier>{5DABFEEB-C96D-3276-121E-C1027E1F0B54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ChisatoCore\Rendering\Drawable">
+      <UniqueIdentifier>{CEC52E27-BA01-3291-2314-4A880F6FDAAB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\ChisatoCore\Tools">
       <UniqueIdentifier>{909E1D74-FC0A-D96E-C5FE-70CC312AFBD6}</UniqueIdentifier>
     </Filter>
@@ -96,6 +99,9 @@
     <ClInclude Include="src\ChisatoCore\Gameplay\camera.h">
       <Filter>src\ChisatoCore\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Gameplay\position.h">
+      <Filter>src\ChisatoCore\Gameplay</Filter>
+    </ClInclude>
     <ClInclude Include="src\ChisatoCore\Layers\ImGui\ImGui_layer.h">
       <Filter>src\ChisatoCore\Layers\ImGui</Filter>
     </ClInclude>
@@ -128,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Macro.h">
       <Filter>src\ChisatoCore</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Rendering\Drawable\Drawable.h">
+      <Filter>src\ChisatoCore\Rendering\Drawable</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Rendering\Renderer.h">
       <Filter>src\ChisatoCore\Rendering</Filter>
@@ -184,6 +193,9 @@
       <Filter>src\ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\StateMachine.h">
+      <Filter>src\ChisatoCore\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChisatoCore\Tools\Tag.h">
       <Filter>src\ChisatoCore\Tools</Filter>
     </ClInclude>
     <ClInclude Include="src\ChisatoCore\Tools\Time.h">
@@ -246,8 +258,6 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChisatoCore\Rendering\Drawable\Drawable.h" />
-    <ClInclude Include="src\ChisatoCore\Gameplay\position.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="packages\stb\stb_image.cpp">
@@ -295,9 +305,5 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Shaders\FlatColor.glsl" />
-    <None Include="Resources\Shaders\Texture.glsl" />
   </ItemGroup>
 </Project>
